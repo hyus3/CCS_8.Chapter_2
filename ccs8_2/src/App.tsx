@@ -11,13 +11,11 @@ function App() {
   return (
       <Router>
           <header><NavBar path={path}/></header>
-          <Container>
-              <Routes>
-                  <Route path={`${path[0]}`} element={<Body2 />} />
-                  <Route path={`${path[1]}`} element={<Body3 />} />
-                  <Route path={`${path[2]}`} element={<Body1 />} />
-              </Routes>
-          </Container>
+          <Routes>
+              <Route path={`${path[0]}`} element={<Body2 />} />
+              <Route path={`${path[1]}`} element={<Body3 />} />
+              <Route path={`${path[2]}`} element={<Body1 />} />
+          </Routes>
       </Router>
   );
 }

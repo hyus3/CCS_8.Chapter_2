@@ -11,11 +11,10 @@ function NavBtn(props: prop) {
         <Button
             variant="contained"
             sx={{
-                color: "grey",
                 borderRadius: 7.5,
                 boxShadow: "none",
                 height: "75%",
-                alignSelf: "center"
+                alignSelf: "center",
             }}
             onClick={() => navigate(props.path)}
         >

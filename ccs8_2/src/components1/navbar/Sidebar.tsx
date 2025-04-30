@@ -1,14 +1,14 @@
-import {Box} from "@mui/material";
+import {Drawer} from "@mui/material";
 
 type prop = {
     name: string
 }
-function Modal() {
+function Sidebar() {
     return (
         <>
-            <Box>
-
-            </Box>
+            <Drawer>
+                
+            </Drawer>
         </>
     )
 }
@@ -18,4 +18,4 @@ function List(props: prop) {
     )
 }
 
-export default Modal
+export default Sidebar

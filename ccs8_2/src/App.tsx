@@ -1,6 +1,5 @@
 import NavBar from "./components1/navbar/NavBar";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Body1 from "./components1/body/Body1";
 import Body2 from "./components1/body/Body2";
 import CoffeeProfiles from "./components1/coffeeprofiles/CoffeeProfiles";
 import ContactUs from "./components1/contactus/ContactUs";
@@ -14,10 +13,14 @@ function App() {
           <header><NavBar path={path}/></header>
           <Routes>
               <Route path={`${path[0]}`} element={<Body2 />} />
+<<<<<<< Updated upstream
               <Route path={`${path[3]}`} element={<FaqPage />} />
               <Route path={`${path[2]}`} element={<Body1 />} />
               <Route path={`${path[4]}`} element={<CoffeeProfiles />} />
               <Route path={`${path[5]}`} element={<ContactUs />} />
+=======
+              <Route path={`${path[1]}`} element={<Body3 />} />
+>>>>>>> Stashed changes
           </Routes>
       </Router>
   );

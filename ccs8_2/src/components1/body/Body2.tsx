@@ -1,105 +1,98 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box } from "@mui/material";
+import { Box, Modal, Typography, Rating, Chip } from "@mui/material";
 import './Body2.css';
+import './Body2.modal.css';
+import './EnhancedComponents.css'; // Import the new CSS
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { 
+  CafeDetails,
+  getFallbackSliderItems
+} from './Body2.script';
+
+// Import our new components
+import AutosuggestSearch from './AutosuggestSearch';
+import EnhancedImageSlider from './EnhancedImageSlider';
+
+// You'll need to create these functions based on the OpenStreetMap Nominatim API
+import { 
+  fetchTopCafesOSM,
+  fetchCafeDetailsOSM,
+  searchCafesByTextOSM
+} from './Body2.osm.script';
 
 function Body2() {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [showResults, setShowResults] = useState(false);
-    const [filteredCafes, setFilteredCafes] = useState<string[]>([]);
+    // Store the map instance
+    const mapRef = useRef<L.Map | null>(null);
     const searchRef = useRef<HTMLDivElement>(null);
+
+    const [selectedCafe, setSelectedCafe] = useState<CafeDetails | null>(null);
+    const [showCafeModal, setShowCafeModal] = useState(false);
+    const [sliderItems, setSliderItems] = useState<CafeDetails[]>([]);
+    
     const tags = ['Coffee', 'Brunch', 'Pastries', 'Study Spot', 'Date Spot', 'Work-Friendly'];
-    const [activeSlide, setActiveSlide] = useState(2); // Middle slide is active by default
-    
-    // Dumaguete coffee shops database
-    const dumagueteCafes = [
-        "Hemingway Cafe",
-        "Kava Modern Filipino Restaurant",
-        "Mulat Cafe",
-        "Tuesday Cafe",
-        "Overdose Coffee",
-        "Foundation Coffee Shop",
-        "The Artsy Corner Cafe",
-        "Bean Bless Café",
-        "Cafe Antonio",
-        "Cafe Mamia",
-        "Coffee Break Cafe",
-        "Gabby's Bistro",
-        "Le Chalet Cafe",
-        "Sans Rival Cakes and Pastries",
-        "Qyosko Cafe",
-        "Books & Brews",
-        "Coffee Notes",
-        "Mountain Brew Coffee",
-        "Why Not Cafe",
-        "The Rollin' Pin"
-    ];
-    
-    // Top cafes for the slider
-    const sliderItems = [
-        { id: 0, title: 'Hemingway Cafe', image: '/api/placeholder/200/150', description: 'Classic ambiance with great coffee' },
-        { id: 1, title: 'Kava', image: '/api/placeholder/200/150', description: 'Modern Filipino cuisine and coffee' },
-        { id: 2, title: 'Mulat Cafe', image: '/api/placeholder/200/150', description: 'Artisanal coffee and pastries' },
-        { id: 3, title: 'Tuesday Cafe', image: '/api/placeholder/200/150', description: 'Cozy spot with signature drinks' },
-        { id: 4, title: 'Overdose Coffee', image: '/api/placeholder/200/150', description: 'Strong coffee for true enthusiasts' }
-    ];
-  
-    // Filter cafes based on search query
+
+    // Load top-rated cafes for the slider when component mounts
     useEffect(() => {
-        if (searchQuery.trim() === '') {
-            setFilteredCafes([]);
-            return;
-        }
-        
-        const filtered = dumagueteCafes.filter(cafe => 
-            cafe.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setFilteredCafes(filtered);
-        setShowResults(true);
-    }, [searchQuery]);
-    
-    // Handle click outside search results to close them
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-                setShowResults(false);
+        loadTopCafes();
+    }, []);
+
+    // Load top cafes
+    const loadTopCafes = () => {
+        fetchTopCafesOSM(
+            // Success callback
+            (cafes) => {
+                setSliderItems(cafes);
+                
+                // Fetch detailed information for each cafe
+                cafes.forEach((cafe, index) => {
+                    loadCafeDetails(cafe.place_id, index);
+                });
+            },
+            // Error callback
+            (error) => {
+                console.error(error);
+                // If API fails, use placeholder data
+                setSliderItems(getFallbackSliderItems());
             }
-        }
-        
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [searchRef]);
-
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(e.target.value);
-        if (e.target.value.trim() !== '') {
-            setShowResults(true);
-        }
-    };
-  
-    const handleSearchSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log('Searching for:', searchQuery);
-        setShowResults(false);
+        );
     };
     
-    const handleSelectCafe = (cafe: string) => {
-        setSearchQuery(cafe);
-        setShowResults(false);
-        console.log('Selected cafe:', cafe);
+    // Load detailed information for a cafe
+    const loadCafeDetails = (placeId: string, index?: number) => {
+        fetchCafeDetailsOSM(
+            placeId,
+            // Success callback
+            (cafeDetails) => {
+                if (index !== undefined) {
+                    // Update cafe in the slider
+                    setSliderItems(prev => {
+                        const newItems = [...prev];
+                        newItems[index] = cafeDetails;
+                        return newItems;
+                    });
+                } else {
+                    // Set as selected cafe for modal display
+                    setSelectedCafe(cafeDetails);
+                    setShowCafeModal(true);
+                }
+            },
+            // Error callback
+            (error) => {
+                console.error(error);
+            }
+        );
     };
 
-    const handleSlideHover = (index: number) => {
-        setActiveSlide(index);
+    // Handle selecting a cafe for details modal
+    const handleCafeSelect = (cafe: CafeDetails) => {
+        setSelectedCafe(cafe);
+        setShowCafeModal(true);
     };
-
-    // Determine slide class based on its position relative to active slide
-    const getSlideClass = (index: number) => {
-        if (index === activeSlide) return 'slider-item active';
-        if (index === activeSlide - 1) return 'slider-item left';
-        if (index === activeSlide + 1) return 'slider-item right';
-        return 'slider-item';
+    
+    // Close modal
+    const handleCloseModal = () => {
+        setShowCafeModal(false);
     };
     
     return (
@@ -107,37 +100,13 @@ function Body2() {
             {/* Hero Section */}
             <div className="hero">
                 <h1 className="hero-title">Dumaguete Cafe Compass</h1>
-                <p className="hero-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+                <p className="hero-subtitle">Discover the best cafes in Dumaguete City</p>
                 
-                <div className="search-container" ref={searchRef}>
-                <form onSubmit={handleSearchSubmit}>
-                    <input
-                        type="text"
-                        placeholder="Search for coffee shops in Dumaguete"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                        className="search-input"
-                        onFocus={() => setShowResults(searchQuery.trim() !== '')}
-                    />
-                    <button type="submit" className="search-button">
-                        <span className="search-icon">🔍</span>
-                    </button>
-                </form>
-                
-                {showResults && filteredCafes.length > 0 && (
-                    <div className="search-results">
-                        {filteredCafes.map((cafe, index) => (
-                            <div 
-                                key={index} 
-                                className="search-result-item"
-                                onClick={() => handleSelectCafe(cafe)}
-                            >
-                                {cafe}
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
+                {/* Enhanced Autosuggest Search Component */}
+                <AutosuggestSearch 
+                    onCafeSelect={(placeId) => loadCafeDetails(placeId)}
+                    placeholder="Search for coffee shops in Dumaguete"
+                />
                 
                 <div className="tags-container">
                     {tags.map((tag, index) => (
@@ -157,47 +126,122 @@ function Body2() {
                 </div>
             </div>
 
-            {/* Image Slider */}
-            <div className="slider-container">
-                <div className="slider-wrapper">
-                    {sliderItems.map((item, index) => (
-                        <div
-                            key={item.id}
-                            className={getSlideClass(index)}
-                            onMouseEnter={() => handleSlideHover(index)}
-                        >
-                            <div className="slider-caption">{item.title}</div>
-                            <div 
-                                className="slider-image"
-                                style={{ 
-                                    backgroundColor: index === activeSlide ? '#666' : '#aaa',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}
-                            >
-                                {index === activeSlide && (
-                                    <Box sx={{ 
-                                        width: '80%', 
-                                        height: '80%', 
-                                        backgroundColor: '#444',
-                                        borderRadius: '8px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: '#fff',
-                                        padding: '8px',
-                                        textAlign: 'center',
-                                        fontSize: '0.9rem'
-                                    }}>
-                                        {item.description}
-                                    </Box>
+            {/* Enhanced Image Slider */}
+            <EnhancedImageSlider 
+                sliderItems={sliderItems} 
+                onCafeSelect={handleCafeSelect}
+                title="Top Cafes in Dumaguete"
+            />
+            
+            {/* Cafe Details Modal */}
+            <Modal
+                open={showCafeModal}
+                onClose={handleCloseModal}
+                aria-labelledby="cafe-details-modal"
+                className="cafe-modal"
+            >
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: {xs: '90%', sm: '80%', md: '60%'},
+                    maxWidth: '700px',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    borderRadius: 2,
+                    p: 4,
+                    maxHeight: '90vh',
+                    overflow: 'auto'
+                }}>
+                    {selectedCafe && (
+                        <>
+                            <Typography variant="h5" component="h2" gutterBottom>
+                                {selectedCafe.name}
+                            </Typography>
+                            
+                            <Box display="flex" alignItems="center" mb={1}>
+                                <Rating 
+                                    value={selectedCafe.rating} 
+                                    precision={0.5} 
+                                    readOnly 
+                                />
+                                <Typography ml={1} variant="body2">
+                                    {selectedCafe.rating} / 5
+                                </Typography>
+                            </Box>
+                            
+                            <Typography variant="body1" gutterBottom>
+                                {selectedCafe.address}
+                            </Typography>
+                            
+                            {selectedCafe.phoneNumber && (
+                                <Typography variant="body2" gutterBottom>
+                                    {selectedCafe.phoneNumber}
+                                </Typography>
+                            )}
+                            
+                            {selectedCafe.website && (
+                                <Typography variant="body2" gutterBottom>
+                                    <a href={selectedCafe.website} target="_blank" rel="noopener noreferrer">
+                                        Visit Website
+                                    </a>
+                                </Typography>
+                            )}
+                            
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, my: 2 }}>
+                                {selectedCafe.amenities.map((amenity, index) => (
+                                    <Chip 
+                                        key={index} 
+                                        label={amenity} 
+                                        size="small" 
+                                        variant="outlined" 
+                                    />
+                                ))}
+                                
+                                {selectedCafe.openNow !== undefined && (
+                                    <Chip 
+                                        label={selectedCafe.openNow ? "Open Now" : "Closed"} 
+                                        color={selectedCafe.openNow ? "success" : "error"}
+                                        size="small"
+                                    />
                                 )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+                                
+                                {selectedCafe.priceLevel !== undefined && (
+                                    <Chip 
+                                        label={'$'.repeat(selectedCafe.priceLevel || 1)} 
+                                        size="small" 
+                                    />
+                                )}
+                            </Box>
+                            
+                            <Box sx={{ 
+                                display: 'flex', 
+                                gap: 2, 
+                                mt: 3,
+                                flexWrap: 'wrap',
+                                justifyContent: 'center'
+                            }}>
+                                {selectedCafe.photos.map((photo, index) => (
+                                    <Box 
+                                        key={index} 
+                                        component="img" 
+                                        src={photo}
+                                        alt={`${selectedCafe.name} photo ${index + 1}`}
+                                        sx={{ 
+                                            width: '100%', 
+                                            maxWidth: '200px',
+                                            height: '150px',
+                                            objectFit: 'cover',
+                                            borderRadius: 1
+                                        }}
+                                    />
+                                ))}
+                            </Box>
+                        </>
+                    )}
+                </Box>
+            </Modal>
         </>
     );
 }

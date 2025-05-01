@@ -1,8 +1,14 @@
 import SearchIcon from '@mui/icons-material/Search';
 import {InputAdornment, TextField} from "@mui/material";
 
-function SearchBar() {
+type prop = {
+    path:any
+    state:boolean
+}
+function SearchBar(props: prop) {
     return (
+        props.path === "/"
+            ? <></> :
         <>
             <TextField
                 variant="outlined"

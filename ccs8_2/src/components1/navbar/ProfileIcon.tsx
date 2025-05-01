@@ -1,7 +1,14 @@
 import {Avatar} from "@mui/material";
 
-function ProfileIcon() {
-    const img = "https://sm.ign.com/t/ign_pk/cover/a/avatar-gen/avatar-generations_rpge.1200.jpg"
+type prop = {
+    loggedIn:boolean
+}
+
+function ProfileIcon(props: prop) {
+    const img = props.loggedIn
+        ? "https://sm.ign.com/t/ign_pk/cover/a/avatar-gen/avatar-generations_rpge.1200.jpg"
+        : "/broken-image.jpg"
+
     return (
         <>
             <Avatar

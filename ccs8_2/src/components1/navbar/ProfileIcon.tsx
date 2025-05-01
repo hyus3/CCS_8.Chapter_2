@@ -1,25 +1,26 @@
-import {Avatar} from "@mui/material";
+import { Avatar } from "@mui/material";
+import PersonIcon from "@mui/icons-material/Person";
 
-type prop = {
-    loggedIn:boolean
-}
+type ProfileIconProps = {
+    loggedIn: boolean;
+    photoURL?: string | null;
+};
 
-function ProfileIcon(props: prop) {
-    const img = props.loggedIn
-        ? "https://sm.ign.com/t/ign_pk/cover/a/avatar-gen/avatar-generations_rpge.1200.jpg"
-        : "/broken-image.jpg"
+function ProfileIcon({ loggedIn, photoURL }: ProfileIconProps) {
+    const showPhoto = loggedIn && photoURL;
 
     return (
-        <>
-            <Avatar
-                src={img}
-                sx={{
-                    width: "100%",
-                    height: "100%"
-                }}
-            />
-        </>
-    )
+        <Avatar
+            src={showPhoto ? photoURL ?? undefined : undefined}
+            sx={{
+                width: 40,
+                height: 40,
+                bgcolor: !showPhoto ? "grey.400" : "transparent",
+            }}
+        >
+            {!showPhoto && <PersonIcon />}
+        </Avatar>
+    );
 }
 
-export default ProfileIcon
+export default ProfileIcon;

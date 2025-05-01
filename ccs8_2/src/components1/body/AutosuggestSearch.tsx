@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import debounce from 'lodash/debounce';
-import { searchCafesByTextOSM } from './Body2.osm.script';
-import { CafeDetails } from './Body2.script';
+import { searchCafesByText } from './GeopifyService';
 
 interface AutosuggestSearchProps {
   onCafeSelect: (placeId: string) => void;
@@ -16,6 +15,7 @@ export const AutosuggestSearch: React.FC<AutosuggestSearchProps> = ({
   const [searchResults, setSearchResults] = useState<Array<{ name: string, place_id: string }>>([]);
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -24,22 +24,26 @@ export const AutosuggestSearch: React.FC<AutosuggestSearchProps> = ({
     debounce((query: string) => {
       if (query.trim() === '') {
         setSearchResults([]);
+        setIsLoading(false);
         return;
       }
 
-      searchCafesByTextOSM(
+      setIsLoading(true);
+      searchCafesByText(
         query,
         // Success callback
         (results) => {
           setSearchResults(results);
           setShowDropdown(results.length > 0);
           setFocusedIndex(-1);
+          setIsLoading(false);
         },
         // Error callback
         (error) => {
           console.error(error);
           setSearchResults([]);
           setShowDropdown(false);
+          setIsLoading(false);
         }
       );
     }, 300) // 300ms debounce
@@ -116,7 +120,7 @@ export const AutosuggestSearch: React.FC<AutosuggestSearchProps> = ({
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -144,7 +148,11 @@ export const AutosuggestSearch: React.FC<AutosuggestSearchProps> = ({
           onFocus={() => searchResults.length > 0 && setShowDropdown(true)}
         />
         <button type="submit" className="search-button">
-          <span className="search-icon">🔍</span>
+          {isLoading ? (
+            <span className="loading-spinner">⌛</span>
+          ) : (
+            <span className="search-icon">🔍</span>
+          )}
         </button>
       </form>
       

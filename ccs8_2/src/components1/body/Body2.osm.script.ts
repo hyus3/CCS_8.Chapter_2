@@ -1,3 +1,4 @@
+//Body2.osm.script.ts
 import { CafeDetails, DUMAGUETE_COORDINATES } from './Body2.script';
 
 // Nominatim API for OpenStreetMap geocoding

@@ -90,7 +90,7 @@ function Body2() {
         <>
             {/* Hero Section */}
             <div className="hero">
-                <h1 className="hero-title">Dumaguete Cafe Compass</h1>
+                <h1 className="hero-title">Cafe Compass</h1>
                 <p className="hero-subtitle">Discover the best cafes in Dumaguete City</p>
                 
                 {/* Enhanced Autosuggest Search Component */}

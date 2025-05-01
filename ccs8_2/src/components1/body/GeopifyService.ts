@@ -1,3 +1,4 @@
+//GeopifyServices.ts
 import { CafeDetails, DUMAGUETE_COORDINATES } from './Body2.script';
 
 const GEOAPIFY_API_KEY = 'ad9ccb4d38894adc9f2d8e53a218afae';

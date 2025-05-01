@@ -1,11 +1,9 @@
-// src/App.tsx
-import NavBar from "./components1/navbar/NavBar";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { User } from "firebase/auth";
-import 'firebase/firestore';
-import 'firebase/auth';
+import { User, onAuthStateChanged, getAuth, signOut } from "firebase/auth";
+
+import NavBar from "./components1/navbar/NavBar";
 import Body2 from "./components1/body/Body2";
-import React, { useState } from "react";
 import Login from "./components1/login/Login";
 import AboutUs from "./components1/aboutus/AboutUs";
 import FaqPage from "./components1/faqs/FaqPage";
@@ -18,20 +16,42 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
 
+    useEffect(() => {
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setLoggedIn(!!currentUser);
+        });
+
+        return () => unsubscribe();
+    }, []);
+
     const handleLogin = (loggedInUser: User | null) => {
         setUser(loggedInUser);
         setLoggedIn(true);
     };
 
     const logout = () => {
-        setUser(null);
-        setLoggedIn(false);
+        const auth = getAuth();
+        signOut(auth)
+            .then(() => {
+                setUser(null);
+                setLoggedIn(false);
+            })
+            .catch((error) => {
+                console.error("Error during sign out:", error);
+            });
     };
 
     return (
         <Router>
             <header>
-                <NavBar path={path} loggedIn={loggedIn} setLoggedin={logout} userPhoto={user?.photoURL} />
+                <NavBar
+                    path={path}
+                    loggedIn={loggedIn}
+                    setLoggedin={logout}
+                    userPhoto={user?.photoURL}
+                />
             </header>
             <Routes>
                 <Route path={path[0]} element={<Body2 />} />

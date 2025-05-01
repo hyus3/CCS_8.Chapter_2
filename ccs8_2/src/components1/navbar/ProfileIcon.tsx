@@ -1,5 +1,7 @@
 import { Avatar } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 type ProfileIconProps = {
     loggedIn: boolean;
@@ -7,11 +9,24 @@ type ProfileIconProps = {
 };
 
 function ProfileIcon({ loggedIn, photoURL }: ProfileIconProps) {
-    const showPhoto = loggedIn && photoURL;
+    const location = useLocation();
+    const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
+
+    useEffect(() => {
+        if (loggedIn && photoURL) {
+            // Force update the image by appending a unique query parameter to bust cache
+            setAvatarUrl(photoURL + `?t=${new Date().getTime()}`);
+        } else {
+            setAvatarUrl(undefined); // Default if not logged in
+        }
+    }, [location.pathname, loggedIn, photoURL]);
+
+    const showPhoto = loggedIn && avatarUrl;
 
     return (
         <Avatar
-            src={showPhoto ? photoURL ?? undefined : undefined}
+            src={showPhoto ? avatarUrl : undefined}
+            alt={showPhoto ? "User profile photo" : "Default user icon"}
             sx={{
                 width: 40,
                 height: 40,

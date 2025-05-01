@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './Body2.css';
 import './EnhancedComponents.css';
-import { fetchTopCafes } from './GeopifyService';
-import { CafeDetails, getFallbackSliderItems } from './Body2.script';
+import { fetchTopCafes, CafeDetails, getFallbackSliderItems } from '../services/GooglePlacesService';
 import AutosuggestSearch from './AutosuggestSearch';
 import EnhancedImageSlider from './EnhancedImageSlider';
 

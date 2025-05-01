@@ -1,7 +1,7 @@
 // src/components1/body/EnhancedImageSlider.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CafeDetails } from './Body2.script';
+import { CafeDetails } from '../services/GooglePlacesService';
 
 interface EnhancedImageSliderProps {
   sliderItems: CafeDetails[];
@@ -49,7 +49,13 @@ const EnhancedImageSlider: React.FC<EnhancedImageSliderProps> = ({
               alt={item.name} 
               className="slider-image"
             />
-            <div className="slider-caption">{item.name}</div>
+            <div className="slider-caption">
+              <div>{item.name}</div>
+              <div className="text-sm">{item.address}</div>
+              {item.rating && (
+                <div className="text-sm">Rating: {item.rating}/5</div>
+              )}
+            </div>
           </div>
         ))}
       </div>

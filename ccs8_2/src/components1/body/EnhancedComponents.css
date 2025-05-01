@@ -1,4 +1,8 @@
 /* Enhanced autosuggest search styles */
+.slider-caption .text-sm {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+}
 .search-result-item.active {
   background-color: rgba(240, 240, 240, 0.85);
   font-weight: 500;

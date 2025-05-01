@@ -1,8 +1,7 @@
-// src/components1/body/AutosuggestSearch.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import debounce from 'lodash/debounce';
-import { fetchPlaceSuggestions } from './GeopifyService';
+import { fetchPlaceSuggestions } from '../services/GooglePlacesService';
 
 interface AutosuggestSearchProps {
   placeholder?: string;
@@ -36,6 +35,7 @@ export const AutosuggestSearch: React.FC<AutosuggestSearchProps> = ({
           setIsLoading(false);
         },
         () => {
+          console.error('Failed to fetch place suggestions');
           setSearchResults([]);
           setShowDropdown(false);
           setIsLoading(false);

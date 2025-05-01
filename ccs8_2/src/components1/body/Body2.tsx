@@ -14,12 +14,11 @@ import {
 import AutosuggestSearch from './AutosuggestSearch';
 import EnhancedImageSlider from './EnhancedImageSlider';
 
-// You'll need to create these functions based on the OpenStreetMap Nominatim API
+// Import our new Geoapify service
 import { 
-  fetchTopCafesOSM,
-  fetchCafeDetailsOSM,
-  searchCafesByTextOSM
-} from './Body2.osm.script';
+  fetchTopCafes,
+  fetchCafeDetails
+} from './GeopifyService'
 
 function Body2() {
     // Store the map instance
@@ -29,6 +28,7 @@ function Body2() {
     const [selectedCafe, setSelectedCafe] = useState<CafeDetails | null>(null);
     const [showCafeModal, setShowCafeModal] = useState(false);
     const [sliderItems, setSliderItems] = useState<CafeDetails[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     
     const tags = ['Coffee', 'Brunch', 'Pastries', 'Study Spot', 'Date Spot', 'Work-Friendly'];
 
@@ -39,47 +39,38 @@ function Body2() {
 
     // Load top cafes
     const loadTopCafes = () => {
-        fetchTopCafesOSM(
+        setIsLoading(true);
+        fetchTopCafes(
             // Success callback
             (cafes) => {
                 setSliderItems(cafes);
-                
-                // Fetch detailed information for each cafe
-                cafes.forEach((cafe, index) => {
-                    loadCafeDetails(cafe.place_id, index);
-                });
+                setIsLoading(false);
             },
             // Error callback
             (error) => {
                 console.error(error);
                 // If API fails, use placeholder data
                 setSliderItems(getFallbackSliderItems());
+                setIsLoading(false);
             }
         );
     };
     
     // Load detailed information for a cafe
-    const loadCafeDetails = (placeId: string, index?: number) => {
-        fetchCafeDetailsOSM(
+    const loadCafeDetails = (placeId: string) => {
+        setIsLoading(true);
+        fetchCafeDetails(
             placeId,
             // Success callback
             (cafeDetails) => {
-                if (index !== undefined) {
-                    // Update cafe in the slider
-                    setSliderItems(prev => {
-                        const newItems = [...prev];
-                        newItems[index] = cafeDetails;
-                        return newItems;
-                    });
-                } else {
-                    // Set as selected cafe for modal display
-                    setSelectedCafe(cafeDetails);
-                    setShowCafeModal(true);
-                }
+                setSelectedCafe(cafeDetails);
+                setShowCafeModal(true);
+                setIsLoading(false);
             },
             // Error callback
             (error) => {
                 console.error(error);
+                setIsLoading(false);
             }
         );
     };
@@ -125,6 +116,13 @@ function Body2() {
                     </div>
                 </div>
             </div>
+
+            {/* Loading Indicator */}
+            {isLoading && (
+                <div className="loading-container">
+                    <div className="loading-spinner">Loading...</div>
+                </div>
+            )}
 
             {/* Enhanced Image Slider */}
             <EnhancedImageSlider 

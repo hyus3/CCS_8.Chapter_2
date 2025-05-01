@@ -1,4 +1,4 @@
-//Body2.script.ts
+// src/components1/body/Body2.script.ts
 import debounce from 'lodash/debounce';
 
 // Interface for cafe details
@@ -13,6 +13,9 @@ export interface CafeDetails {
   phoneNumber?: string;
   website?: string;
   amenities: string[];
+  lat?: number; // Added for navigation
+  lon?: number; // Added for navigation
+  description?: string; // Added for cafeView.tsx
 }
 
 // Dumaguete City coordinates
@@ -33,14 +36,12 @@ export const DUMAGUETE_BOUNDS = {
 const extractAmenities = (place: google.maps.places.PlaceResult): string[] => {
   const amenities: string[] = [];
   
-  // Extract from place types
   if (place.types) {
     if (place.types.includes('meal_takeaway')) amenities.push('Takeaway');
     if (place.types.includes('restaurant')) amenities.push('Food');
     if (place.types.includes('cafe')) amenities.push('Coffee');
   }
   
-  // Add common amenities if needed
   const commonAmenities = [
     { name: 'Wi-Fi', probability: 0.7 },
     { name: 'Outdoor Seating', probability: 0.5 },
@@ -72,7 +73,9 @@ export const getFallbackSliderItems = (): CafeDetails[] => {
       address: 'Dumaguete City', 
       rating: 4.5, 
       photos: ['/api/placeholder/200/150'], 
-      amenities: ['Wi-Fi', 'Outdoor Seating'] 
+      amenities: ['Wi-Fi', 'Outdoor Seating'],
+      lat: 9.3076,
+      lon: 123.3080
     },
     { 
       place_id: '2', 
@@ -80,7 +83,9 @@ export const getFallbackSliderItems = (): CafeDetails[] => {
       address: 'Dumaguete City', 
       rating: 4.2, 
       photos: ['/api/placeholder/200/150'], 
-      amenities: ['Wi-Fi'] 
+      amenities: ['Wi-Fi'],
+      lat: 9.3076,
+      lon: 123.3080
     },
     { 
       place_id: '3', 
@@ -88,7 +93,9 @@ export const getFallbackSliderItems = (): CafeDetails[] => {
       address: 'Dumaguete City', 
       rating: 4.7, 
       photos: ['/api/placeholder/200/150'], 
-      amenities: ['Outdoor Seating'] 
+      amenities: ['Outdoor Seating'],
+      lat: 9.3076,
+      lon: 123.3080
     },
     { 
       place_id: '4', 
@@ -96,7 +103,9 @@ export const getFallbackSliderItems = (): CafeDetails[] => {
       address: 'Dumaguete City', 
       rating: 4.0, 
       photos: ['/api/placeholder/200/150'], 
-      amenities: ['Wi-Fi', 'Power Outlets'] 
+      amenities: ['Wi-Fi', 'Power Outlets'],
+      lat: 9.3076,
+      lon: 123.3080
     },
     { 
       place_id: '5', 
@@ -104,7 +113,9 @@ export const getFallbackSliderItems = (): CafeDetails[] => {
       address: 'Dumaguete City', 
       rating: 4.3, 
       photos: ['/api/placeholder/200/150'], 
-      amenities: ['Breakfast'] 
+      amenities: ['Breakfast'],
+      lat: 9.3076,
+      lon: 123.3080
     }
   ];
 };

@@ -1,25 +1,24 @@
+// src/components1/body/EnhancedImageSlider.tsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CafeDetails } from './Body2.script';
 
 interface EnhancedImageSliderProps {
   sliderItems: CafeDetails[];
-  onCafeSelect: (cafe: CafeDetails) => void;
   title?: string;
 }
 
 const EnhancedImageSlider: React.FC<EnhancedImageSliderProps> = ({
   sliderItems,
-  onCafeSelect,
   title = "Top Cafes in Dumaguete"
 }) => {
   const [activeSlide, setActiveSlide] = useState(Math.min(2, sliderItems.length - 1));
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Set active slide to middle or beginning
     setActiveSlide(Math.min(2, sliderItems.length - 1));
   }, [sliderItems]);
 
-  // Get slide class based on position relative to active slide
   const getSlideClass = (index: number) => {
     if (index === activeSlide) return 'slider-item center';
     if (index === activeSlide - 1) return 'slider-item left';
@@ -39,7 +38,9 @@ const EnhancedImageSlider: React.FC<EnhancedImageSliderProps> = ({
             onMouseEnter={() => setActiveSlide(index)}
             onClick={() => {
               setActiveSlide(index);
-              setTimeout(() => onCafeSelect(item), 300);
+              navigate('/search', { 
+                state: { lat: item.lat || 9.3076, lon: item.lon || 123.3080 } 
+              });
             }}
             style={{ transitionDuration: '.9s' }}
           >

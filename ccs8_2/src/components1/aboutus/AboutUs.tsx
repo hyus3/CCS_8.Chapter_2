@@ -1,0 +1,68 @@
+import React from 'react';
+import { Box, Typography, Paper, Avatar } from '@mui/material';
+
+function AboutUs() {
+    return (
+        <Box
+            display="flex"
+            flexDirection={{ xs: 'column', sm: 'row' }} // Stack vertically on mobile, horizontally on larger screens
+            justifyContent="space-around"
+            alignItems="center"
+            sx={{
+                padding: '20px',
+                gap: '20px', // Space between the people
+                minHeight: '100vh', // Ensures that content takes full height
+            }}
+        >
+            {/* Person 1 */}
+            <Paper sx={{ padding: '20px', width: { xs: '80%', sm: '30%' }, textAlign: 'center', borderRadius: '20px' }}>
+                {/* Avatar for picture */}
+                <Avatar
+                    alt="Person 1"
+                    src="/broken-image.jpg" // Image source
+                    sx={{
+                        width: 120,
+                        height: 120,
+                        margin: '0 auto 10px', // Centering the Avatar and adding space below
+                    }}
+                />
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Person 1</Typography>
+                <Typography variant="body1">This is Person 1. They are the leader of our project.</Typography>
+            </Paper>
+
+            {/* Person 2 */}
+            <Paper sx={{ padding: '20px', width: { xs: '80%', sm: '30%' }, textAlign: 'center', borderRadius: '20px' }}>
+                {/* Avatar for picture */}
+                <Avatar
+                    alt="Person 2"
+                    src="/broken-image.jpg" // Image source
+                    sx={{
+                        width: 120,
+                        height: 120,
+                        margin: '0 auto 10px',
+                    }}
+                />
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Person 2</Typography>
+                <Typography variant="body1">This is Person 2. They manage operations and coordination.</Typography>
+            </Paper>
+
+            {/* Person 3 */}
+            <Paper sx={{ padding: '20px', width: { xs: '80%', sm: '30%' }, textAlign: 'center', borderRadius: '20px' }}>
+                {/* Avatar for picture */}
+                <Avatar
+                    alt="Person 3"
+                    src="/broken-image.jpg" // Image source
+                    sx={{
+                        width: 120,
+                        height: 120,
+                        margin: '0 auto 10px',
+                    }}
+                />
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Person 3</Typography>
+                <Typography variant="body1">This is Person 3. They are the creative genius behind our project.</Typography>
+            </Paper>
+        </Box>
+    );
+}
+
+export default AboutUs;

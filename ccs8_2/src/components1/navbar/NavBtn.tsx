@@ -3,7 +3,8 @@ import {useNavigate} from "react-router-dom";
 
 type prop = {
     name:string,
-    path:string
+    path:string,
+    onClick?: () => void
 }
 function NavBtn(props: prop) {
     const navigate = useNavigate()

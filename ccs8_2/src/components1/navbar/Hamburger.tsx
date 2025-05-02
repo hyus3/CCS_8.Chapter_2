@@ -1,18 +1,22 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import {Button} from "@mui/material";
-import {useState} from "react";
+import { Button } from '@mui/material';
+import { useState } from 'react';
+import Sidebar from './Sidebar'; // Import Sidebar component
 
-function Hamburger() {
-    const [toggleDrawer, setToggleDrawer] = useState(false)
+type prop = {
+    path:string[]
+}
+function Hamburger(props: prop) {
+    const [toggleDrawer, setToggleDrawer] = useState(false);
 
     return (
         <>
-            <Button onClick={() => setToggleDrawer(toggleDrawer => !toggleDrawer)}>
+            <Button onClick={() => setToggleDrawer(!toggleDrawer)}>
                 <MenuIcon />
             </Button>
-
+            <Sidebar toggleDrawer={toggleDrawer} setToggleDrawer={setToggleDrawer} path={props.path} />
         </>
-    )
+    );
 }
 
-export default Hamburger
+export default Hamburger;

@@ -1,0 +1,136 @@
+/* cafeSearch.css */
+html, body {
+  background: linear-gradient(to right, #f9f9f9, #e9ecef) !important;
+  margin: 0;
+}
+
+.App {
+  background: transparent;
+}
+
+.cafeSearch-container {
+  padding: 20px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #f9f9f9, #e9ecef);
+  min-height: 100vh;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+  justify-items: center;
+}
+
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  max-width: 250px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  background-color: #777;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-footer {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 10px 15px; /* Adjusted padding for aesthetic spacing */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Place text and heart side by side */
+  align-items: center;
+  margin-top: auto;
+  height: 110px; /* Kept at 110px to fit beside text */
+  overflow: hidden;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Tight spacing between text elements */
+  max-width: 85%; /* Increased from 80% to fit with smaller heart */
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0; /* Remove default margin */
+  overflow-wrap: break-word;
+}
+
+.card-location {
+  font-size: 14px;
+  color: #444;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0; /* Remove default margin */
+}
+
+.heart {
+  width: 32px; /* Reduced from 40px to 32px */
+  height: 32px; /* Reduced from 40px to 32px */
+  cursor: pointer;
+  padding: 3px;
+  align-self: flex-start; /* Keep heart aligned at the top of its space */
+}
+
+.heart.favorited path {
+  fill: #FF0000; /* Pure red fill when favorited */
+  stroke: none; /* No stroke when favorited */
+  animation: heartBeat 0.5s ease-in-out;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3); /* Scale up */
+  }
+  100% {
+    transform: scale(1); /* Return to original size */
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #666;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  color: #666;
+  grid-column: 1 / -1;
+}

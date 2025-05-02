@@ -121,7 +121,7 @@ const ContactUs = () => {
         display: "flex", 
         justifyContent: "space-between", 
         marginTop: "3rem", 
-        fontSize: "0.8rem", 
+        fontSize: "0.7rem", 
         color: "#666",
         }}>
 
@@ -129,8 +129,8 @@ const ContactUs = () => {
           <span role="img" aria-label="location">📍</span> Dumaguete 6200, Philippines
         </div>
         <div style={{ textAlign: "right" }}>
-          09XX XXXX XXXX <br />
-          cafecompass@gmail.com
+        0955 591 8483<br />
+        cafecompassdumaguete@gmail.com
         </div>
       </footer>
       </form>

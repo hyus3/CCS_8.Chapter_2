@@ -41,11 +41,6 @@ const faqs = [
     answer:
       "The Map View offers a visual and interactive experience where you can see all listed cafes plotted directly on a map. You can zoom in on your area and explore cafes nearby. This feature is especially useful if you're planning a cafe-hopping day or simply want to find the closest coffee shop quickly while on the go.",
   },
-  {
-    question: "FAQ #9: Why is the map not loading properly?",
-    answer:
-      "If the map doesn't load, try refreshing the page or checking your internet connection. You may also need to allow location access in your browser settings.",
-  },
 ];
 
 const FaqPage = () => {

@@ -138,16 +138,24 @@ const CoffeeProfiles = () => {
   return (
     <div style={{ 
         padding: "2rem",
-        backgroundColor: "#eeeae4",
+        fontFamily: "Helvetica",
      }}>
      
-      <h1 style={{ 
-        fontSize: "3rem", 
-        fontFamily: "Roboto", 
-        marginBottom: "3rem",
-        marginTop: "2rem", }}>
+      <h2 style={{ 
+        fontSize: "1.5rem", 
+        color: "#cd3234",
+        marginBottom: "0",
+        }}>
         Coffee Flavors Profile
-      </h1>
+      </h2>
+
+      <p style = {{
+        marginBottom: "4rem", 
+        marginTop: "0",
+        fontSize: "3rem",
+      }}>
+        Discover your perfect cup.
+      </p>
         
         {coffeeData.map((category) => (
 
@@ -155,7 +163,10 @@ const CoffeeProfiles = () => {
             marginBottom: "4rem", }}>
           
           <h2 style={{ 
-            marginBottom: "1rem" }}>
+            marginBottom: "1rem",
+            fontSize: "1.5rem",
+            fontWeight: "normal",
+            color: "#6e4e33", }}>
             {category.title}
           </h2>
 
@@ -172,8 +183,7 @@ const CoffeeProfiles = () => {
                 style={{
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                   borderRadius: "10px",
-                  borderColor: "#110203",
-                  borderWidth: "0.2rem",
+                  border: "1px solid #110203",
                   overflow: "hidden",
                   cursor: "pointer",
                 }} >
@@ -181,7 +191,7 @@ const CoffeeProfiles = () => {
                 <div
                   style={{ 
                     position: "relative", 
-                    height: 200, 
+                    height: 150, 
                     overflow: "hidden" }}
 
                   onMouseEnter={(e) =>
@@ -223,6 +233,7 @@ const CoffeeProfiles = () => {
                         maxWidth: "90%",
                         backgroundColor: "transparent",
                         wordWrap: "break-word",
+                        fontSize: "0.8rem",
                      }} > 
                      {item.description} 
                      </span>
@@ -233,7 +244,6 @@ const CoffeeProfiles = () => {
                 <div style={{ 
                     padding: "10px", 
                     textAlign: "center", 
-                    fontWeight: "500", 
                     backgroundColor: "#cd3234",
                     color: "#ffffff", }}>
                   {item.name}

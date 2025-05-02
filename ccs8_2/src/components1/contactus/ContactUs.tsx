@@ -1,4 +1,5 @@
 import { FormatPaint } from "@mui/icons-material";
+import emailjs from "emailjs-com";
 import { useState } from "react";
 
 const ContactUs = () => {
@@ -16,44 +17,54 @@ const ContactUs = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder for form submission logic
-    alert("Message sent!");
-    setFormData({ 
-        name: "", 
-        email: "", 
-        subject: "", 
-        message: "" });
+    emailjs
+    .send(
+      "service_mjdlnxm",
+      "template_46npcqu",
+      formData,
+      "8MOmvCOn6pIwGnT3t"
+    )
+    .then(() => {
+      alert("Message sent!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    })
+    .catch((error) => {
+      console.error("Email send error:", error);
+      alert("Failed to send message.");
+    });
   };
 
   return (
     <div style={{ 
         padding: "2rem", 
-        maxWidth: "900px", 
-        margin: "0 auto", 
+        maxWidth: "80%", 
         fontFamily: "Helvetica",}}>
 
       <h2 style={{ 
         fontSize: "1.5rem", 
         color: "#cd3234",
-        marginBottom: "0",
-        marginLeft: "-10rem", }}>
+        marginBottom: "0", }}>
             Contact Us
       </h2>
 
       <p style={{ 
         marginBottom: "4rem", 
         marginTop: "0",
-        fontSize: "3rem",
-        marginLeft: "-10rem", }}>
+        fontSize: "3rem",}}>
         We’d love to hear from you! Get in touch.
       </p>
-
+        
       <form onSubmit={handleSubmit} style={{ 
         display: "flex", 
         flexDirection: "column", 
-        gap: "1.2rem" }}>
+        gap: "1.2rem",
+        maxWidth: "700px",
+        width: "100%",
+        marginLeft: "auto",
+        marginRight: "10%",
+        }}>
 
-        <label>
+        <label style={labelStyle}>
           <strong>Name:</strong>
           <input
             type="text"
@@ -105,18 +116,24 @@ const ContactUs = () => {
         <button type="submit" style={buttonStyle}>
           Send
         </button>
-      </form>
 
-      <footer style={{ display: "flex", justifyContent: "space-between", marginTop: "3rem", fontSize: "0.9rem", color: "#666" }}>
+      <footer style={{ 
+        display: "flex", 
+        justifyContent: "space-between", 
+        marginTop: "3rem", 
+        fontSize: "0.8rem", 
+        color: "#666",
+        }}>
+
         <div>
-          <span role="img" aria-label="location">📍</span> Silliman University, Dumaguete 6200 <br />
-          Negros Oriental, Philippines
+          <span role="img" aria-label="location">📍</span> Dumaguete 6200, Philippines
         </div>
         <div style={{ textAlign: "right" }}>
-          09XX XXXX XXXX<br />
-          emailaddress@gmail.com
+          09XX XXXX XXXX <br />
+          cafecompass@gmail.com
         </div>
       </footer>
+      </form>
     </div>
   );
 };
@@ -140,5 +157,11 @@ const buttonStyle = {
   alignSelf: "flex-end",
   backgroundColor: "#cd3234"
 };
+
+const labelStyle = {
+    width: "100%", 
+    display: "flex", 
+    flexDirection: "column",
+  } as const;
 
 export default ContactUs;

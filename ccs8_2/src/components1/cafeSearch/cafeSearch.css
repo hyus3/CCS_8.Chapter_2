@@ -1,11 +1,11 @@
 /* cafeSearch.css */
 html, body {
-  background: linear-gradient(to right, #f9f9f9, #e9ecef) !important; /* Ensure background applies to entire page */
-  margin: 0; /* Remove default margin to prevent gaps */
+  background: linear-gradient(to right, #f9f9f9, #e9ecef) !important;
+  margin: 0;
 }
 
 .App {
-  background: transparent; /* Ensure parent component doesn’t override with white */
+  background: transparent;
 }
 
 .cafeSearch-container {
@@ -19,7 +19,7 @@ html, body {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Fixed 4-column grid */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   margin-top: 20px;
   justify-items: center;
@@ -58,20 +58,28 @@ html, body {
 .card-footer {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  padding: 15px;
+  padding: 10px 15px; /* Adjusted padding for aesthetic spacing */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Place text and heart side by side */
+  align-items: center;
+  margin-top: auto;
+  height: 110px; /* Kept at 110px to fit beside text */
+  overflow: hidden;
+}
+
+.text-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  margin-top: auto;
-  height: 100px;
-  overflow: hidden;
+  gap: 5px; /* Tight spacing between text elements */
+  max-width: 85%; /* Increased from 80% to fit with smaller heart */
 }
 
 .card-title {
   font-size: 16px;
   font-weight: bold;
   color: #222;
-  margin-bottom: 5px;
+  margin-bottom: 0; /* Remove default margin */
   overflow-wrap: break-word;
 }
 
@@ -83,6 +91,33 @@ html, body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 0; /* Remove default margin */
+}
+
+.heart {
+  width: 32px; /* Reduced from 40px to 32px */
+  height: 32px; /* Reduced from 40px to 32px */
+  cursor: pointer;
+  padding: 3px;
+  align-self: flex-start; /* Keep heart aligned at the top of its space */
+}
+
+.heart.favorited path {
+  fill: #FF0000; /* Pure red fill when favorited */
+  stroke: none; /* No stroke when favorited */
+  animation: heartBeat 0.5s ease-in-out;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3); /* Scale up */
+  }
+  100% {
+    transform: scale(1); /* Return to original size */
+  }
 }
 
 .loading {

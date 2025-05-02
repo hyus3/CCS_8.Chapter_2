@@ -1,5 +1,6 @@
 // src/components1/body/Body2.tsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Body2.css';
 import './EnhancedComponents.css';
 import { fetchTopCafes, CafeDetails, getFallbackSliderItems } from '../services/GooglePlacesService';
@@ -9,7 +10,7 @@ import EnhancedImageSlider from './EnhancedImageSlider';
 function Body2() {
   const [sliderItems, setSliderItems] = useState<CafeDetails[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  
+  const navigate = useNavigate();
   const tags = ['Coffee', 'Brunch', 'Pastries', 'Study Spot', 'Date Spot', 'Work-Friendly'];
 
   useEffect(() => {
@@ -28,6 +29,30 @@ function Body2() {
         setIsLoading(false);
       }
     );
+  };
+
+  const handleImageClick = (placeId: string, lat: number, lon: number, cafe: CafeDetails) => {
+    if (!placeId || typeof placeId !== 'string' || placeId.trim() === '') {
+      console.warn('Cannot navigate: Invalid placeId', {
+        placeId,
+        reason: !placeId ? 'Missing placeId' : 'Non-string or empty placeId',
+      });
+      return;
+    }
+    navigate(`/cafe/${placeId}`, {
+      state: {
+        lat: lat || 9.3076,
+        lon: lon || 123.3080,
+        source: 'slider',
+        cafeDetails: {
+          name: cafe.name,
+          address: cafe.address,
+          rating: cafe.rating,
+          photos: cafe.photos,
+          amenities: cafe.amenities,
+        },
+      },
+    });
   };
 
   return (
@@ -55,9 +80,13 @@ function Body2() {
         </div>
       )}
 
-      <EnhancedImageSlider 
-        sliderItems={sliderItems} 
+      <EnhancedImageSlider
+        sliderItems={sliderItems}
         title="Top Cafes in Dumaguete"
+        onImageClick={(placeId, lat, lon) => {
+          const cafe = sliderItems.find((item) => item.place_id === placeId);
+          if (cafe) handleImageClick(placeId, lat, lon, cafe);
+        }}
       />
     </>
   );

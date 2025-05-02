@@ -1,6 +1,17 @@
 /* cafeSearch.css */
+html, body {
+  background: linear-gradient(to right, #f9f9f9, #e9ecef) !important; /* Ensure background applies to entire page */
+  margin: 0; /* Remove default margin to prevent gaps */
+}
+
+.App {
+  background: transparent; /* Ensure parent component doesn’t override with white */
+}
+
 .cafeSearch-container {
-  padding: 20px;
+  padding: 20px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #f9f9f9, #e9ecef);
   min-height: 100vh;
@@ -8,22 +19,10 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* Fixed 4-column grid */
   gap: 20px;
   margin-top: 20px;
   justify-items: center;
-}
-
-@media (min-width: 768px) {
-  .card-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .card-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
 }
 
 .card {
@@ -31,13 +30,13 @@
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   cursor: pointer;
   width: 100%;
-  max-width: 180px;
-  height: 220px;
+  max-width: 250px;
+  height: 300px;
   display: flex;
   flex-direction: column;
 }
@@ -50,9 +49,8 @@
 
 .card-image {
   width: 100%;
-  height: 120px;
+  height: 200px;
   background-color: #777;
-  background-image: url('https://source.unsplash.com/featured/?cafe');
   background-size: cover;
   background-position: center;
 }
@@ -60,7 +58,7 @@
 .card-footer {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  padding: 10px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -70,17 +68,15 @@
 }
 
 .card-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   color: #222;
   margin-bottom: 5px;
+  overflow-wrap: break-word;
 }
 
 .card-location {
-  font-size: 12px;
+  font-size: 14px;
   color: #444;
   display: -webkit-box;
   -webkit-line-clamp: 3;

@@ -10,9 +10,11 @@ import FaqPage from "./components1/faqs/FaqPage";
 import Profile from "./components1/profile/Profile";
 import CafeSearch from "./components1/cafeSearch/cafeSearch";
 import CafeView from "./components1/cafeView/cafeView";
+import ContactUs from "./components1/contactus/ContactUs";
+import CoffeeProfiles from "./components1/coffeeprofiles/CoffeeProfiles";
 
 function App() {
-    const path = ["", "aboutus", "faq", "login", "profile"];
+    const path = ["", "aboutus", "faq", "login", "profile", "contactus", "coffeeprofiles"];
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
 
@@ -57,6 +59,8 @@ function App() {
                 <Route path={path[0]} element={<Body2 />} />
                 <Route path={path[1]} element={<AboutUs />} />
                 <Route path={path[2]} element={<FaqPage />} />
+                <Route path={path[5]} element={<ContactUs />} />
+                <Route path={path[6]} element={<CoffeeProfiles />} />
                 <Route path={path[3]} element={<Login onLogin={handleLogin} />} />
                 <Route path={path[4]} element={<Profile user={user} />} />
                 <Route path="/search" element={<CafeSearch />} />

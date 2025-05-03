@@ -12,7 +12,7 @@ const faqs = [
       "Searching for cafes near you is quick and simple. Just use the search bar located at the top of the Home page. Enter keywords like the type of cafe you're looking for, or even pick from the available tags. Our search will instantly suggest cafes that best fit your criteria, helping you find the perfect spot in seconds.",
   },
   {
-    question: "FAQ #3: Can I filter cafes by type (e.g. study-friendly, pet-friendly)?",
+    question: "FAQ #3: Can I filter cafes by type?",
     answer:
       "Yes! After searching, you can apply filters like ambiance, Wi-Fi availability, pet-friendliness, and more. Our filters make it easy to find exactly the type of cafe experience you're looking for without having to scroll endlessly.",
   },
@@ -45,10 +45,25 @@ const faqs = [
 
 const FaqPage = () => {
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1 style={{ fontSize: "3rem", fontFamily: "cursive", marginBottom: "1rem" }}>
+    <div style={{ 
+      padding: "2rem",
+      fontFamily: "Helvetica",
+     }}>
+      <h1 style={{ 
+        fontSize: "1.5rem", 
+        color: "#cd3234", 
+        marginBottom: "0", }}>
         Frequently Asked Questions
       </h1>
+
+      <p style={{
+        marginBottom: "4rem", 
+        marginTop: "0",
+        fontSize: "3rem",
+      }}>
+        Quick answers to common questions.
+      </p>
+
       <div
         style={{
           display: "grid",
@@ -64,15 +79,16 @@ const FaqPage = () => {
               borderRadius: "10px",
               overflow: "hidden",
               padding: "1.5rem",
-              backgroundColor: "#d9bfa6",
               paddingTop: "1rem",
+              border: "1px solid #110203",
             }}
           >
             <h3
               style={{
-                fontSize: "18px",
+                fontSize: "17px",
                 fontWeight: "bold",
                 backgroundColor: "transparent",
+                color: "#cd3234",
               }}
             >
               {faq.question}

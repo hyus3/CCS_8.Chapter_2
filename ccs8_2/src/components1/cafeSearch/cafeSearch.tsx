@@ -118,8 +118,8 @@ const CafeSearch: React.FC = () => {
                   <div className="card-title">{cafe.name}</div>
                   <div className="card-location">{cafe.address}</div>
                   {cafe.rating && (
-                    <div className="card-location">
-                      Rating: {'★'.repeat(Math.floor(cafe.rating))}{'☆'.repeat(5 - Math.floor(cafe.rating))}
+                    <div className="rating">
+                     {'★'.repeat(Math.floor(cafe.rating))}{'☆'.repeat(5 - Math.floor(cafe.rating))}
                     </div>
                   )}
                 </div>

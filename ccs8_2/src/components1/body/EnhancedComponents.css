@@ -1,7 +1,7 @@
 /* Enhanced autosuggest search styles */
 .slider-caption .text-sm {
-  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.9);
+  background-color: transparent;
 }
 .search-result-item.active {
   background-color: rgba(240, 240, 240, 0.85);
@@ -10,13 +10,15 @@
 
 .search-input:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px #6e4e33;
 }
 
 .search-results {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: #6e4e33;
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: 3px;
+  border-radius: 10px;
+  margin-left: 2px;
 }
 
 .search-result-item {
@@ -32,7 +34,7 @@
 .slider-wrapper {
   overflow: visible;
   position: relative;
-  height: 180px;
+  height: 200px;
   margin: 2rem 0;
 }
 
@@ -83,17 +85,18 @@
   left: 0;
   width: 100%;
   padding: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #CD3234;
   color: white;
   text-align: center;
   border-radius: 0 0 10px 10px;
   backdrop-filter: blur(3px);
   transition: all 0.3s ease;
+  font-size: 0.6rem;
 }
 
 .slider-item:hover .slider-caption,
 .slider-item.center .slider-caption {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #CD3234;
 }
 
 /* Responsive adjustments */

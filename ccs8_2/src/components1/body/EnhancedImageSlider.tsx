@@ -66,7 +66,7 @@ const EnhancedImageSlider: React.FC<EnhancedImageSliderProps> = ({
               className="slider-image"
             />
             <div className="slider-caption">
-              <div>{item.name}</div>
+              <div style={{background: "transparent", fontSize: "0.8rem",}}>{item.name}</div>
               <div className="text-sm">{item.address}</div>
               {item.rating && (
                 <div className="text-sm">Rating: {item.rating}/5</div>

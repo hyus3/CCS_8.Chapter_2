@@ -1,4 +1,3 @@
-// src/components1/cafeView/cafeView.tsx
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import L from 'leaflet';
@@ -99,7 +98,6 @@ const CafeView: React.FC = () => {
         fetchGooglePlaceDetails(
           placeId,
           (details: GooglePlaceDetails) => {
-            // Handle API errors
             if (details.status && details.status !== 'OK') {
               console.error('Google Places API error:', {
                 placeId,
@@ -136,7 +134,6 @@ const CafeView: React.FC = () => {
         fetchCafeDetails(
           placeId,
           (cafeDetails) => {
-            // Try to get Google Place ID for reviews/photos
             findGooglePlaceId(
               cafeDetails.name,
               cafeDetails.address,
@@ -228,7 +225,6 @@ const CafeView: React.FC = () => {
         }
         setError(userError);
         console.error('Error loading cafe:', { placeId, source: state?.source, error: err, status });
-        // Fallback to state.cafeDetails if available
         if (state?.cafeDetails) {
           const fallbackCafe: CafeDetails = {
             place_id: placeId,
@@ -279,11 +275,6 @@ const CafeView: React.FC = () => {
     });
   };
 
-  const getCafeDescription = () => {
-    if (cafe?.description) return cafe.description;
-    return RANDOM_DESCRIPTIONS[Math.floor(Math.random() * RANDOM_DESCRIPTIONS.length)];
-  };
-
   if (loading) {
     return (
       <div className="loading-container">
@@ -296,7 +287,7 @@ const CafeView: React.FC = () => {
     return (
       <div className="cafe-view-error">
         {error}
-        <button onClick={handleBack} style={{ marginTop: '1rem' }}>Back to Search</button>
+        <button className="back-button" onClick={handleBack}>Back to Search</button>
       </div>
     );
   }
@@ -305,45 +296,36 @@ const CafeView: React.FC = () => {
     return (
       <div className="cafe-view-error">
         Cafe not found
-        <button onClick={handleBack} style={{ marginTop: '1rem' }}>Back to Search</button>
+        <button className="back-button" onClick={handleBack}>Back to Search</button>
       </div>
     );
   }
 
   return (
     <div className="cafe-view-container">
-      <button onClick={handleBack} style={{ marginBottom: '1rem' }}>Back to Search</button>
       <div className="cafe-view-content">
-        <div className="cafe-image-container">
-          {photoLoading ? (
-            <div className="loading-container">
-              <div className="loading-spinner"></div>
-            </div>
-          ) : googlePhotos.length > 0 ? (
-            googlePhotos.slice(0, 2).map((photo, index) => (
+        <div className="left-section">
+          <div className="cafe-image-container">
+            {photoLoading ? (
+              <div className="loading-container">
+                <div className="loading-spinner"></div>
+              </div>
+            ) : googlePhotos.length > 0 ? (
               <img
-                key={index}
-                src={photo}
-                alt={`${cafe.name} view ${index + 1}`}
+                src={googlePhotos[0]}
+                alt={`${cafe.name} main view`}
                 className="cafe-image"
               />
-            ))
-          ) : (
-            <div className="placeholder-image">No Image Available</div>
-          )}
+            ) : (
+              <div className="placeholder-image">No Image Available</div>
+            )}
+          </div>
+          <div className="cafe-map-container">
+            <div ref={mapRef} className="cafe-map"></div>
+          </div>
         </div>
-        <div className="cafe-details">
+        <div className="right-section">
           <h1 className="cafe-name">{cafe.name}</h1>
-          <p className="cafe-description">{getCafeDescription()}</p>
-          <div className="cafe-tags">
-            {cafe.amenities.map((amenity, index) => (
-              <span key={index} className="cafe-tag">{amenity}</span>
-            ))}
-          </div>
-          <div className="cafe-rating">
-            {'★'.repeat(Math.floor(cafe.rating || 0))}
-            {'☆'.repeat(5 - Math.floor(cafe.rating || 0))}
-          </div>
           <div className="cafe-reviews">
             <h2>Reviews</h2>
             {photoLoading ? (
@@ -369,14 +351,8 @@ const CafeView: React.FC = () => {
               <p className="no-reviews">No reviews available</p>
             )}
           </div>
+          <button className="back-button" onClick={handleBack}>Back to Search</button>
         </div>
-      </div>
-      <div className="cafe-map-container">
-        <div ref={mapRef} className="cafe-map"></div>
-      </div>
-      <div className="cafe-address">
-        <div className="address-icon">📍</div>
-        <div className="address-text">{cafe.address}</div>
       </div>
     </div>
   );

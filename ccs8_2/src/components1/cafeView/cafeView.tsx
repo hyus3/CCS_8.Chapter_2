@@ -379,7 +379,7 @@ const CafeView: React.FC = () => {
           <h1 className="cafe-name">{cafe.name}</h1>
           <p className="cafe-description">{description}</p>
           <div className="cafe-reviews">
-            <h2>Reviews</h2>
+            <h2 style={{ color: "#6e4e33,"}}>Reviews</h2>
             {photoLoading ? (
               <div className="loading-container">
                 <div className="loading-spinner"></div>

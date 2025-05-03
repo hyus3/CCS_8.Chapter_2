@@ -17,6 +17,13 @@ html, body {
   min-height: 100vh;
 }
 
+.search-results-label {
+  font-size: 16px;
+  color: #666;
+  margin: 10px 0;
+  text-align: left;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -28,7 +35,6 @@ html, body {
 .card {
   position: relative;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   overflow: hidden;
@@ -50,36 +56,59 @@ html, body {
 .card-image {
   width: 100%;
   height: 200px;
-  background-color: #777;
-  background-size: cover;
-  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.card-image-content:hover {
+  opacity: 0.9;
+}
+
+.card-image .loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 .card-footer {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
-  padding: 10px 15px; /* Adjusted padding for aesthetic spacing */
+  padding: 10px 15px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between; /* Place text and heart side by side */
+  justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  height: 110px; /* Kept at 110px to fit beside text */
+  min-height: 80px;
   overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .text-content {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Tight spacing between text elements */
-  max-width: 85%; /* Increased from 80% to fit with smaller heart */
+  gap: 5px;
+  max-width: 85%;
 }
 
 .card-title {
   font-size: 16px;
   font-weight: bold;
   color: #222;
-  margin-bottom: 0; /* Remove default margin */
+  margin-bottom: 0;
   overflow-wrap: break-word;
 }
 
@@ -91,20 +120,20 @@ html, body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 0; /* Remove default margin */
+  margin-bottom: 0;
 }
 
 .heart {
-  width: 32px; /* Reduced from 40px to 32px */
-  height: 32px; /* Reduced from 40px to 32px */
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   padding: 3px;
-  align-self: flex-start; /* Keep heart aligned at the top of its space */
+  align-self: flex-start;
 }
 
 .heart.favorited path {
-  fill: #FF0000; /* Pure red fill when favorited */
-  stroke: none; /* No stroke when favorited */
+  fill: #FF0000;
+  stroke: none;
   animation: heartBeat 0.5s ease-in-out;
 }
 
@@ -113,10 +142,10 @@ html, body {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.3); /* Scale up */
+    transform: scale(1.3);
   }
   100% {
-    transform: scale(1); /* Return to original size */
+    transform: scale(1);
   }
 }
 
@@ -133,4 +162,13 @@ html, body {
   font-size: 16px;
   color: #666;
   grid-column: 1 / -1;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

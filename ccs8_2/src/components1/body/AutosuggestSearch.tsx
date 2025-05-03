@@ -56,7 +56,10 @@ export const AutosuggestSearch: React.FC<AutosuggestSearchProps> = ({
     if (searchQuery.trim() === '' || searchResults.length === 0) return;
     
     const result = searchResults[0];
-    navigate('/search', { state: { lat: result.lat, lon: result.lon } });
+    const queryString = `?query=${encodeURIComponent(searchQuery)}`;
+    navigate(`/search${queryString}`, {
+      state: { lat: result.lat, lon: result.lon, query: searchQuery },
+    });
     setShowDropdown(false);
     setSearchResults([]);
     setSearchQuery('');
@@ -65,7 +68,10 @@ export const AutosuggestSearch: React.FC<AutosuggestSearchProps> = ({
   const handleSelectResult = (placeId: string) => {
     const selectedResult = searchResults.find(result => result.place_id === placeId);
     if (selectedResult) {
-      navigate('/search', { state: { lat: selectedResult.lat, lon: selectedResult.lon } });
+      const queryString = `?query=${encodeURIComponent(selectedResult.name)}`;
+      navigate(`/search${queryString}`, {
+        state: { lat: selectedResult.lat, lon: selectedResult.lon, query: selectedResult.name },
+      });
       setSearchQuery(selectedResult.name);
       setShowDropdown(false);
       setSearchResults([]);

@@ -1,4 +1,3 @@
-// src/components1/body/GeopifyService.ts
 import { CafeDetails, DUMAGUETE_COORDINATES } from './Body2.script';
 
 const GEOAPIFY_API_KEY = process.env.REACT_APP_GEOAPIFY_API_KEY || 'ad9ccb4d38894adc9f2d8e53a218afae';
@@ -16,9 +15,11 @@ const apiCache = new Map<string, any>();
  */
 const cachedFetch = async (url: string): Promise<any> => {
   if (apiCache.has(url)) {
+    console.log(`Cache hit for URL: ${url}`); // Debug cache usage
     return apiCache.get(url);
   }
   
+  console.log(`Fetching from API: ${url}`); // Debug new fetch
   const response = await fetch(url);
   
   if (!response.ok) {
@@ -150,49 +151,81 @@ export const findGooglePlaceId = async (
 ) => {
   try {
     const query = `${name}, ${address}`;
-    const url = `${GOOGLE_PLACES_API}/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=place_id&key=${GOOGLE_API_KEY}`;
+    const url: string = `${GOOGLE_PLACES_API}/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=place_id&key=${GOOGLE_API_KEY}`;
     
     const data = await cachedFetch(url);
     
     if (data?.candidates?.length > 0) {
+      console.log(`Found Google Place ID for ${name} at ${address}: ${data.candidates[0].place_id}`); // Detailed log
       callback(data.candidates[0].place_id);
     } else {
+      console.warn(`No Google Place ID found for ${name} at ${address}, response:`, data); // Detailed log
       callback(null);
     }
   } catch (error) {
+    console.error(`Error in findGooglePlaceId for ${name} at ${address}:`, error); // Detailed log
     errorCallback(`Error finding Google Place ID: ${error}`);
   }
 };
 
 /**
- * Fetch Google Place Details (reviews and photos)
+ * Fetch Google Place Details (photos, reviews, and editorial summary)
  */
 export const fetchGooglePlaceDetails = async (
   googlePlaceId: string,
-  callback: (details: { photos?: string[], reviews?: Array<{ author_name: string, rating: number, text: string }> }) => void,
+  callback: (details: { photos?: string[], reviews?: Array<{ author_name: string, rating: number, text: string }>, editorial_summary?: { overview: string } }) => void,
   errorCallback: (error: string) => void
 ) => {
+  const url: string = `${GOOGLE_PLACES_API}/details/json?place_id=${encodeURIComponent(googlePlaceId)}&fields=photos,reviews,editorial_summary&max_review_count=5&key=${GOOGLE_API_KEY}`;
+  
+  console.log(`Fetching Google Place Details for placeId: ${googlePlaceId}`); // Debug log
+  
   try {
-    const url = `${GOOGLE_PLACES_API}/details/json?place_id=${googlePlaceId}&fields=photos,reviews&key=${GOOGLE_API_KEY}`;
+    if (!googlePlaceId || !googlePlaceId.startsWith('ChIJ')) {
+      throw new Error('Invalid Google Place ID');
+    }
     
     const data = await cachedFetch(url);
+    
+    console.log(`Google Place Details Raw Response for ${googlePlaceId}:`, data); // Log raw response
+    
+    if (data?.status !== 'OK') {
+      console.error('Google Places API error:', {
+        placeId: googlePlaceId,
+        status: data.status,
+        error_message: data.error_message || 'Unknown API error',
+        response: data,
+      });
+      apiCache.delete(url); // Invalidate cache on error
+      errorCallback(`Google Places API error: ${data.error_message || 'Unknown error'}`);
+      return;
+    }
     
     if (data?.result) {
       const photos = data.result.photos?.slice(0, 2).map((photo: any) => 
         `${GOOGLE_PHOTO_API}?maxwidth=400&photoreference=${photo.photo_reference}&key=${GOOGLE_API_KEY}`
       ) || [];
       
-      const reviews = data.result.reviews?.slice(0, 3).map((review: any) => ({
-        author_name: review.author_name,
-        rating: review.rating,
-        text: review.text
+      const reviews = data.result.reviews?.slice(0, 5).map((review: any) => ({
+        author_name: review.author_name || 'Anonymous',
+        rating: review.rating || 0,
+        text: review.text || ''
       })) || [];
       
-      callback({ photos, reviews });
+      const editorial_summary = data.result.editorial_summary
+        ? { overview: data.result.editorial_summary.overview }
+        : undefined;
+      
+      console.log('Google Place Details Processed:', { placeId: googlePlaceId, photos, reviews, editorial_summary }); // Log processed data
+      callback({ photos, reviews, editorial_summary });
     } else {
+      console.warn('No result in Google Places API response:', { placeId: googlePlaceId, response: data });
+      apiCache.delete(url); // Invalidate cache on empty result
       callback({});
     }
   } catch (error) {
+    console.error('Error fetching Google Place details:', { placeId: googlePlaceId, error });
+    apiCache.delete(url); // Invalidate cache on error
     errorCallback(`Error fetching Google Place details: ${error}`);
   }
 };

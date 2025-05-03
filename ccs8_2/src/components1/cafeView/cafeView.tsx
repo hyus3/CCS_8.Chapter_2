@@ -23,6 +23,7 @@ const RANDOM_DESCRIPTIONS: Array<string> = [
 interface GooglePlaceDetails {
   photos?: string[];
   reviews?: Array<{ author_name: string; rating: number; text: string }>;
+  editorial_summary?: { overview: string };
   status?: string;
   error_message?: string;
 }
@@ -36,6 +37,7 @@ interface GoogleApiResponse {
     rating?: number;
     photos?: Array<{ photo_reference: string }>;
     reviews?: Array<{ author_name: string; rating: number; text: string }>;
+    editorial_summary?: { overview: string };
     types?: string[];
     geometry?: {
       location?: {
@@ -59,6 +61,7 @@ const CafeView: React.FC = () => {
   const [reviews, setReviews] = useState<
     Array<{ author_name: string; rating: number; text: string }>
   >([]);
+  const [description, setDescription] = useState<string>('');
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMap = useRef<L.Map | null>(null);
   const navigate = useNavigate();
@@ -71,6 +74,7 @@ const CafeView: React.FC = () => {
         error_message: response.error_message,
         photos: [],
         reviews: [],
+        editorial_summary: undefined,
       };
     }
     return {
@@ -81,7 +85,10 @@ const CafeView: React.FC = () => {
               `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo.photo_reference}&key=${process.env.REACT_APP_GOOGLE_API_KEY || 'AIzaSyBOQbqvtffeuLeuo4DpS_zBF71ic-R0ocU'}`
           )
         : [],
-      reviews: response.result.reviews?.slice(0, 3) || [],
+      reviews: response.result.reviews?.slice(0, 5) || [],
+      editorial_summary: response.result.editorial_summary
+        ? { overview: response.result.editorial_summary.overview }
+        : undefined,
     };
   };
 
@@ -94,10 +101,12 @@ const CafeView: React.FC = () => {
     retries: number = 2
   ) => {
     const attemptFetch = (attempt: number) => {
+      console.log(`Attempt ${attempt + 1} to fetch details for placeId: ${placeId}, isGoogleId: ${isGoogleId}`); // Debug log
       if (isGoogleId) {
         fetchGooglePlaceDetails(
           placeId,
           (details: GooglePlaceDetails) => {
+            console.log(`Google Place Details received for direct fetch:`, details); // Debug log
             if (details.status && details.status !== 'OK') {
               console.error('Google Places API error:', {
                 placeId,
@@ -121,7 +130,7 @@ const CafeView: React.FC = () => {
             callback(cafeDetails, details);
           },
           (err) => {
-            console.warn(`Google fetch attempt ${attempt + 1} failed for placeId ${placeId}: ${err}`);
+            console.warn(`Google fetch attempt ${attempt + 1} failed for placeId ${placeId}: ${err}`); // Debug log
             if (attempt < retries) {
               setTimeout(() => attemptFetch(attempt + 1), 1000);
             } else {
@@ -134,42 +143,72 @@ const CafeView: React.FC = () => {
         fetchCafeDetails(
           placeId,
           (cafeDetails) => {
-            findGooglePlaceId(
-              cafeDetails.name,
-              cafeDetails.address,
-              (googlePlaceId) => {
-                if (googlePlaceId) {
-                  fetchGooglePlaceDetails(
-                    googlePlaceId,
-                    (googleDetails: GooglePlaceDetails) => {
-                      callback(cafeDetails, googleDetails);
-                    },
-                    (err) => {
-                      console.warn('Failed to fetch Google details for Geoapify cafe:', err);
-                      callback(cafeDetails, {
-                        status: 'OK',
-                        photos: cafeDetails.photos || [PLACEHOLDER_PHOTO],
-                        reviews: [],
-                      });
-                    }
-                  );
-                } else {
+            // Hardcode the Google Place ID for Starbucks Lifestyle 8880 Dumaguete Drive-Thru for testing
+            const hardcodedGooglePlaceId = cafeDetails.name === 'Starbucks Lifestyle 8880 Dumaguete Drive-Thru'
+              ? 'ChIJPRXmcgBvqzMRfbt75qCrAbc'
+              : null;
+            
+            if (hardcodedGooglePlaceId) {
+              console.log(`Using hardcoded Google Place ID for ${cafeDetails.name}: ${hardcodedGooglePlaceId}`); // Debug log
+              fetchGooglePlaceDetails(
+                hardcodedGooglePlaceId,
+                (googleDetails: GooglePlaceDetails) => {
+                  console.log(`Google Place Details received for hardcoded ID:`, googleDetails); // Debug log
+                  callback(cafeDetails, googleDetails);
+                },
+                (err) => {
+                  console.warn('Failed to fetch Google details with hardcoded ID:', err); // Debug log
                   callback(cafeDetails, {
                     status: 'OK',
                     photos: cafeDetails.photos || [PLACEHOLDER_PHOTO],
                     reviews: [],
+                    editorial_summary: undefined,
                   });
                 }
-              },
-              (err) => {
-                console.warn('Failed to find Google Place ID:', err);
-                callback(cafeDetails, {
-                  status: 'OK',
-                  photos: cafeDetails.photos || [PLACEHOLDER_PHOTO],
-                  reviews: [],
-                });
-              }
-            );
+              );
+            } else {
+              findGooglePlaceId(
+                cafeDetails.name,
+                cafeDetails.address,
+                (googlePlaceId) => {
+                  if (googlePlaceId) {
+                    fetchGooglePlaceDetails(
+                      googlePlaceId,
+                      (googleDetails: GooglePlaceDetails) => {
+                        console.log(`Google Place Details received for resolved ID:`, googleDetails); // Debug log
+                        callback(cafeDetails, googleDetails);
+                      },
+                      (err) => {
+                        console.warn('Failed to fetch Google details for Geoapify cafe:', err);
+                        callback(cafeDetails, {
+                          status: 'OK',
+                          photos: cafeDetails.photos || [PLACEHOLDER_PHOTO],
+                          reviews: [],
+                          editorial_summary: undefined,
+                        });
+                      }
+                    );
+                  } else {
+                    console.warn('No Google Place ID found for:', { name: cafeDetails.name, address: cafeDetails.address });
+                    callback(cafeDetails, {
+                      status: 'OK',
+                      photos: cafeDetails.photos || [PLACEHOLDER_PHOTO],
+                      reviews: [],
+                      editorial_summary: undefined,
+                    });
+                  }
+                },
+                (err) => {
+                  console.warn('Failed to find Google Place ID:', err);
+                  callback(cafeDetails, {
+                    status: 'OK',
+                    photos: cafeDetails.photos || [PLACEHOLDER_PHOTO],
+                    reviews: [],
+                    editorial_summary: undefined,
+                  });
+                }
+              );
+            }
           },
           (err) => {
             console.warn(`Geoapify fetch attempt ${attempt + 1} failed for placeId ${placeId}: ${err}`);
@@ -197,6 +236,7 @@ const CafeView: React.FC = () => {
       return;
     }
 
+    console.log('CafeView useEffect triggered:', { placeId, state: state?.cafeDetails }); // Debug log
     setLoading(true);
     setPhotoLoading(true);
 
@@ -205,9 +245,19 @@ const CafeView: React.FC = () => {
       placeId,
       isGoogleId,
       (cafeDetails, googleDetails) => {
+        console.log('Callback received:', { cafeDetails, googleDetails }); // Debug log
         setCafe(cafeDetails);
         setGooglePhotos(googleDetails?.photos || cafeDetails.photos || [PLACEHOLDER_PHOTO]);
         setReviews(googleDetails?.reviews || []);
+        setDescription(
+          googleDetails?.editorial_summary?.overview ||
+          RANDOM_DESCRIPTIONS[Math.floor(Math.random() * RANDOM_DESCRIPTIONS.length)]
+        );
+        console.log('State updated:', {
+          googlePhotos: googleDetails?.photos || cafeDetails.photos || [PLACEHOLDER_PHOTO],
+          reviews: googleDetails?.reviews || [],
+          description: googleDetails?.editorial_summary?.overview || RANDOM_DESCRIPTIONS[Math.floor(Math.random() * RANDOM_DESCRIPTIONS.length)],
+        }); // Debug log
         setPhotoLoading(false);
         setLoading(false);
         setTimeout(() => initializeMap(cafeDetails), 100);
@@ -217,7 +267,7 @@ const CafeView: React.FC = () => {
         if (status === 'NOT_FOUND') {
           userError = 'Cafe not found. Please try another cafe.';
         } else if (status === 'INVALID_REQUEST') {
-          userError = 'Invalid cafe ID. Please try another cafe.';
+          userError = 'Invalid cafe ID. Please try another cafe or verify your Place ID.';
         } else if (err.includes('Failed to fetch')) {
           userError = 'Network error. Please check your connection and try again.';
         } else if (err.includes('Geoapify')) {
@@ -239,6 +289,7 @@ const CafeView: React.FC = () => {
           setCafe(fallbackCafe);
           setGooglePhotos(fallbackCafe.photos);
           setReviews([]);
+          setDescription(RANDOM_DESCRIPTIONS[Math.floor(Math.random() * RANDOM_DESCRIPTIONS.length)]);
           setPhotoLoading(false);
           setLoading(false);
           setTimeout(() => initializeMap(fallbackCafe), 100);
@@ -326,6 +377,7 @@ const CafeView: React.FC = () => {
         </div>
         <div className="right-section">
           <h1 className="cafe-name">{cafe.name}</h1>
+          <p className="cafe-description">{description}</p>
           <div className="cafe-reviews">
             <h2>Reviews</h2>
             {photoLoading ? (

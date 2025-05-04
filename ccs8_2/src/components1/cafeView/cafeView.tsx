@@ -451,7 +451,14 @@ const CafeView: React.FC<CafeViewProps> = ({ user }) => {
           </div>
         </div>
         <div className="right-section">
-          <h1 className="cafe-name">{cafe.name}</h1>
+          <div className="cafe-header">
+            <h1 className="cafe-name">{cafe.name}</h1>
+            <Tooltip title="Add to Favorites">
+              <IconButton onClick={handleToggleFavorite} sx={{ padding: "6px", color: isFavorited ? "#cd3234" : "#cd3234", width: 8, height: 8, paddingLeft: "8px"}}>
+                {isFavorited ? ( <Favorite sx={{ color: "#cd3234", fontSize: "30px",  }}/>) : (<FavoriteBorder sx={{ color: "#cd3234", fontSize: "30px",  }}/>)}
+              </IconButton>
+            </Tooltip>
+          </div>
           <p className="cafe-description">{description}</p>
           <Tooltip title="Add to Favorites">
             <IconButton

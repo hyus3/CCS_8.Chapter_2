@@ -99,16 +99,17 @@
 
 .tag {
   display: inline-block;
-  background-color: #cd3234;
+  border: 1.5px solid #6E4E33;
   padding: 0.3rem 1rem;
   border-radius: 15px;
   font-size: 0.9rem;
   cursor: pointer;
-  color: white;
+  color: #110203;
 }
 
 .tag:hover {
   background-color: #6E4E33;
+  color: #ffffff;
 }
 
 /* Video container styling */

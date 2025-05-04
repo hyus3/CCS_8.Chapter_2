@@ -340,3 +340,4 @@ export const getFallbackSliderItems = (): CafeDetails[] => [
     amenities: ['Wi-Fi', 'Vibrant Decor'],
   },
 ];
+

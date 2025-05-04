@@ -8,6 +8,10 @@ import './cafeView.css';
 import '../body/loading.css';
 import {Tooltip, IconButton} from "@mui/material";
 import { FavoriteBorder, Favorite } from '@mui/icons-material';
+import { db } from '../../firebase';
+import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
+import {User} from "firebase/auth";
+
 
 const DUMAGUETE_COORDINATES = { lat: 9.3076, lng: 123.3080 };
 const PLACEHOLDER_PHOTO = 'https://via.placeholder.com/400x300?text=No+Image';
@@ -51,8 +55,13 @@ interface GoogleApiResponse {
   status: string;
   error_message?: string;
 }
+interface CafeViewProps {
+  user: User | null;
+}
 
-const CafeView: React.FC = () => {
+
+
+const CafeView: React.FC<CafeViewProps> = ({ user }) => {
   const { placeId } = useParams<{ placeId: string }>();
   const { state } = useLocation();
   const [cafe, setCafe] = useState<CafeDetails | null>(null);
@@ -67,12 +76,71 @@ const CafeView: React.FC = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMap = useRef<L.Map | null>(null);
   const navigate = useNavigate();
+  const userid = user?.uid;
+
+  // Fetch favorite status from Firebase on component mount
+  useEffect(() => {
+    if (user && cafe && cafe.place_id) {
+      const favoriteRef = doc(db, "users", user.uid, "favorites", cafe.place_id);
+      getDoc(favoriteRef).then((favSnap) => {
+        if (favSnap.exists()) {
+          setIsFavorited(true);
+        } else {
+          setIsFavorited(false);
+        }
+      }).catch((err) => {
+        console.error("Error checking favorite status:", err);
+        setIsFavorited(false); // If error occurs, assume not favorited
+      });
+    }
+  }, [user, cafe]);
 
   const [isFavorited, setIsFavorited] = useState(false);
+  // Helper function for toggling favorite status
+  const handleToggleFavorite = async () => {
+    const newFavoritedState = !isFavorited;
+    setIsFavorited(newFavoritedState);
 
-  const handleToggleFavorite = () => {
-    setIsFavorited(!isFavorited);
+    if (!cafe || !user) return alert('User not logged in.');
+
+    const favoriteRef = doc(db, "users", user.uid, "favorites", cafe.place_id);
+
+    try {
+      if (newFavoritedState) {
+        await setDoc(favoriteRef, {
+          name: cafe.name,
+          address: cafe.address,
+          placeId: cafe.place_id,
+          timestamp: new Date(),
+        });
+        console.log("Cafe added to favorites");
+      } else {
+        await deleteDoc(favoriteRef);
+        console.log("Cafe removed from favorites");
+      }
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+    }
   };
+
+  // Fetch initial favorite state after fetching the cafe details
+  useEffect(() => {
+    if (user && cafe) {
+      const favoriteRef = doc(db, "users", userid!, "favorites", cafe.place_id);
+      getDoc(favoriteRef)
+          .then((docSnapshot) => {
+            if (docSnapshot.exists()) {
+              setIsFavorited(true); // If the doc exists, the cafe is favorited
+            } else {
+              setIsFavorited(false); // Otherwise, it's not
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching favorite status:", error);
+          });
+    }
+  }, [user, cafe]);
+
   // Helper to convert GoogleApiResponse to GooglePlaceDetails
   const mapGoogleApiResponse = (response: GoogleApiResponse): GooglePlaceDetails => {
     if (response.status !== 'OK' || !response.result) {
@@ -154,7 +222,7 @@ const CafeView: React.FC = () => {
             const hardcodedGooglePlaceId = cafeDetails.name === 'Starbucks Lifestyle 8880 Dumaguete Drive-Thru'
               ? 'ChIJPRXmcgBvqzMRfbt75qCrAbc'
               : null;
-            
+
             if (hardcodedGooglePlaceId) {
               console.log(`Using hardcoded Google Place ID for ${cafeDetails.name}: ${hardcodedGooglePlaceId}`); // Debug log
               fetchGooglePlaceDetails(
@@ -385,13 +453,22 @@ const CafeView: React.FC = () => {
         <div className="right-section">
           <h1 className="cafe-name">{cafe.name}</h1>
           <p className="cafe-description">{description}</p>
+          <Tooltip title="Add to Favorites">
+            <IconButton
+                onClick={handleToggleFavorite}
+                sx={{
+                  borderRadius: 0,
+                  width: 10,
+                  height: 10,
+                  color: isFavorited ? "#cd3234" : "#888", // red when favorited
+                }}
+            >
+              {isFavorited ? <Favorite /> : <FavoriteBorder />}
+            </IconButton>
+          </Tooltip>
+
           <div className="cafe-reviews">
             <h2 style={{ color: "#6e4e33,"}}>Reviews</h2>
-            <Tooltip  title="Add to Favorites">
-              <IconButton onClick={handleToggleFavorite} sx={{border: "1px solid black", borderRadius: 0, width: 10, height: 10}}>
-                {isFavorited ? <Favorite /> : <FavoriteBorder />}
-              </IconButton>
-            </Tooltip>
             {photoLoading ? (
               <div className="loading-container">
                 <div className="loading-spinner"></div>

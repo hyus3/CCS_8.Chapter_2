@@ -12,9 +12,9 @@ import CafeSearch from "./components1/cafeSearch/cafeSearch";
 import CafeView from "./components1/cafeView/cafeView";
 import ContactUs from "./components1/contactus/ContactUs";
 import CoffeeProfiles from "./components1/coffeeprofiles/CoffeeProfiles";
+import Footer from "./components1/footer/Footer";
 
 function App() {
-    const path = ["", "aboutus", "faq", "login", "profile", "contactus", "coffeeprofiles"];
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
 
@@ -49,23 +49,25 @@ function App() {
         <Router>
             <header>
                 <NavBar
-                    path={path}
                     loggedIn={loggedIn}
                     setLoggedin={logout}
                     userPhoto={user?.photoURL}
                 />
             </header>
             <Routes>
-                <Route path={path[0]} element={<Body2 />} />
-                <Route path={path[1]} element={<AboutUs />} />
-                <Route path={path[2]} element={<FaqPage />} />
-                <Route path={path[5]} element={<ContactUs />} />
-                <Route path={path[6]} element={<CoffeeProfiles />} />
-                <Route path={path[3]} element={<Login onLogin={handleLogin} />} />
-                <Route path={path[4]} element={<Profile user={user} />} />
+                <Route path="/" element={<Body2 />} />
+                <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/faq" element={<FaqPage />} />
+                <Route path="/contactus" element={<ContactUs />} />
+                <Route path="/types" element={<CoffeeProfiles />} />
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
+                <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/search" element={<CafeSearch />} />
-                <Route path="/cafe/:placeId" element={<CafeView />} />
+                <Route path="/cafe/:placeId" element={<CafeView user={user} />} />
             </Routes>
+            <footer>
+                <Footer></Footer>
+            </footer>
         </Router>
     );
 }

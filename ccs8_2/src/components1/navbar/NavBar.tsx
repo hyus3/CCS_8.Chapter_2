@@ -6,15 +6,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 type props = {
-    path: string[];
     loggedIn: boolean;
     setLoggedin: (value: boolean) => void;
     userPhoto?: string | null;
 };
 
 function NavBar(prop: props) {
-    const btns = ["home", "about us", "faq"];
-    const path = prop.path;
+    const btns = ["home", "about us", "faq", "types"];
+    const path = ["", "aboutus", "faq", "types"];
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -38,7 +37,7 @@ function NavBar(prop: props) {
     };
 
     const handleLogoutClick = () => {
-        navigate(prop.path[0])
+        navigate(path[0])
         handleMenuClose();
         prop.setLoggedin(false);// updates login state
     };
@@ -62,9 +61,9 @@ function NavBar(prop: props) {
                     width: "10vw",
                 }}
             >
-                <Tooltip title="Menu">
-                    <Hamburger path={prop.path}/>
-                </Tooltip>
+            <Tooltip title="Menu">
+                <Hamburger path={path}/>
+            </Tooltip>
             </Box>
 
             <Box

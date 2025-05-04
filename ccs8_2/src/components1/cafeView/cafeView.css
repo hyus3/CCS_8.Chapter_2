@@ -44,6 +44,12 @@
   border-radius: 15px;
 }
 
+.cafe-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 /* Left Section */
 .left-section {
   flex: 1;

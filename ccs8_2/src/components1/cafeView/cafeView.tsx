@@ -383,15 +383,17 @@ const CafeView: React.FC = () => {
           </div>
         </div>
         <div className="right-section">
-          <h1 className="cafe-name">{cafe.name}</h1>
+          <div className="cafe-header">
+            <h1 className="cafe-name">{cafe.name}</h1>
+            <Tooltip title="Add to Favorites">
+              <IconButton onClick={handleToggleFavorite} sx={{ padding: "6px", color: isFavorited ? "#cd3234" : "#cd3234", width: 8, height: 8, paddingLeft: "8px"}}>
+                {isFavorited ? ( <Favorite sx={{ color: "#cd3234", fontSize: "30px",  }}/>) : (<FavoriteBorder sx={{ color: "#cd3234", fontSize: "30px",  }}/>)}
+              </IconButton>
+            </Tooltip>
+          </div>
           <p className="cafe-description">{description}</p>
           <div className="cafe-reviews">
             <h2 style={{ color: "#6e4e33,"}}>Reviews</h2>
-            <Tooltip  title="Add to Favorites">
-              <IconButton onClick={handleToggleFavorite} sx={{border: "1px solid black", borderRadius: 0, width: 10, height: 10}}>
-                {isFavorited ? <Favorite /> : <FavoriteBorder />}
-              </IconButton>
-            </Tooltip>
             {photoLoading ? (
               <div className="loading-container">
                 <div className="loading-spinner"></div>

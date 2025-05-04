@@ -36,6 +36,7 @@
   border: 1px solid #6E4E33;
   border-radius: 20px;
   font-size: 1rem;
+   background-color: #eeeae4;
 }
 
 .search-results {
@@ -44,7 +45,7 @@
   left: 0;
   width: 100%;
   max-height: 200px;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: #eeeae4;
   backdrop-filter: blur(6px);
   border-radius: 0 0 10px 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -57,10 +58,11 @@
   cursor: pointer;
   border-bottom: 1px solid rgba(240, 240, 240, 0.6);
   color: rgba(0, 0, 0, 0.8);
+  background-color: #eeeae4;
 }
 
 .search-result-item:hover {
-  background-color: rgba(245, 245, 245, 0.8);
+  background-color: #6E4E33;
 }
 
 .search-result-item:last-child {
@@ -69,7 +71,7 @@
 
 .search-button {
   position: absolute;
-  right: 15px;
+  right: -20px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -83,7 +85,7 @@
 }
 
 .search-icon {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 /* Tags styling */

@@ -1,5 +1,5 @@
 import NavBtn from "./NavBtn";
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import {Box, Button, Menu, MenuItem, Tooltip} from "@mui/material";
 import ProfileIcon from "./ProfileIcon";
 import Hamburger from "./Hamburger";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -48,9 +48,11 @@ function NavBar(prop: props) {
             sx={{
                 direction: "row",
                 display: "flex",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 alignItems: "center",
                 height: "10vh",
+                mx: 10,
+                my: 5
             }}
         >
             <Box
@@ -60,13 +62,15 @@ function NavBar(prop: props) {
                     width: "10vw",
                 }}
             >
-                <Hamburger path={prop.path}/>
+                <Tooltip title="Menu">
+                    <Hamburger path={prop.path}/>
+                </Tooltip>
             </Box>
 
             <Box
                 sx={{
                     direction: "row",
-                    width: "40%",
+                    width: "50%",
                     display: { xs: "none", sm: "flex" },
                     justifyContent: "space-between",
                 }}
@@ -87,9 +91,11 @@ function NavBar(prop: props) {
                     height: { xs: "10vw", sm: "5vw" },
                 }}
             >
-                <Button onClick={handleMenuOpen}>
-                    <ProfileIcon loggedIn={prop.loggedIn} photoURL={prop.userPhoto} />
-                </Button>
+                <Tooltip title="Profile">
+                    <Button onClick={handleMenuOpen}>
+                        <ProfileIcon/>
+                    </Button>
+                </Tooltip>
                 <Menu
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
@@ -98,12 +104,13 @@ function NavBar(prop: props) {
                     {!prop.loggedIn ? (
                         <MenuItem onClick={handleLoginClick}>Login</MenuItem>
                     ) : (
-                        <>
-                            <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-                            <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
-                        </>
+                        [
+                            <MenuItem key="profile" onClick={handleProfileClick}>Profile</MenuItem>,
+                            <MenuItem key="logout" onClick={handleLogoutClick}>Logout</MenuItem>
+                        ]
                     )}
                 </Menu>
+
             </Box>
         </Box>
     );

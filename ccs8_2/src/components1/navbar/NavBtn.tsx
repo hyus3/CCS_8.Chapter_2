@@ -16,6 +16,8 @@ function NavBtn(props: prop) {
                 boxShadow: "none",
                 height: "75%",
                 alignSelf: "center",
+                backgroundColor: "#cd3234",
+                "&:hover": { backgroundColor: "#6e4e33"}
             }}
             onClick={() => navigate(props.path)}
         >

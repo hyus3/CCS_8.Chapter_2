@@ -6,6 +6,8 @@ import { fetchCafeDetails, fetchGooglePlaceDetails, findGooglePlaceId } from '..
 import { CafeDetails } from '../body/Body2.script';
 import './cafeView.css';
 import '../body/loading.css';
+import {Tooltip, IconButton} from "@mui/material";
+import { FavoriteBorder, Favorite } from '@mui/icons-material';
 
 const DUMAGUETE_COORDINATES = { lat: 9.3076, lng: 123.3080 };
 const PLACEHOLDER_PHOTO = 'https://via.placeholder.com/400x300?text=No+Image';
@@ -66,6 +68,11 @@ const CafeView: React.FC = () => {
   const leafletMap = useRef<L.Map | null>(null);
   const navigate = useNavigate();
 
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  const handleToggleFavorite = () => {
+    setIsFavorited(!isFavorited);
+  };
   // Helper to convert GoogleApiResponse to GooglePlaceDetails
   const mapGoogleApiResponse = (response: GoogleApiResponse): GooglePlaceDetails => {
     if (response.status !== 'OK' || !response.result) {
@@ -380,6 +387,11 @@ const CafeView: React.FC = () => {
           <p className="cafe-description">{description}</p>
           <div className="cafe-reviews">
             <h2 style={{ color: "#6e4e33,"}}>Reviews</h2>
+            <Tooltip  title="Add to Favorites">
+              <IconButton onClick={handleToggleFavorite} sx={{border: "1px solid black", borderRadius: 0, width: 10, height: 10}}>
+                {isFavorited ? <Favorite /> : <FavoriteBorder />}
+              </IconButton>
+            </Tooltip>
             {photoLoading ? (
               <div className="loading-container">
                 <div className="loading-spinner"></div>

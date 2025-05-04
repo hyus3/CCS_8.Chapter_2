@@ -3,38 +3,18 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-type ProfileIconProps = {
-    loggedIn: boolean;
-    photoURL?: string | null;
-};
 
-function ProfileIcon({ loggedIn, photoURL }: ProfileIconProps) {
-    const location = useLocation();
-    const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
-
-    useEffect(() => {
-        if (loggedIn && photoURL) {
-            // Force update the image by appending a unique query parameter to bust cache
-            setAvatarUrl(photoURL + `?t=${new Date().getTime()}`);
-        } else {
-            setAvatarUrl(undefined); // Default if not logged in
-        }
-    }, [location.pathname, loggedIn, photoURL]);
-
-    const showPhoto = loggedIn && avatarUrl;
-
+function ProfileIcon() {
     return (
         <Avatar
-            src={showPhoto ? avatarUrl : undefined}
-            alt={showPhoto ? "User profile photo" : "Default user icon"}
+            src="/broken-image.jpg"
+            alt=""
             sx={{
-                width: 40,
-                height: 40,
-                bgcolor: !showPhoto ? "grey.400" : "transparent",
+                width: 50,
+                height: 50,
+                border: "2px solid #6e4e33",
             }}
-        >
-            {!showPhoto && <PersonIcon />}
-        </Avatar>
+        />
     );
 }
 

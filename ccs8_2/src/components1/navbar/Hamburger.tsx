@@ -12,7 +12,7 @@ function Hamburger(props: prop) {
     return (
         <>
             <Button onClick={() => setToggleDrawer(!toggleDrawer)}>
-                <MenuIcon />
+                <MenuIcon sx={{ color: "#6e4e33" }}/>
             </Button>
             <Sidebar toggleDrawer={toggleDrawer} setToggleDrawer={setToggleDrawer} path={props.path} />
         </>

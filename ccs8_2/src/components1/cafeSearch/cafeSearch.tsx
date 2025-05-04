@@ -5,6 +5,7 @@ import AutosuggestSearch from '../body/AutosuggestSearch';
 import { fetchCafesByQuery } from '../services/GooglePlacesService';
 import { CafeDetails } from '../body/Body2.script';
 import './cafeSearch.css';
+import {Tooltip} from "@mui/material";
 
 const DUMAGUETE_COORDINATES = { lat: 9.3076, lng: 123.3080 };
 
@@ -14,7 +15,6 @@ const CafeSearch: React.FC = () => {
   const [cafes, setCafes] = useState<CafeDetails[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [favorites, setFavorites] = useState<Record<string, boolean>>({});
 
   // Extract query from state or URL as a fallback
   const queryParams = new URLSearchParams(search);
@@ -72,13 +72,6 @@ const CafeSearch: React.FC = () => {
     });
   };
 
-  const toggleFavorite = (placeId: string) => {
-    setFavorites((prevFavorites) => ({
-      ...prevFavorites,
-      [placeId]: !prevFavorites[placeId],
-    }));
-  };
-
   useEffect(() => {
     console.log('[CafeSearch] Component mounted with state:', state);
     console.log('[CafeSearch] state.query:', state?.query);
@@ -89,7 +82,9 @@ const CafeSearch: React.FC = () => {
 
   return (
     <div className="cafeSearch-container">
-      <AutosuggestSearch placeholder="Search for coffee shops in Dumaguete" />
+      <Tooltip title="Searchbar">
+        <AutosuggestSearch placeholder="Search for coffee shops in Dumaguete" />
+      </Tooltip>
       {(finalQuery || true) && (
         <div className="search-results-label">
           {finalQuery ? `Search results for "${finalQuery}"` : 'Coffee shops in Dumaguete'}
@@ -123,25 +118,6 @@ const CafeSearch: React.FC = () => {
                     </div>
                   )}
                 </div>
-                <svg
-                  className={`heart ${favorites[cafe.place_id] ? 'favorited' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFavorite(cafe.place_id);
-                  }}
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                    fill={favorites[cafe.place_id] ? '#FF0000' : 'none'}
-                    stroke={favorites[cafe.place_id] ? 'none' : '#808080'}
-                    strokeWidth="2"
-                  />
-                </svg>
               </div>
             </div>
           ))

@@ -137,8 +137,11 @@ const coffeeData: CoffeeCategory[] = [
 const CoffeeProfiles = () => {
   return (
     <div style={{ 
-        padding: "2rem",
-        fontFamily: "Helvetica",
+      fontFamily: "Helvetica",
+      margin: "0 auto",
+      maxWidth: "1200px",
+      padding: "40px 1rem",
+      width: "100%",
      }}>
      
       <h2 style={{ 
@@ -173,7 +176,7 @@ const CoffeeProfiles = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
               gap: "1rem",
             }} >
 
@@ -193,7 +196,6 @@ const CoffeeProfiles = () => {
                     position: "relative", 
                     height: 150, 
                     overflow: "hidden" }}
-
                   onMouseEnter={(e) =>
                     ((e.currentTarget.querySelector(".hover-overlay") as HTMLElement).style.opacity = "1")
                   }

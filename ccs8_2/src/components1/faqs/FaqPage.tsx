@@ -46,8 +46,11 @@ const faqs = [
 const FaqPage = () => {
   return (
     <div style={{ 
-      padding: "2rem",
-      fontFamily: "Helvetica",
+        padding: "40px 1rem",
+        margin: "0 auto",
+        maxWidth: "1200px",
+        fontFamily: "Helvetica",
+        marginBottom: "4rem",
      }}>
       <h1 style={{ 
         fontSize: "1.5rem", 
@@ -67,8 +70,8 @@ const FaqPage = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "3rem",
+          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+          gap: "2rem",
         }}
       >
         {faqs.map((faq, index) => (

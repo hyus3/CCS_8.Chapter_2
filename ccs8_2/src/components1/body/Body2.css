@@ -140,7 +140,7 @@
 .slider-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1rem 3rem 1rem;
   position: relative;
   font-family: Helvetica;
 }

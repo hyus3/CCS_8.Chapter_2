@@ -12,8 +12,8 @@ type props = {
 };
 
 function NavBar(prop: props) {
-    const btns = ["home", "about us", "faq", "coffee profiles"];
-    const path = ["", "aboutus", "faq", "coffeeprofiles"];
+    const btns = ["Home", "About Us", "Coffee Profiles", "Contact Us", "FAQs" ];
+    const path = ["", "aboutus", "coffeeprofiles", "contactus", "faq"];
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -45,19 +45,20 @@ function NavBar(prop: props) {
     return (
         <Box
             sx={{
+                maxWidth: "1200px",
+                margin: "0 auto",
                 direction: "row",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: "10vh",
-                mx: 10,
-                my: 5
+                my: 5,
             }}
         >
             <Box
                 sx={{
-                    display: { xs: "flex", sm: "none" },
-                    justifyContent: "center",
+                    display: { xs: "flex", md: "flex", lg: "none" },
+                    justifyContent: "left",
                     width: "10vw",
                 }}
             >
@@ -69,9 +70,10 @@ function NavBar(prop: props) {
             <Box
                 sx={{
                     direction: "row",
-                    width: "50%",
-                    display: { xs: "none", sm: "flex" },
+                    width: "75%",
+                    display: { xs: "none", md: "none", lg: "flex" },
                     justifyContent: "space-between",
+                    alignItems: "center",
                 }}
             >
                 {btns.map((btn, index) => (
@@ -86,8 +88,9 @@ function NavBar(prop: props) {
 
             <Box
                 sx={{
-                    width: { xs: "10vw", sm: "5vw" },
+                    width: { xs: "auto", sm: "auto" },
                     height: { xs: "10vw", sm: "5vw" },
+                    display: "flex",
                 }}
             >
                 <Tooltip title="Profile">

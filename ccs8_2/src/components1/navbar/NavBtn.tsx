@@ -12,11 +12,16 @@ function NavBtn(props: prop) {
         <Button
             variant="contained"
             sx={{
+                margin: "0 auto",
+                fontSize: "14px",
                 borderRadius: 7.5,
                 boxShadow: "none",
                 height: "75%",
+                minWidth: "160px",
+                maxWidth: "160px", 
                 alignSelf: "center",
                 backgroundColor: "#cd3234",
+                textTransform: "none",
                 "&:hover": { backgroundColor: "#9E2A26"}
             }}
             onClick={() => navigate(props.path)}

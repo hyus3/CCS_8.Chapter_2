@@ -36,9 +36,11 @@ const ContactUs = () => {
 
   return (
     <div style={{ 
-        padding: "2rem", 
-        maxWidth: "80%", 
-        fontFamily: "Helvetica",}}>
+        paddingTop: "40px",
+        margin: "0 auto",
+        maxWidth: "1200px",
+        fontFamily: "Helvetica",
+        marginBottom: "4rem", }}>
 
       <h2 style={{ 
         fontSize: "1.5rem", 
@@ -58,10 +60,9 @@ const ContactUs = () => {
         display: "flex", 
         flexDirection: "column", 
         gap: "1.2rem",
-        maxWidth: "700px",
+        maxWidth: "750px",
         width: "100%",
-        marginLeft: "auto",
-        marginRight: "10%",
+        margin: "0 auto",
         }}>
 
         <label style={labelStyle}>

@@ -12,7 +12,6 @@ import CafeSearch from "./components1/cafeSearch/cafeSearch";
 import CafeView from "./components1/cafeView/cafeView";
 import ContactUs from "./components1/contactus/ContactUs";
 import CoffeeProfiles from "./components1/coffeeprofiles/CoffeeProfiles";
-import Footer from "./components1/footer/Footer";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -57,17 +56,14 @@ function App() {
             <Routes>
                 <Route path="/" element={<Body2 />} />
                 <Route path="/aboutus" element={<AboutUs />} />
-                <Route path="/faq" element={<FaqPage />} />
-                <Route path="/contactus" element={<ContactUs />} />
                 <Route path="/coffeeprofiles" element={<CoffeeProfiles />} />
+                <Route path="/contactus" element={<ContactUs />} />
+                <Route path="/faq" element={<FaqPage />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/search" element={<CafeSearch />} />
                 <Route path="/cafe/:placeId" element={<CafeView user={user} />} />
             </Routes>
-            <footer>
-                <Footer></Footer>
-            </footer>
         </Router>
     );
 }

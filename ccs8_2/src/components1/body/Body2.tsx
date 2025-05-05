@@ -70,7 +70,7 @@ function Body2() {
 
       <div className="video-container">
         <div className="video-wrapper">
-          <div className="video-placeholder">Video Content Goes Here</div>
+        <iframe className="video" src="https://www.youtube.com/embed/5xAIzOlvfdE?autoplay=1&mute=1&loop=1&playlist=5xAIzOlvfdE" title="Cafe Compass Intro" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen> </iframe>
         </div>
       </div>
 

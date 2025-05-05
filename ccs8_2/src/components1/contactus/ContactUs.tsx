@@ -145,6 +145,7 @@ const inputStyle = {
   borderRadius: "8px",
   border: "1px solid #999",
   marginTop: "0.3rem",
+  backgroundColor: "transparent",
 };
 
 const buttonStyle = {

@@ -13,6 +13,7 @@ import CafeView from "./components1/cafeView/cafeView";
 import ContactUs from "./components1/contactus/ContactUs";
 import CoffeeProfiles from "./components1/coffeeprofiles/CoffeeProfiles";
 import Footer from "./components1/footer/Footer";
+import MapView from "./components1/mapview/mapview";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -64,6 +65,7 @@ function App() {
                 <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/search" element={<CafeSearch />} />
                 <Route path="/cafe/:placeId" element={<CafeView user={user} />} />
+                <Route path="/mapview" element={<MapView />} />
             </Routes>
             <footer>
                 <Footer></Footer>

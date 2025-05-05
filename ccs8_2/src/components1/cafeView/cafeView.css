@@ -2,52 +2,60 @@
 
 /* Main Container */
 .cafe-view-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
-  font-family: Arial, Helvetica, sans-serif;
+  padding: 2.5rem 1.5rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #eeeae4;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* Back Button */
 .back-button {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
   background-color: #cd3234;
-  color: white;
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   align-self: flex-end;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .back-button:hover {
-  background-color: #cd3234;
+  background-color: #b02a2f;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(205, 50, 52, 0.3);
 }
 
 .back-button:active {
   transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(205, 50, 52, 0.2);
 }
 
 /* Cafe content layout */
 .cafe-view-content {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
-  margin: 1rem;
-  padding: 2rem;
-  border-radius: 15px;
+  gap: 2.5rem;
+  margin: 1.5rem 0;
+  padding: 2.5rem;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .cafe-header {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 /* Left Section */
@@ -55,16 +63,22 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-width: 500px;
+  gap: 1.5rem;
+  max-width: 600px;
 }
 
 /* Image section */
 .cafe-image-container {
   width: 100%;
-  height: 300px;
+  height: 350px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.cafe-image-container:hover {
+  transform: scale(1.02);
 }
 
 .cafe-image {
@@ -79,53 +93,54 @@
   align-items: center;
   justify-content: center;
   height: 350px;
-  color: #110203;
-  background-color: #e0e0e0;
+  color: #6e4e33;
+  background-color: #f5f5f5;
   border-radius: 15px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
 /* Map section */
 .cafe-map-container {
   width: 100%;
-  height: 300px;
-  background-color: #ffffff;
-  color: #110203;
+  height: 350px;
   border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .cafe-map {
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
 }
 
 /* Leaflet Popup Styling */
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background-color: #eeeae3;
-  color: #110203;
-  font-weight: 500;
-  border-radius: 6px;
-  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  color: #6e4e33;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Leaflet Zoom Controls Styling */
 .leaflet-control-zoom a {
-  background-color: #eeeae3;
-  color: #110203;
+  background-color: #fff;
+  color: #6e4e33;
   font-weight: bold;
-  border: 0.5px solid #6e4e33;
+  border: 1px solid #cd3234;
+  border-radius: 4px;
 }
 
 .leaflet-control-zoom a:hover {
-  background-color: #eeeae3;
+  background-color: #cd3234;
+  color: #fff;
 }
 
 .leaflet-control-zoom a.leaflet-disabled {
-  background-color: #eeeae3;
+  background-color: #f5f5f5;
+  color: #ccc;
 }
 
 /* Right Section */
@@ -133,23 +148,24 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-width: 500px;
+  gap: 2rem;
+  max-width: 600px;
 }
 
 /* Cafe name */
 .cafe-name {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin: 0;
   color: #6e4e33;
   font-weight: 700;
+  line-height: 1.2;
 }
 
 /* Cafe description */
 .cafe-description {
-  font-size: 1rem;
-  color: #110203;
-  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #4a3b2e;
+  line-height: 1.8;
   margin: 0;
 }
 
@@ -160,101 +176,162 @@
 }
 
 .cafe-reviews h2 {
-  font-size: 1.3rem;
-  margin: 0 0 0.5rem 0;
-  font-weight: 500;
-  color: #110203;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  color: #cd3234;
 }
 
 .reviews-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .review-item {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 0.8rem;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.review-item:hover {
+  transform: translateY(-2px);
 }
 
 .review-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .review-author {
   font-weight: 600;
-  color: #110203;
+  color: #6e4e33;
 }
 
 .review-rating {
   color: #d3af37;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .review-text {
   margin: 0;
-  color: #6e4e33;
-  line-height: 1.5;
+  color: #4a3b2e;
+  line-height: 1.6;
 }
 
 .no-reviews {
   color: #666;
   font-style: italic;
+  font-size: 1rem;
 }
 
 /* Loading and error states */
 .cafe-view-loading,
 .cafe-view-error {
   text-align: center;
-  padding: 2rem;
-  font-size: 1.1rem;
-  color: #666;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: #6e4e33;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .cafe-view-error {
-  color: #666;
+  color: #cd3234;
 }
 
 /* Responsive adjustments */
+@media (max-width: 1024px) {
+  .cafe-view-content {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .left-section,
+  .right-section {
+    max-width: 100%;
+  }
+
+  .cafe-image-container,
+  .cafe-map-container {
+    height: 300px;
+  }
+}
+
 @media (max-width: 768px) {
   .cafe-view-container {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .cafe-view-content {
-    flex-direction: column;
-    gap: 1rem;
-    margin: 0.5rem;
-    padding: 0.5rem;
-  }
-
-  .cafe-image-container {
-    height: 200px;
-  }
-
-  .cafe-map-container {
-    height: 180px;
+    margin: 1rem 0;
+    padding: 1.5rem;
   }
 
   .cafe-name {
-    font-size: 1.7rem;
+    font-size: 2rem;
   }
 
   .cafe-description {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .cafe-reviews h2 {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+  }
+
+  .cafe-image-container,
+  .cafe-map-container {
+    height: 250px;
   }
 
   .back-button {
     align-self: center;
-    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cafe-view-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .cafe-view-content {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .cafe-name {
+    font-size: 1.8rem;
+  }
+
+  .cafe-description {
+    font-size: 0.95rem;
+  }
+
+  .cafe-reviews h2 {
+    font-size: 1.2rem;
+  }
+
+  .cafe-image-container,
+  .cafe-map-container {
+    height: 200px;
+  }
+
+  .review-item {
+    padding: 0.8rem;
+  }
+
+  .back-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
   }
 }

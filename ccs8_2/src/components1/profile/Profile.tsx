@@ -100,76 +100,178 @@ function Profile({ user }: ProfileProps) {
     }, [user?.photoURL]);
 
     if (!freshUser) {
-        return <Typography variant="h6">Please log in to view your profile.</Typography>;
+        return (
+            <Typography
+                variant="h6"
+                sx={{
+                    textAlign: 'center',
+                    p: 3,
+                    bgcolor: '#fff',
+                    borderRadius: 2,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                    color: '#cd3234',
+                    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: 500,
+                    maxWidth: 600,
+                    mx: 'auto',
+                    mt: 4,
+                }}
+            >
+                Please log in to view your profile.
+            </Typography>
+        );
     }
 
     const fullName = freshUser.displayName || "Anonymous User";
 
     return (
-        <Container sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            mt: 4,
-            justifyContent: "center",
-            minHeight: "60vh"
-        }}>
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: { xs: "100%", sm: "20vw" }, mb: 4 }}>
+        <Container
+            sx={{
+                maxWidth: '1400px !important',
+                minHeight: '100vh',
+                bgcolor: '#eeeae4',
+                p: { xs: 2, sm: 3, md: 4 },
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+            }}
+        >
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    mb: 4,
+                    gap: 2,
+                }}
+            >
                 <Avatar
                     src={photoUrl || "broken-image.jpg"}
-                    sx={{ width: 200, height: 200, mb: 2 }}
+                    sx={{
+                        width: { xs: 120, sm: 160, md: 180 },
+                        height: { xs: 120, sm: 160, md: 180 },
+                        border: '4px solid #fff',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                        transition: 'transform 0.3s ease',
+                        '&:hover': {
+                            transform: 'scale(1.05)',
+                        },
+                    }}
                 />
-                <Typography variant="h5">{fullName}</Typography>
+                <Typography
+                    variant="h4"
+                    sx={{
+                        fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' },
+                        fontWeight: 700,
+                        color: '#6e4e33',
+                        textAlign: 'center',
+                    }}
+                >
+                    {fullName}
+                </Typography>
             </Box>
 
-            {/* Display Favorite Cafes in Cards */}
-            <Box sx={{
-                display: "grid",
-                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
-                gap: 3,
-                width: "100%",
-                justifyItems: "center",
-            }}>
+            <Box
+                sx={{
+                    display: 'grid',
+                    gridTemplateColumns: {
+                        xs: '1fr',
+                        sm: 'repeat(auto-fill, minmax(280px, 1fr))',
+                        md: 'repeat(auto-fill, minmax(300px, 1fr))',
+                    },
+                    gap: { xs: 2, sm: 3 },
+                    width: '100%',
+                    maxWidth: '1200px',
+                }}
+            >
                 {favoriteCafes.length > 0 ? (
                     favoriteCafes.map((cafe) => (
                         <Card
                             key={cafe.place_id}
                             sx={{
-                                maxWidth: 345,
-                                borderRadius: 10,
-                                width: "100%",
-                                height: "auto", // Adjust height to auto for better responsiveness
-                                boxShadow: 3,
+                                borderRadius: 3,
+                                bgcolor: '#fff',
+                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                                overflow: 'hidden',
+                                cursor: 'pointer',
+                                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                                '&:hover': {
+                                    transform: 'translateY(-4px)',
+                                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                                },
                             }}
                             onClick={() => handleCafeClick(cafe)}
                         >
                             {cafe.photos.length > 0 ? (
                                 <CardMedia
                                     component="img"
-                                    height="140"
+                                    sx={{
+                                        height: { xs: 140, sm: 160, md: 180 },
+                                        objectFit: 'cover',
+                                    }}
                                     image={cafe.photos[0]}
                                     alt={cafe.name}
                                 />
                             ) : (
                                 <CardMedia
                                     component="img"
-                                    height="140"
+                                    sx={{
+                                        height: { xs: 140, sm: 160, md: 180 },
+                                        objectFit: 'cover',
+                                    }}
                                     image="broken-image.jpg"
                                     alt="Default Image"
                                 />
                             )}
-
-                            <CardContent>
-                                <Typography gutterBottom variant="h6" component="div">
+                            <CardContent
+                                sx={{
+                                    p: 2,
+                                }}
+                            >
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontSize: { xs: '1.2rem', sm: '1.3rem' },
+                                        fontWeight: 600,
+                                        color: '#6e4e33',
+                                        mb: 1,
+                                    }}
+                                >
                                     {cafe.name}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography
+                                    variant="body2"
+                                    sx={{
+                                        fontSize: { xs: '0.9rem', sm: '0.95rem' },
+                                        color: '#4a3b2e',
+                                        lineHeight: 1.5,
+                                    }}
+                                >
                                     {cafe.address}
                                 </Typography>
                             </CardContent>
                         </Card>
                     ))
                 ) : (
-                    <Typography variant="h6">You have no favorite cafes yet.</Typography>
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            textAlign: 'center',
+                            p: 3,
+                            bgcolor: '#fff',
+                            borderRadius: 2,
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                            color: '#666',
+                            fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                            fontWeight: 500,
+                            width: '100%',
+                            maxWidth: 600,
+                            mx: 'auto',
+                        }}
+                    >
+                        You have no favorite cafes yet.
+                    </Typography>
                 )}
             </Box>
         </Container>

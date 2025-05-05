@@ -147,6 +147,7 @@ const inputStyle = {
   border: "1px solid #999",
   marginTop: "0.3rem",
   backgroundColor: "transparent",
+  fontFamily: "Helvetica",
 };
 
 const buttonStyle = {

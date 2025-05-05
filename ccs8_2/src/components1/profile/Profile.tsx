@@ -105,12 +105,13 @@ function Profile({ user }: ProfileProps) {
                 variant="h6"
                 sx={{
                     textAlign: 'center',
-                    p: 3,
-                    bgcolor: '#fff',
+                    p: 2,
+                    backgroundColor: 'transparent',
+                    border: '1px solid #110203',
                     borderRadius: 2,
                     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                    color: '#cd3234',
-                    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                    color: '#666',
+                    fontFamily: "Helvetica",
                     fontWeight: 500,
                     maxWidth: 600,
                     mx: 'auto',
@@ -134,7 +135,7 @@ function Profile({ user }: ProfileProps) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                fontFamily: "Helvetica",
             }}
         >
             <Box
@@ -191,7 +192,8 @@ function Profile({ user }: ProfileProps) {
                             key={cafe.place_id}
                             sx={{
                                 borderRadius: 3,
-                                bgcolor: '#fff',
+                                border: '1px solid #110203',
+                                backgroundColor: "transparent",
                                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                                 overflow: 'hidden',
                                 cursor: 'pointer',
@@ -207,7 +209,7 @@ function Profile({ user }: ProfileProps) {
                                 <CardMedia
                                     component="img"
                                     sx={{
-                                        height: { xs: 140, sm: 160, md: 180 },
+                                        height: { xs: 120, sm: 140, md: 150 },
                                         objectFit: 'cover',
                                     }}
                                     image={cafe.photos[0]}
@@ -232,10 +234,11 @@ function Profile({ user }: ProfileProps) {
                                 <Typography
                                     variant="h6"
                                     sx={{
-                                        fontSize: { xs: '1.2rem', sm: '1.3rem' },
+                                        fontSize: { xs: '1rem', sm: '1.3rem' },
                                         fontWeight: 600,
                                         color: '#6e4e33',
                                         mb: 1,
+                                        lineHeight: 1.2,
                                     }}
                                 >
                                     {cafe.name}
@@ -243,9 +246,9 @@ function Profile({ user }: ProfileProps) {
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        fontSize: { xs: '0.9rem', sm: '0.95rem' },
+                                        fontSize: { xs: '0.7rem', sm: '0.9rem' },
                                         color: '#4a3b2e',
-                                        lineHeight: 1.5,
+                                        lineHeight: 1.3,
                                     }}
                                 >
                                     {cafe.address}
@@ -258,15 +261,16 @@ function Profile({ user }: ProfileProps) {
                         variant="h6"
                         sx={{
                             textAlign: 'center',
-                            p: 3,
-                            bgcolor: '#fff',
+                            p: 2,
+                            backgroundColor: 'transparent',
+                            border: '1px solid #110203',
                             borderRadius: 2,
                             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                             color: '#666',
-                            fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                            fontFamily: "Helvetica",
                             fontWeight: 500,
                             width: '100%',
-                            maxWidth: 600,
+                            maxWidth: 500,
                             mx: 'auto',
                         }}
                     >

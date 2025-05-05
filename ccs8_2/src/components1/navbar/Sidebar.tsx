@@ -12,29 +12,49 @@ function Sidebar({ toggleDrawer, setToggleDrawer, path }: SidebarProps) {
     const btns = ["Home", "About Us", "Coffee Profiles", "Contact Us", "FAQs"];
 
     const handleItemClick = (index: number) => {
-        // Navigate to the selected route
         navigate(path[index]);
-        // Close the drawer
         setToggleDrawer(false);
     };
 
     return (
-        <Drawer anchor="left" open={toggleDrawer} onClose={() => setToggleDrawer(false)}>
+        <Drawer
+            anchor="left"
+            open={toggleDrawer}
+            onClose={() => setToggleDrawer(false)}
+            PaperProps={{
+                sx: {
+                    backgroundColor: '#eeeae4', // White background for contrast
+                    width: '200px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                },
+            }}
+        >
             <List>
                 {btns.map((btn, index) => (
                     <ListItem
                         key={index}
                         component="button"
-                        onClick={() => handleItemClick(index)} // Use the function to close the drawer and navigate
+                        onClick={() => handleItemClick(index)}
                         sx={{
-                            border: 'none',  // Remove any border
-                            padding: '10px 20px', // Optional: adjust padding if needed
+                            bgcolor: "#eeeae4",
+                            border: 'none',
+                            padding: '12px 24px',
                             '&:hover': {
-                                backgroundColor: 'rgba(0, 0, 0, 0.08)', // Optional: hover effect
+                                // Subtle red tint from #cd3234
+                                color: '#cd3234', // Highlight color
                             },
+                            transition: 'background-color 0.2s ease, color 0.2s ease',
                         }}
                     >
-                        <ListItemText primary={btn} />
+                        <ListItemText
+                            primary={btn}
+                            primaryTypographyProps={{
+                                fontFamily: 'Inter, sans-serif',
+                                fontWeight: 500,
+                                fontSize: '16px',
+                                color: '#2d2d2d',
+                            }}
+                        />
                     </ListItem>
                 ))}
             </List>

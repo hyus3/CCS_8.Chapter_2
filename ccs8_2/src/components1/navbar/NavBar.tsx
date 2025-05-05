@@ -1,5 +1,5 @@
 import NavBtn from "./NavBtn";
-import {Box, Button, Menu, MenuItem, Tooltip} from "@mui/material";
+import { Box, Button, Menu, MenuItem, Tooltip } from "@mui/material";
 import ProfileIcon from "./ProfileIcon";
 import Hamburger from "./Hamburger";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ function NavBar(prop: props) {
 
     const handleLoginClick = () => {
         handleMenuClose();
-        navigate("/login"); // login.tsx is routed here per your earlier config
+        navigate("/login");
     };
 
     const handleProfileClick = () => {
@@ -37,41 +37,41 @@ function NavBar(prop: props) {
     };
 
     const handleLogoutClick = () => {
-        navigate(path[0])
+        navigate(path[0]);
         handleMenuClose();
-        prop.setLoggedin(false);// updates login state
+        prop.setLoggedin(false);
     };
 
     return (
         <Box
             sx={{
-                maxWidth: "1200px",
-                margin: "0 auto",
                 direction: "row",
                 display: "flex",
+                flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: "10vh",
-                my: 5,
+                mx: 10,
+                my: 5
             }}
         >
             <Box
                 sx={{
-                    display: { xs: "flex", md: "flex", lg: "none" },
-                    justifyContent: "left",
+                    display: { xs: "flex", sm: "none" },
+                    justifyContent: "center",
                     width: "10vw",
                 }}
             >
-            <Tooltip title="Menu">
-                <Hamburger path={path}/>
-            </Tooltip>
+                <Tooltip title="Menu">
+                    <Hamburger path={path} />
+                </Tooltip>
             </Box>
 
             <Box
                 sx={{
                     direction: "row",
-                    width: "75%",
-                    display: { xs: "none", md: "none", lg: "flex" },
+                    width: "50%",
+                    display: { xs: "none", sm: "flex" },
                     justifyContent: "space-between",
                     alignItems: "center",
                 }}
@@ -88,31 +88,75 @@ function NavBar(prop: props) {
 
             <Box
                 sx={{
-                    width: { xs: "auto", sm: "auto" },
+                    width: { xs: "10vw", sm: "5vw" },
                     height: { xs: "10vw", sm: "5vw" },
-                    display: "flex",
                 }}
             >
                 <Tooltip title="Profile">
-                    <Button onClick={handleMenuOpen}>
-                        <ProfileIcon/>
+                    <Button
+                        onClick={handleMenuOpen}
+                        sx={{
+                            padding: 0,
+                            minWidth: 'auto',
+                            '&:hover': { backgroundColor: 'transparent' },
+                        }}
+                    >
+                        <ProfileIcon />
                     </Button>
                 </Tooltip>
                 <Menu
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleMenuClose}
+                    PaperProps={{
+                        sx: {
+                            backgroundColor: '#ffffff',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                            borderRadius: '8px',
+                        },
+                    }}
                 >
                     {!prop.loggedIn ? (
-                        <MenuItem onClick={handleLoginClick}>Login</MenuItem>
+                        <MenuItem
+                            onClick={handleLoginClick}
+                            sx={{
+                                fontFamily: 'Inter, sans-serif',
+                                color: '#2d2d2d',
+                                '&:hover': { backgroundColor: '#fce8e9', color: '#cd3234' },
+                                padding: '8px 16px',
+                            }}
+                        >
+                            Login
+                        </MenuItem>
                     ) : (
                         [
-                            <MenuItem key="profile" onClick={handleProfileClick}>Profile</MenuItem>,
-                            <MenuItem key="logout" onClick={handleLogoutClick}>Logout</MenuItem>
+                            <MenuItem
+                                key="profile"
+                                onClick={handleProfileClick}
+                                sx={{
+                                    fontFamily: 'Inter, sans-serif',
+                                    color: '#2d2d2d',
+                                    '&:hover': { backgroundColor: '#fce8e9', color: '#cd3234' },
+                                    padding: '8px 16px',
+                                }}
+                            >
+                                Profile
+                            </MenuItem>,
+                            <MenuItem
+                                key="logout"
+                                onClick={handleLogoutClick}
+                                sx={{
+                                    fontFamily: 'Inter, sans-serif',
+                                    color: '#2d2d2d',
+                                    '&:hover': { backgroundColor: '#fce8e9', color: '#cd3234' },
+                                    padding: '8px 16px',
+                                }}
+                            >
+                                Logout
+                            </MenuItem>,
                         ]
                     )}
                 </Menu>
-
             </Box>
         </Box>
     );

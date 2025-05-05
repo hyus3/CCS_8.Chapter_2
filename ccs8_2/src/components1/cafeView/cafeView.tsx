@@ -226,7 +226,6 @@ import React, { useEffect, useState, useRef } from 'react';
               <IconButton
                   onClick={handleToggleFavorite}
                   sx={{
-                    marginLeft: "220px",
                     borderRadius: 0,
                     width: 10,
                     height: 10,

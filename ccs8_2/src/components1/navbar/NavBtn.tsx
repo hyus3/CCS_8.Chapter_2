@@ -14,18 +14,9 @@ function NavBtn(props: prop) {
         <Button
             variant="contained"
             sx={{
-                margin: "0 auto",
-                fontSize: "14px",
-                borderRadius: 7.5,
-                boxShadow: "none",
-                height: "75%",
-                minWidth: "160px",
-                maxWidth: "160px", 
-                alignSelf: "center",
-                backgroundColor: "#cd3234",
-                textTransform: "none",
-                "&:hover": { backgroundColor: "#9E2A26"}
-                borderRadius: '20px',
+                minWidth: "180px",
+                maxWidth: "180px",
+                borderRadius: '18px',
                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                 height: '40px',
                 padding: { xs: '8px 16px', md: '8px 24px' },
@@ -33,7 +24,7 @@ function NavBtn(props: prop) {
                 '&:hover': { backgroundColor: '#b02b2d' },
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 500,
-                fontSize: { xs: '14px', md: '16px' },
+                fontSize: { xs: '12px', md: '14px' },
                 color: '#ffffff',
                 transition: 'background-color 0.2s ease',
             }}

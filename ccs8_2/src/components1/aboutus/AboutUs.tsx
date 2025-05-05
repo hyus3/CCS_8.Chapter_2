@@ -5,7 +5,7 @@ function AboutUs() {
     return (
         <Box
             sx={{
-                padding: "40px 1rem",
+                padding: "60px 1rem",
                 maxWidth: "1200px",
                 fontFamily: 'Helvetica',
                 margin: '0 auto',

@@ -140,7 +140,7 @@ const CoffeeProfiles = () => {
       fontFamily: "Helvetica",
       margin: "0 auto",
       maxWidth: "1200px",
-      padding: "40px 1rem",
+      padding: "60px 1rem",
       width: "100%",
      }}>
      

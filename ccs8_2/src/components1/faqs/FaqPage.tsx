@@ -46,7 +46,7 @@ const faqs = [
 const FaqPage = () => {
   return (
     <div style={{ 
-        padding: "40px 1rem",
+        padding: "60px 1rem",
         margin: "0 auto",
         maxWidth: "1200px",
         fontFamily: "Helvetica",

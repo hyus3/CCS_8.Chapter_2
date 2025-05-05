@@ -45,13 +45,15 @@ function NavBar(prop: props) {
     return (
         <Box
             sx={{
+                padding: "0 1rem",
+                maxWidth:"1200px",
                 direction: "row",
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: "80px",
-                mx: { xs: 2, sm: 4, md: 8 },
+                margin: "0 auto",
                 my: 3,
                 backgroundColor: '#eeeae4', // Light beige background
                 fontFamily: 'Inter, sans-serif',
@@ -71,8 +73,9 @@ function NavBar(prop: props) {
 
             <Box
                 sx={{
+
                     direction: "row",
-                    width: "75%",
+                    width: "80%",
                     display: { xs: "none", md: "none", lg: "flex" },
                     justifyContent: "space-between",
                     alignItems: "center",
@@ -113,7 +116,7 @@ function NavBar(prop: props) {
                     onClose={handleMenuClose}
                     PaperProps={{
                         sx: {
-                            backgroundColor: '#ffffff',
+                            border: "1px solid #110203", 
                             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                             borderRadius: '8px',
                         },

@@ -36,7 +36,7 @@ const ContactUs = () => {
 
   return (
     <div style={{ 
-        paddingTop: "40px",
+        padding: "60px 1rem",
         margin: "0 auto",
         maxWidth: "1200px",
         fontFamily: "Helvetica",

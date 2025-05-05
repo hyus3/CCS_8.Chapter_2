@@ -1,24 +1,24 @@
 /* Hero section styling */
 .hero {
-  max-width: 90vw;
-  margin: 3vh auto;
-  padding: 0 2vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 2rem;
   text-align: left;
-  font-family: 'Inter', sans-serif;
-  background-color: #eeeae4; /* Light beige background */
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .hero-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 6vw; /* Scales with viewport */
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #2d2d2d;
-  line-height: 1.2;
+  color: #110203;
+  line-height: 1.1;
 }
 
 .hero-subtitle {
-  font-size: 2.5vw;
-  margin: 0 0 2vh 0.5vw;
+  font-size: 2vw;
+  margin: 0 0 3vh 0.5vw;
   color: #cd3234; /* Red highlight */
   font-weight: 400;
 }
@@ -26,23 +26,22 @@
 /* Search container styling */
 .search-container {
   position: relative;
-  margin-bottom: 2vh;
+  margin-bottom: 1vh;
   max-width: 70vw; /* Wider to align with tags */
 }
 
 .search-input {
   width: 100%;
   padding: 1.5vh 2vw;
-  border: 1px solid #d9d4cf;
+  border: 1px solid #110203;
   border-radius: 20px;
   font-size: 1rem;
-  background-color: #ffffff;
-  font-family: 'Inter', sans-serif;
   transition: border-color 0.2s ease;
+  background-color: transparent;
 }
 
 .search-input:focus {
-  border-color: #cd3234;
+  border-color: #6e4e33;
   outline: none;
 }
 
@@ -52,7 +51,7 @@
   left: 0;
   width: 100%;
   max-height: 30vh;
-  background-color: #ffffff;
+  background-color: #eeeae4;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 100;
@@ -63,13 +62,12 @@
   padding: 1.5vh 2vw;
   cursor: pointer;
   border-bottom: 1px solid #eeeae4;
-  color: #2d2d2d;
-  background-color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  color: #110203;
+  background-color: #eeeae4;
 }
 
 .search-result-item:hover {
-  background-color: #fce8e9; /* Subtle red tint */
+  background-color: #6e4e33; /* Subtle red tint */
 }
 
 .search-result-item:last-child {
@@ -85,10 +83,10 @@
   border: none;
   cursor: pointer;
   color: #cd3234;
-  font-size: 1rem;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 }
 
 .search-icon {
@@ -101,7 +99,7 @@
   align-items: center;
   gap: 1vw;
   margin-bottom: 2vh;
-  max-width: 70vw; /* Wider to accommodate all tags in one line */
+  max-width: 90vw; /* Wider to accommodate all tags in one line */
 }
 
 /* Tags styling */
@@ -117,27 +115,28 @@
   padding: 1vh 2vw;
   margin: 0.5vh;
   border-radius: 20px;
-  background-color: #ffffff;
-  color: #2d2d2d;
+  background-color: transparent;
+  color: #110203;
   font-size: 0.9rem;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #110203;
   white-space: nowrap; /* Prevent tag text from wrapping */
 }
 
 .tag.selected {
-  background-color: #cd3234;
+  background-color: #6e4e33;
   color: #ffffff;
 }
 
 .tag:hover {
-  background-color: #fce8e9;
+  background-color: #6e4e33;
+  color: #ffffff;
 }
 
 .tag.selected:hover {
-  background-color: #b02b2d;
+  background-color: #7a5f4a;
 }
 
 /* Video container styling */
@@ -174,7 +173,6 @@
   justify-content: center;
   background-color: #f8f5f2;
   color: #2d2d2d;
-  font-family: 'Inter', sans-serif;
   font-size: 1.2rem;
   object-fit: cover;
 }
@@ -185,16 +183,15 @@
   margin: 0 auto;
   padding: 0 1rem 3rem 1rem;
   position: relative;
-  font-family: 'Inter', sans-serif;
   background-color: #eeeae4;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .slider-title {
   text-align: center;
   margin: 4vh 0 2vh 0;
-  font-size: 3vw;
-  color: #2d2d2d;
-  font-weight: 600;
+  font-size: 2.5vw;
+  color: #6e4e33;
 }
 
 .slider-wrapper {
@@ -202,7 +199,6 @@
   justify-content: center;
   align-items: center;
   gap: 2vw;
-  padding: 2vh 0;
 }
 
 .slider-item {
@@ -240,7 +236,6 @@
   color: #ffffff;
   text-align: center;
   border-radius: 0 0 12px 12px;
-  font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
 }
 

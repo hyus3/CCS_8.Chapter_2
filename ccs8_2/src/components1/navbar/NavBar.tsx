@@ -50,15 +50,17 @@ function NavBar(prop: props) {
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                height: "10vh",
-                mx: 10,
-                my: 5
+                height: "80px",
+                mx: { xs: 2, sm: 4, md: 8 },
+                my: 3,
+                backgroundColor: '#eeeae4', // Light beige background
+                fontFamily: 'Inter, sans-serif',
             }}
         >
             <Box
                 sx={{
-                    display: { xs: "flex", sm: "none" },
-                    justifyContent: "center",
+                    display: { xs: "flex", md: "flex", lg: "none" },
+                    justifyContent: "left",
                     width: "10vw",
                 }}
             >
@@ -70,8 +72,8 @@ function NavBar(prop: props) {
             <Box
                 sx={{
                     direction: "row",
-                    width: "50%",
-                    display: { xs: "none", sm: "flex" },
+                    width: "75%",
+                    display: { xs: "none", md: "none", lg: "flex" },
                     justifyContent: "space-between",
                     alignItems: "center",
                 }}
@@ -88,8 +90,9 @@ function NavBar(prop: props) {
 
             <Box
                 sx={{
-                    width: { xs: "10vw", sm: "5vw" },
+                    width: { xs: "auto", sm: "auto" },
                     height: { xs: "10vw", sm: "5vw" },
+                    display: "flex",
                 }}
             >
                 <Tooltip title="Profile">

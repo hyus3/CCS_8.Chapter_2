@@ -68,7 +68,6 @@ function App() {
                 <Route path="/mapview" element={<MapView />} />
             </Routes>
             <footer>
-                <Footer></Footer>
             </footer>
         </Router>
     );

@@ -20,7 +20,6 @@ function NavBtn(props: prop) {
                 padding: { xs: '8px 16px', md: '8px 24px' },
                 backgroundColor: '#cd3234',
                 '&:hover': { backgroundColor: '#b02b2d' },
-                textTransform: 'none',
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 500,
                 fontSize: { xs: '14px', md: '16px' },

@@ -223,25 +223,21 @@ import React, { useEffect, useState, useRef } from 'react';
             <div className="cafe-header">
               <h1 className="cafe-name">{cafe.name}</h1>
               <Tooltip title="Add to Favorites">
-                <IconButton onClick={handleToggleFavorite} sx={{ padding: "6px", color: isFavorited ? "#cd3234" : "#cd3234", width: 8, height: 8, paddingLeft: "8px"}}>
-                  {isFavorited ? ( <Favorite sx={{ color: "#cd3234", fontSize: "30px",  }}/>) : (<FavoriteBorder sx={{ color: "#cd3234", fontSize: "30px",  }}/>)}
+                <IconButton
+                    onClick={handleToggleFavorite}
+                    sx={{
+                      borderRadius: 0,
+                      width: 10,
+                      height: 10,
+                      color: isFavorited ? "#cd3234" : "#888",
+                    }}
+                >
+                  {isFavorited ? <Favorite /> : <FavoriteBorder />}
                 </IconButton>
               </Tooltip>
             </div>
             <p className="cafe-description">{description}</p>
-            <Tooltip title="Add to Favorites">
-              <IconButton
-                  onClick={handleToggleFavorite}
-                  sx={{
-                    borderRadius: 0,
-                    width: 10,
-                    height: 10,
-                    color: isFavorited ? "#cd3234" : "#888",
-                  }}
-              >
-                {isFavorited ? <Favorite /> : <FavoriteBorder />}
-              </IconButton>
-            </Tooltip>
+
 
             <div className="cafe-reviews">
               <h2 style={{ color: "#6e4e33" }}>Reviews</h2>

@@ -76,7 +76,7 @@ const CafeCarousel: React.FC<{
     const cafe = cafes[currentIndex];
 
     return (
-        <Box sx={{ position: 'relative', width: '100%', height: { xs: '300px', md: '350px' } }}>
+        <Box sx={{ position: 'relative', width: '100%', maxWidth: '100vw', height: { xs: '300px', md: '350px' } }}>
             <Box
                 sx={{
                     width: '100%',
@@ -258,11 +258,16 @@ function MapView() {
                 return;
             }
 
-            // Initialize Google Map
+            // Initialize Google Map with locked interaction
             const googleMap = new google.maps.Map(mapRef.current, {
                 center: DUMAGUETE_CENTER,
-                zoom: 14,
+                zoom: 15,
                 mapTypeId: 'roadmap',
+                disableDefaultUI: true, // Disable all default UI controls
+                draggable: false, // Prevent dragging/panning
+                scrollwheel: false, // Disable zoom on scroll
+                gestureHandling: 'none', // Disable all gestures
+                keyboardShortcuts: false, // Disable keyboard controls
             });
             setMap(googleMap);
 
@@ -361,8 +366,7 @@ function MapView() {
             <Box
                 sx={{
                     flex: { xs: 'none', md: 1 },
-                    width: '100%',
-                    padding: { xs: '16px', md: '24px' },
+                    width: { xs: '100vw', md: '100%' },
                     backgroundColor: '#ffffff', // White sidebar for contrast
                     overflowY: 'auto',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)',

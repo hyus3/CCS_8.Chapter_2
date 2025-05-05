@@ -12,8 +12,8 @@ type props = {
 };
 
 function NavBar(prop: props) {
-    const btns = ["home", "about us", "faq", "coffee profiles"];
-    const path = ["", "aboutus", "faq", "coffeeprofiles"];
+    const btns = ["home", "about us", "contact us", "faq", "coffee profiles"];
+    const path = ["", "aboutus", "contactus", "faq", "coffeeprofiles"];
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -71,7 +71,7 @@ function NavBar(prop: props) {
             <Box
                 sx={{
                     flexDirection: "row",
-                    width: { sm: "50%", md: "40%" },
+                    width: "70%",
                     display: { xs: "none", sm: "flex" },
                     justifyContent: "space-between",
                     alignItems: "center",

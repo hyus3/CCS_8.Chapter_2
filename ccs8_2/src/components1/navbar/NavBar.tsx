@@ -12,8 +12,8 @@ type props = {
 };
 
 function NavBar(prop: props) {
-    const btns = ["home", "about us", "faq", "types"];
-    const path = ["", "aboutus", "faq", "types"];
+    const btns = ["home", "about us", "faq", "coffee profiles"];
+    const path = ["", "aboutus", "faq", "coffeeprofiles"];
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

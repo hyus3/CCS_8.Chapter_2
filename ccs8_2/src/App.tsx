@@ -60,7 +60,7 @@ function App() {
                 <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/faq" element={<FaqPage />} />
                 <Route path="/contactus" element={<ContactUs />} />
-                <Route path="/types" element={<CoffeeProfiles />} />
+                <Route path="/coffeeprofiles" element={<CoffeeProfiles />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
                 <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/search" element={<CafeSearch />} />

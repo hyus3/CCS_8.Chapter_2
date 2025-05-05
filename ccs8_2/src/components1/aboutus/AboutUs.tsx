@@ -4,18 +4,47 @@ import { Box, Typography, Paper, Avatar } from '@mui/material';
 function AboutUs() {
     return (
         <Box
+            sx={{
+                padding: '40px 20px',
+                minHeight: '100vh',
+                fontFamily: 'Helvetica',
+                margin: '0 auto',
+            }}
+        >
+            {/* Header Section */}
+            <Box mb={2}>
+                <h2 style={{
+                    fontSize: "1.5rem",
+                    color: "#cd3234",
+                    marginBottom: "0",
+                    paddingLeft: "15px",
+                }}>
+                    About Us
+                </h2>
+
+                <p style={{
+                    marginBottom: "0",
+                    marginTop: "0",
+                    fontSize: "3rem",
+                    paddingLeft: "15px",
+                }}>
+                    Meet the team.
+                </p>
+            </Box>
+        <Box
             display="flex"
             flexDirection={{ xs: 'column', sm: 'row' }} // Stack vertically on mobile, horizontally on larger screens
             justifyContent="space-around"
-            alignItems="center"
+            alignItems="stretch"
             sx={{
-                padding: '20px',
+                padding: '16px',
                 gap: '20px', // Space between the people
-                minHeight: '100vh', // Ensures that content takes full height
+                maxHeight: '100vh', // Ensures that content takes full height
+                marginTop: '0',
             }}
         >
             {/* Person 1 */}
-            <Paper sx={{ padding: '20px', width: { xs: '80%', sm: '30%' }, textAlign: 'center', borderRadius: '20px' }}>
+            <Paper sx={{ padding: '20px', width: { xs: '80%', sm: '30%' }, textAlign: 'center', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', flex: 1, }}>
                 {/* Avatar for picture */}
                 <Avatar
                     alt="Person 1"
@@ -61,6 +90,7 @@ function AboutUs() {
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Person 3</Typography>
                 <Typography variant="body1">This is Person 3. They are the creative genius behind our project.</Typography>
             </Paper>
+        </Box>
         </Box>
     );
 }

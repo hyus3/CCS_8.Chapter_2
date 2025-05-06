@@ -58,12 +58,16 @@ const EnhancedImageSlider: React.FC<EnhancedImageSliderProps> = ({
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     touchStartX.current = e.touches[0].clientX;
     isSwiping.current = false;
+    // Optional: Add debug log
+    // console.log('Touch started at:', touchStartX.current);
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     touchEndX.current = e.touches[0].clientX;
     isSwiping.current = true;
     e.preventDefault(); // Prevent page scrolling during swipe
+    // Optional: Add debug log
+    // console.log('Touch moving, current X:', touchEndX.current);
   };
 
   const handleTouchEnd = () => {
@@ -75,7 +79,10 @@ const EnhancedImageSlider: React.FC<EnhancedImageSliderProps> = ({
     }
 
     const deltaX = touchEndX.current - touchStartX.current;
-    const minSwipeDistance = 50; //සත්විත්පුත්තු.minSwipeDistance = 50; // Minimum distance for a swipe
+    const minSwipeDistance = 50; // Minimum distance for a swipe
+
+    // Optional: Add debug log
+    // console.log('Swipe detected, deltaX:', deltaX);
 
     if (deltaX > minSwipeDistance && activeSlide > 0) {
       // Swipe right: go to previous slide

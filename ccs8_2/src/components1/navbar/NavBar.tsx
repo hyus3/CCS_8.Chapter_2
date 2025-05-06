@@ -75,7 +75,7 @@ function NavBar(prop: props) {
                 sx={{
 
                     direction: "row",
-                    width: "80%",
+                    width: "90%",
                     display: { xs: "none", md: "none", lg: "flex" },
                     justifyContent: "space-between",
                     alignItems: "center",

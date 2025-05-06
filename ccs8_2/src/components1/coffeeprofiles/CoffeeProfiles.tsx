@@ -1,4 +1,5 @@
 import React from "react";
+import "./CoffeeProfiles.css";
 
 type CoffeeItem = {
   name: string;
@@ -31,11 +32,6 @@ const coffeeData: CoffeeCategory[] = [
         description: "Hot water first, then espresso — preserving the crema and giving a bold, aromatic cup.",
       },
       {
-        name: "Doppio",
-        image: "doppio.jpg",
-        description: "A double shot of espresso offering a full-bodied, rich, and slightly bitter taste.",
-      },
-      {
         name: "Cold Brew",
         image: "coldbrew.jpg",
         description: "Coffee steeped cold for hours; smooth, bold, and less acidic than regular iced coffee.",
@@ -54,11 +50,6 @@ const coffeeData: CoffeeCategory[] = [
         name: "Cappuccino",
         image: "capuccino.jpeg",
         description: "Balanced espresso, steamed milk, and a thick layer of foam — rich yet airy.",
-      },
-      {
-        name: "Flat White",
-        image: "flatwhite.jpg",
-        description: "Microfoam milk over a double shot of espresso, giving a smooth, velvety texture.",
       },
       {
         name: "Macchiato",
@@ -95,26 +86,17 @@ const coffeeData: CoffeeCategory[] = [
         image: "whitechocolatemocha.jpg",
         description: "A creamier, sweeter version of mocha using white chocolate.",
       },
-      {
-        name: "Hazelnut Latte",
-        image: "hazelnutlatte.jpg",
-        description: "Hazelnut flavor blended with coffee and milk for a warm, dessert-like experience.",
-      },
     ],
   },
   {
-    title: "Nutty, earthy, rich",
+    title: "Nutty, earthy, and rich",
     items: [
       {
         name: "Matcha Latte",
         image: "matchalatte.jpg",
         description: "Creamy and vibrant green tea mixed with steamed milk for a smooth, earthy taste.",
       },
-      {
-        name: "Amaretto",
-        image: "amaretto.jpg",
-        description: "Espresso or brewed coffee flavored with sweet almond-flavored Amaretto syrup.",
-      },
+      
       {
         name: "Pistachio Latte",
         image: "pistachiolatte.jpg",
@@ -136,128 +118,101 @@ const coffeeData: CoffeeCategory[] = [
 
 const CoffeeProfiles = () => {
   return (
-    <div style={{ 
-      fontFamily: "Helvetica",
-      margin: "0 auto",
-      maxWidth: "1200px",
-      padding: "60px 1rem",
-      width: "100%",
-     }}>
-     
-      <h2 style={{ 
-        fontSize: "1.5rem", 
-        color: "#cd3234",
-        marginBottom: "0",
-        }}>
+    <div className="container">
+      <h2 className="title" >
         Coffee Flavors Profile
       </h2>
 
-      <p style = {{
-        marginBottom: "4rem", 
-        marginTop: "0",
-        fontSize: "3rem",
-      }}>
+      <p className="subtitle">
         Discover your perfect cup.
       </p>
         
-        {coffeeData.map((category) => (
+      {coffeeData.map((category) => (
 
-        <div key={category.title} style={{ 
-            marginBottom: "4rem", }}>
-          
-          <h2 style={{ 
-            marginBottom: "1rem",
-            fontSize: "1.5rem",
-            fontWeight: "normal",
-            color: "#6e4e33", }}>
-            {category.title}
-          </h2>
+<div key={category.title} style={{ 
+    marginBottom: "4rem", }}>
+  
+  <h2 style={{ 
+    marginBottom: "1rem",
+    fontSize: "1.5rem",
+    fontWeight: "normal",
+    color: "#6e4e33", }}>
+    {category.title}
+  </h2>
+
+  <div className="grid">
+
+    {category.items.map((item) => (
+      <div
+        key={item.name} className="card">
+
+        <div
+          style={{ 
+            position: "relative", 
+            height: 200, 
+            overflow: "hidden" }}
+          onMouseEnter={(e) =>
+            ((e.currentTarget.querySelector(".hover-overlay") as HTMLElement).style.opacity = "1")
+          }
+          onMouseLeave={(e) =>
+            ((e.currentTarget.querySelector(".hover-overlay") as HTMLElement).style.opacity = "0")
+          } >
+
+          <img
+            src={item.image}
+            alt={item.name}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }} />
 
           <div
+            className="hover-overlay"
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-              gap: "1rem",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.6)",
+              color: "white",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+              opacity: 0,
+              transition: "opacity 0.3s ease",
             }} >
-
-            {category.items.map((item) => (
-              <div
-                key={item.name}
-                style={{
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "10px",
-                  border: "1px solid #110203",
-                  overflow: "hidden",
-                  cursor: "pointer",
-                }} >
-
-                <div
-                  style={{ 
-                    position: "relative", 
-                    height: 150, 
-                    overflow: "hidden" }}
-                  onMouseEnter={(e) =>
-                    ((e.currentTarget.querySelector(".hover-overlay") as HTMLElement).style.opacity = "1")
-                  }
-                  onMouseLeave={(e) =>
-                    ((e.currentTarget.querySelector(".hover-overlay") as HTMLElement).style.opacity = "0")
-                  } >
-
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }} />
-
-                  <div
-                    className="hover-overlay"
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      backgroundColor: "rgba(0, 0, 0, 0.6)",
-                      color: "white",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      textAlign: "center",
-                      opacity: 0,
-                      transition: "opacity 0.3s ease",
-                    }} >
-                    
-                    <span style={{ 
-                        maxWidth: "90%",
-                        backgroundColor: "transparent",
-                        wordWrap: "break-word",
-                        fontSize: "0.8rem",
-                     }} > 
-                     {item.description} 
-                     </span>
-                     
-                  </div>
-                </div>
-                
-                <div style={{ 
-                    padding: "10px", 
-                    textAlign: "center", 
-                    backgroundColor: "#cd3234",
-                    color: "#ffffff", }}>
-                  {item.name}
-                </div>
-
-              </div>
-            ))}
+            
+            <span style={{ 
+                maxWidth: "90%",
+                backgroundColor: "transparent",
+                wordWrap: "break-word",
+                fontSize: "0.8rem",
+             }} > 
+             {item.description} 
+             </span>
+             
           </div>
         </div>
-      ))}
-    </div>
-  );
+        
+        <div style={{ 
+            padding: "10px", 
+            textAlign: "center", 
+            backgroundColor: "#cd3234",
+            color: "#ffffff", }}>
+          {item.name}
+        </div>
+
+      </div>
+    ))}
+  </div>
+</div>
+))}
+</div>
+);
 };
 
 export default CoffeeProfiles;

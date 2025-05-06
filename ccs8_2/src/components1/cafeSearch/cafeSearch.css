@@ -176,3 +176,60 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 800px)
+{
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    max-width: 300px;
+     height: 300px;
+  }
+
+  .cafeSearch-container {
+    font-size: 18px;
+  }
+
+  .search-input {
+    font-size: 18px;
+  }
+
+  .search-icon {
+    font-size: 18.5px;
+  }
+  
+  .search-results-label {
+  font-size: 20px;
+  }
+
+}
+
+@media (max-width: 500px)
+{
+  .card-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0;
+  }
+   .card {
+    max-width: 300px;
+     height: 300px;
+  }
+
+  .cafeSearch-container {
+    font-size: 12px;
+  }
+
+  .search-input {
+    font-size: 12px;
+  }
+
+  .search-icon {
+    font-size: 12.5px;
+  }
+  
+  .search-results-label {
+  font-size: 13px;
+  }
+}

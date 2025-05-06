@@ -14,8 +14,8 @@ function NavBtn(props: prop) {
         <Button
             variant="contained"
             sx={{
-                minWidth: "180px",
-                maxWidth: "180px",
+                minWidth: "200px",
+                maxWidth: "200px",
                 borderRadius: '18px',
                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                 height: '40px',

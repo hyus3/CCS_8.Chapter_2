@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore"; // ✅ Required import
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDirHowSjl5Jz-k-Qv-t2r8vcDU7Plm0jA",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "dumaguete-coffee-compass.firebaseapp.com",
     projectId: "dumaguete-coffee-compass",
     storageBucket: "dumaguete-coffee-compass.firebasestorage.app",

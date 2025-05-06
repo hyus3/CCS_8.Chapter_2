@@ -34,8 +34,9 @@
 .slider-wrapper {
   overflow: visible;
   position: relative;
-  height: 200px;
+  height: 300px; /* Kept as adjusted previously, will be reviewed below */
   margin: 2rem 0;
+  touch-action: pan-y;
 }
 
 .slider-item {
@@ -57,25 +58,25 @@
 
 .slider-item.left {
   z-index: 5;
-  transform: translateX(calc(-50% - 220px)) scale(0.9);
+  transform: translateX(calc(-50% - 250px)) scale(0.9);
   opacity: 0.8;
 }
 
 .slider-item.right {
   z-index: 5;
-  transform: translateX(calc(-50% + 220px)) scale(0.9);
+  transform: translateX(calc(-50% + 250px)) scale(0.9);
   opacity: 0.8;
 }
 
 .slider-item.left-hidden {
   z-index: 1;
-  transform: translateX(calc(-50% - 400px)) scale(0.7);
+  transform: translateX(calc(-50% - 500px)) scale(0.7);
   opacity: 0.4;
 }
 
 .slider-item.right-hidden {
   z-index: 1;
-  transform: translateX(calc(-50% + 400px)) scale(0.7);
+  transform: translateX(calc(-50% + 500px)) scale(0.7);
   opacity: 0.4;
 }
 
@@ -92,6 +93,9 @@
   backdrop-filter: blur(3px);
   transition: all 0.3s ease;
   font-size: 0.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .slider-item:hover .slider-caption,
@@ -100,16 +104,45 @@
 }
 
 /* Responsive adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .slider-wrapper {
+    height: 250px; /* Adjusted to fit 18vh slides with some padding */
+  }
+
+  .slider-item {
+    width: 30vw; /* As specified */
+    height: 18vh; /* As specified */
+  }
+
+  .slider-item.left {
+    transform: translateX(calc(-50% - 300px)) scale(0.9);
+  }
+
+  .slider-item.right {
+    transform: translateX(calc(-50% + 300px)) scale(0.9);
+  }
+
+  .slider-item.left-hidden,
+  .slider-item.right-hidden {
+    display: none;
+  }
+
+  .slider-caption {
+    font-size: 0.7rem;
+    padding: 0.4rem;
+  }
+}
+
 @media (max-width: 768px) {
   .slider-item.left {
     transform: translateX(calc(-50% - 160px)) scale(0.85);
   }
-  
+
   .slider-item.right {
     transform: translateX(calc(-50% + 160px)) scale(0.85);
   }
-  
-  .slider-item.left-hidden, 
+
+  .slider-item.left-hidden,
   .slider-item.right-hidden {
     display: none;
   }
@@ -119,7 +152,7 @@
   .slider-item.left {
     transform: translateX(calc(-50% - 120px)) scale(0.8);
   }
-  
+
   .slider-item.right {
     transform: translateX(calc(-50% + 120px)) scale(0.8);
   }

@@ -90,12 +90,12 @@ function Body2() {
                                 color: '#ffffff',
                                 '&:hover': { backgroundColor: '#b02b2d' },
                                 borderRadius: '20px',
-                                padding: { xs: '0.3rem 1.5rem', md: '0.3rem 2rem' },
+                                padding: { xs: '0.5rem 1.2rem', sm: '0.5rem 1.5rem', md: '0.3rem 2rem' },
                                 fontFamily: 'Inter, sans-serif',
                                 fontWeight: 500,
                                 textTransform: 'none',
-                                ml: { xs: '2vw', md: '4vw' },
-                                alignSelf: 'center',
+                                alignSelf: { xs: 'flex-start', md: 'center' },
+                                margin: { xs: '1rem 0 0 0', md: '0 0 0 4vw' },
                             }}
                         >
                             Explore Map
@@ -107,15 +107,15 @@ function Body2() {
             <div className="video-container">
                 <div className="video-wrapper">
                     <iframe
-                    className="video"
-                    src="https://www.youtube.com/embed/5xAIzOlvfdE?autoplay=1&mute=1&loop=1&playlist=5xAIzOlvfdE"
-                    title="Cafe Compass Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
+                        className="video"
+                        src="https://www.youtube.com/embed/5xAIzOlvfdE?autoplay=1&mute=1&loop=1&playlist=5xAIzOlvfdE"
+                        title="Cafe Compass Video"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
                     ></iframe>
                 </div>
-                </div>
+            </div>
 
             {isLoading && (
                 <div className="loading-container">

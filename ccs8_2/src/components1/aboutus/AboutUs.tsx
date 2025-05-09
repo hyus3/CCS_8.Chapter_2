@@ -32,61 +32,84 @@ function AboutUs() {
         <Box
             display="flex"
             flexDirection={{ xs: 'column', md: 'row' }} // Stack vertically on mobile, horizontally on larger screens
-            justifyContent="space-around"
+            justifyContent="center" 
             alignItems="stretch"
+            alignContent="center"
             sx={{
                 paddingTop: "3rem",
                 gap: '20px', // Space between the people
                 maxHeight: '100vh', // Ensures that content takes full height
                 marginTop: '0',
+                flexWrap: 'wrap',
             }}
         >
             {/* Person 1 */}
-            <Paper sx={{ padding: '20px', minWidth: { sm: '10%', lg: '30%'}, textAlign: 'center', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', flex: 1, backgroundColor: 'transparent', border: '1px solid #110203',}}>
+            <Paper sx={{ padding: '20px', width: '80%', textAlign: 'center', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', flex: 1, backgroundColor: 'transparent', border: '1px solid #110203',}}>
+            <a 
+                href="https://www.facebook.com/danielrz01" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+            >
                 {/* Avatar for picture */}
                 <Avatar
-                    alt="Person 1"
-                    src="/broken-image.jpg" // Image source
+                    alt="Daniel Arellano Profile"
+                    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t39.30808-1/438973119_1604729470302789_2778952454368984412_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=110&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFZjQl28x2BxCa9MitQjc_0GRoVC1ULahAZGhULVQtqEHhD8CENtpYB5NfACBQ0i3AaOg-q78dCByfgfL2fzQfW&_nc_ohc=Ro-1q4M7KHEQ7kNvwGglZTc&_nc_oc=Adk1LaMUkisE9qHIHeuvlR7huY6G5zPcTiiIIfa68EcaWW755ny5AcJHVvBAypBCZjo&_nc_zt=24&_nc_ht=scontent.fceb3-1.fna&_nc_gid=mFSZ1JR6tPtok7wPqU0pzw&oh=00_AfI-tlmulncvcHo7pWWJc4IM8-uevC_9BzhxYLq2fbS7LA&oe=682004BB" // Image source
                     sx={{
                         width: 120,
                         height: 120,
                         margin: '0 auto 10px', // Centering the Avatar and adding space below
                     }}
                 />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#6e4e33' }}>Person 1</Typography>
-                <Typography variant="body1">This is Person 1. They are the leader of our project.</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#6e4e33' }}> Daniel Roz Arellano </Typography>
+            </a>
+            <Typography variant="body1">This is Daniel. He leads the team and handles the challenging parts of the website.</Typography>
             </Paper>
 
             {/* Person 2 */}
-            <Paper sx={{ padding: '20px', minWidth: { sm: '10%', lg: '30%' }, textAlign: 'center', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', flex: 1, backgroundColor: 'transparent', border: '1px solid #110203', }}>
+            <Paper sx={{ padding: '20px', width: '80%', textAlign: 'center', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', flex: 1, backgroundColor: 'transparent', border: '1px solid #110203', }}>
+            <a 
+                href="https://www.linkedin.com/in/krishnan-mahinay-7130562b1/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+            >
                 {/* Avatar for picture */}
                 <Avatar
-                    alt="Person 2"
-                    src="/broken-image.jpg" // Image source
+                    alt="Krishnan Mahinay Profile"
+                    src="https://media.licdn.com/dms/image/v2/D4E03AQF625sEHpyn2Q/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1707285286734?e=1752105600&v=beta&t=kjT4QLvn3Ibj3Mfnw2pY_FW1YM8xFozOmmp2PRaV-Hw" // Image source
                     sx={{
                         width: 120,
                         height: 120,
                         margin: '0 auto 10px',
                     }}
                 />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#6e4e33' }}>Person 2</Typography>
-                <Typography variant="body1">This is Person 2. They manage operations and coordination.</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#6e4e33' }}> Krishnan Mahinay </Typography>
+            </a>
+            <Typography variant="body1">This is Krishnan. He also works on the challenging parts of the site and keeps everything on track.</Typography>
             </Paper>
 
             {/* Person 3 */}
-            <Paper sx={{ padding: '20px', minWidth: { sm: '10%', lg: '30%' }, textAlign: 'center', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', flex: 1, backgroundColor: 'transparent', border: '1px solid #110203',}}>
+            <Paper sx={{ padding: '20px', width: '80%', textAlign: 'center', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', flex: 1, backgroundColor: 'transparent', border: '1px solid #110203',}}>
+            <a 
+                href="https://www.linkedin.com/in/gayselle-gianni-corsame-73319035b/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+            >
                 {/* Avatar for picture */}
                 <Avatar
                     alt="Person 3"
-                    src="/broken-image.jpg" // Image source
+                    src="https://media.licdn.com/dms/image/v2/D5603AQHV-Pp3IglDkw/profile-displayphoto-shrink_400_400/B56Zamshu.GkAg-/0/1746553413563?e=1752105600&v=beta&t=WsqD3wuis-1u2D_LioD0bQJWEhyro_GkU44G8g12RPs" // Image source
                     sx={{
                         width: 120,
                         height: 120,
                         margin: '0 auto 10px',
                     }}
                 />
-                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#6e4e33' }}>Person 3</Typography>
-                <Typography variant="body1">This is Person 3. They are the creative genius behind our project.</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#6e4e33' }}> Gayselle Gianni Corsame </Typography>
+            </a>
+            <Typography variant="body1">This is Gayselle. She focuses on the creative and structural part of the project—and handles the written documentation.</Typography>
             </Paper>
         </Box>
         </Box>

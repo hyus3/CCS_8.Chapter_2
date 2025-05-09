@@ -149,13 +149,12 @@
 
 .video-wrapper {
   width: 85vw;
-  height: 65vh;
+  height: 52vh;
   margin: 0 auto;
   background-color: #ffffff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  aspect-ratio: 16 / 9;
 }
 
 .video {

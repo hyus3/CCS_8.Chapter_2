@@ -65,6 +65,7 @@ function App() {
                 <Route path="/search" element={<CafeSearch />} />
                 <Route path="/cafe/:placeId" element={<CafeView user={user} />} />
                 <Route path="/mapview" element={<MapView />} />
+                <Route path="/explore" element={<MapView />} />
             </Routes>
         </Router>
     );

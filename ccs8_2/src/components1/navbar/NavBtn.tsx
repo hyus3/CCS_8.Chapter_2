@@ -14,19 +14,19 @@ function NavBtn(props: prop) {
         <Button
             variant="contained"
             sx={{
-                minWidth: "200px",
+                minWidth: "150px",
                 maxWidth: "200px",
                 borderRadius: '18px',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                boxShadow: '0',
                 height: '40px',
                 padding: { xs: '8px 16px', md: '8px 24px' },
-                backgroundColor: '#cd3234',
-                '&:hover': { backgroundColor: '#b02b2d' },
+                backgroundColor: '#eeeae4',
+                '&:hover': { backgroundColor: '#cd3234', color: '#ffffff' },
                 fontFamily: 'Inter, sans-serif',
-                fontWeight: 500,
+                fontWeight: 'bold',
                 fontSize: { xs: '12px', md: '14px' },
-                color: '#ffffff',
-                transition: 'background-color 0.2s ease',
+                color: '#cd3234',
+                transition: 'background-color 0.3s ease',
             }}
             onClick={() => {
                 navigate(props.path);

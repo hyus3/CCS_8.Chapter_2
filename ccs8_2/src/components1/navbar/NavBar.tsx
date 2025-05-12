@@ -4,6 +4,7 @@ import ProfileIcon from "./ProfileIcon";
 import Hamburger from "./Hamburger";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import './navbtn.css'
 
 type props = {
     loggedIn: boolean;
@@ -12,8 +13,8 @@ type props = {
 };
 
 function NavBar(prop: props) {
-    const btns = ["Home", "About Us", "Coffee Profiles", "Contact Us", "FAQs" ];
-    const path = ["", "aboutus", "coffeeprofiles", "contactus", "faq"];
+    const btns = ["Home", "Explore", "Coffee Profiles", "FAQs" ];
+    const path = ["", "explore", "coffeeprofiles", "faq"];
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -46,7 +47,7 @@ function NavBar(prop: props) {
         <Box
             sx={{
                 padding: "0 1rem",
-                maxWidth:"1200px",
+                maxWidth:"90vw",
                 direction: "row",
                 display: "flex",
                 flexDirection: "row",
@@ -61,7 +62,19 @@ function NavBar(prop: props) {
         >
             <Box
                 sx={{
-                    display: { xs: "flex", md: "flex", lg: "none" },
+                    width: 'auto',
+                    height: '7.5vw',
+                    display: {xs: 'none', md: 'flex'},
+                }}>
+                <Tooltip title="Home">
+                    <Button onClick={() => navigate('/')} sx={{width: "auto", height: "inherit"}}>
+                        <img id="logo" src={'../../../logo.png'} height='100%'/>
+                    </Button>
+                </Tooltip>
+            </Box>
+            <Box
+                sx={{
+                    display: { xs: "flex", md: "none"},
                     justifyContent: "left",
                     width: "10vw",
                 }}
@@ -73,12 +86,11 @@ function NavBar(prop: props) {
 
             <Box
                 sx={{
-
                     direction: "row",
-                    width: "90%",
-                    display: { xs: "none", md: "none", lg: "flex" },
+                    width: "70%",
+                    display: { xs: "none", md: 'flex'},
                     justifyContent: "space-between",
-                    alignItems: "center",
+                    alignItems: "flex-start",
                 }}
             >
                 {btns.map((btn, index) => (

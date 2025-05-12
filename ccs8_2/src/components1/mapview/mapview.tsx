@@ -14,7 +14,6 @@ const CafeCarousel: React.FC<{
     navigate: (path: string, options?: { state?: any }) => void;
 }> = ({ cafes, setCurrentIndex, navigate }) => {
     const [currentIndex, setLocalIndex] = useState(0);
-    const [imageSrc, setImageSrc] = useState<string>('');
 
     const handleNext = () => {
         setLocalIndex((prev) => {
@@ -31,16 +30,6 @@ const CafeCarousel: React.FC<{
             return newIndex;
         });
     };
-
-    // Update image source when currentIndex changes
-    useEffect(() => {
-        const cafe = cafes[currentIndex];
-        if (cafe && cafe.photos && cafe.photos.length > 0) {
-            setImageSrc(cafe.photos[0]);
-        } else {
-            setImageSrc(PLACEHOLDER_IMAGE);
-        }
-    }, [currentIndex, cafes]);
 
     // Handle card click to navigate to CafeView
     const handleCardClick = (cafe: CafeDetails) => {
@@ -73,85 +62,113 @@ const CafeCarousel: React.FC<{
         </Typography>;
     }
 
-    const cafe = cafes[currentIndex];
+    // Determine indices for the three cards
+    const prevIndex = (currentIndex - 1 + cafes.length) % cafes.length;
+    const nextIndex = (currentIndex + 1) % cafes.length;
+    const displayedCafes = [
+        cafes[prevIndex],
+        cafes[currentIndex],
+        cafes[nextIndex],
+    ];
 
     return (
-        <Box sx={{ position: 'relative', width: '100%', maxWidth: '100vw', height: { xs: '300px', md: '350px' } }}>
-            <Box
-                sx={{
-                    width: '100%',
-                    height: '100%',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    position: 'relative',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                }}
-                onClick={() => handleCardClick(cafe)}
-            >
-                <img
-                    src={imageSrc}
-                    alt={cafe.name}
-                    onError={() => setImageSrc(PLACEHOLDER_IMAGE)}
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        display: 'block',
-                    }}
-                />
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        padding: { xs: '8px', md: '12px' },
-                        background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
-                        color: '#ffffff',
-                        textShadow: { xs: '0 0 4px rgba(0,0,0,0.7)', md: '0 0 6px rgba(0,0,0,0.7)' },
-                    }}
-                >
-                    <Typography
-                        variant="h6"
+        <Box sx={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '100vw',
+            height: { xs: '350px', md: '400px' },
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 16px',
+        }}>
+            {displayedCafes.map((cafe, index) => {
+                const isMain = index === 1; // Middle card is the main one
+                const imageSrc = cafe.photos && cafe.photos.length > 0 ? cafe.photos[0] : PLACEHOLDER_IMAGE;
+
+                return (
+                    <Box
+                        key={cafe.place_id}
                         sx={{
-                            fontSize: { xs: '16px', md: '20px' },
-                            fontFamily: 'Inter, sans-serif',
-                            fontWeight: 600,
+                            width: isMain ? { xs: '60%', md: '40%' } : { xs: '20%', md: '25%' },
+                            height: isMain ? '100%' : '80%',
+                            mx: 1,
+                            borderRadius: '12px',
+                            overflow: 'hidden',
+                            position: 'relative',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                            transform: isMain ? 'scale(1)' : 'scale(0.9)',
+                            transition: 'transform 0.3s ease',
+                            opacity: isMain ? 1 : 0.7,
                         }}
+                        onClick={() => handleCardClick(cafe)}
                     >
-                        {cafe.name}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            fontSize: { xs: '12px', md: '14px' },
-                            fontFamily: 'Inter, sans-serif',
-                        }}
-                    >
-                        {cafe.address}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            fontSize: { xs: '12px', md: '14px' },
-                            fontFamily: 'Inter, sans-serif',
-                            color: '#cd3234', // Highlight rating
-                        }}
-                    >
-                        Rating: {cafe.rating || 'N/A'}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            fontSize: { xs: '12px', md: '14px' },
-                            fontFamily: 'Inter, sans-serif',
-                        }}
-                    >
-                        Amenities: {cafe.amenities.join(', ') || 'None'}
-                    </Typography>
-                </Box>
-            </Box>
+                        <img
+                            src={imageSrc}
+                            alt={cafe.name}
+                            onError={(e) => { e.currentTarget.src = PLACEHOLDER_IMAGE; }}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                display: 'block',
+                            }}
+                        />
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                padding: { xs: '8px', md: '12px' },
+                                background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                                color: '#ffffff',
+                                textShadow: { xs: '0 0 4px rgba(0,0,0,0.7)', md: '0 0 6px rgba(0,0,0,0.7)' },
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    fontSize: isMain ? { xs: '16px', md: '20px' } : { xs: '12px', md: '16px' },
+                                    fontFamily: 'Inter, sans-serif',
+                                    fontWeight: 600,
+                                }}
+                            >
+                                {cafe.name}
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    fontSize: isMain ? { xs: '12px', md: '14px' } : { xs: '10px', md: '12px' },
+                                    fontFamily: 'Inter, sans-serif',
+                                }}
+                            >
+                                {cafe.address}
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    fontSize: isMain ? { xs: '12px', md: '14px' } : { xs: '10px', md: '12px' },
+                                    fontFamily: 'Inter, sans-serif',
+                                    color: '#cd3234',
+                                }}
+                            >
+                                Rating: {cafe.rating || 'N/A'}
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    fontSize: isMain ? { xs: '12px', md: '14px' } : { xs: '10px', md: '12px' },
+                                    fontFamily: 'Inter, sans-serif',
+                                }}
+                            >
+                                Amenities: {cafe.amenities.join(', ') || 'None'}
+                            </Typography>
+                        </Box>
+                    </Box>
+                );
+            })}
             <Button
                 onClick={handlePrev}
                 sx={{
@@ -198,17 +215,6 @@ const CafeCarousel: React.FC<{
             >
                 <ArrowForward sx={{ fontSize: { xs: '20px', md: '24px' } }} />
             </Button>
-            <Typography
-                sx={{
-                    textAlign: 'center',
-                    mt: '8px',
-                    fontSize: { xs: '14px', md: '16px' },
-                    fontFamily: 'Inter, sans-serif',
-                    color: '#2d2d2d',
-                }}
-            >
-                {currentIndex + 1} of {cafes.length}
-            </Typography>
         </Box>
     );
 };
@@ -345,9 +351,10 @@ function MapView() {
         <Box
             sx={{
                 display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
+                flexDirection: { xs: 'column' },
                 height: '100%',
                 width: '100%',
+                position: 'relative',
                 backgroundColor: '#eeeae4', // Light beige background
             }}
         >
@@ -355,7 +362,7 @@ function MapView() {
             <Box
                 sx={{
                     flex: { xs: 'none', md: 2 }, // Reduced flex to make map smaller
-                    height: { xs: '40vh', md: '500px' }, // Smaller fixed height
+                    minHeight: { xs: '40vh', md: '100vh' }, // Smaller fixed height
                     width: '100%',
                 }}
             >
@@ -367,23 +374,10 @@ function MapView() {
                 sx={{
                     flex: { xs: 'none', md: 1 },
                     width: { xs: '100vw', md: '100%' },
-                    backgroundColor: '#ffffff', // White sidebar for contrast
-                    overflowY: 'auto',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    position: 'absolute',
+                    top: '100%',
                 }}
             >
-                <Typography
-                    variant="h5"
-                    gutterBottom
-                    sx={{
-                        fontSize: { xs: '20px', md: '24px' },
-                        fontFamily: 'Inter, sans-serif',
-                        fontWeight: 700,
-                        color: '#2d2d2d',
-                    }}
-                >
-                    Cafes in Dumaguete
-                </Typography>
                 {isLoading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', padding: '16px' }}>
                         <CircularProgress sx={{ color: '#cd3234' }} />

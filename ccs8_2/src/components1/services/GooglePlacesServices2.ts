@@ -28,7 +28,7 @@ class NetworkError extends Error {
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '';
 const DUMAGUETE_CENTER = { lat: 9.3076, lng: 123.3080 };
 const DEFAULT_RADIUS = 5000; // 5km radius
-const DEFAULT_MAX_RESULTS = 15;
+const DEFAULT_MAX_RESULTS = 30; // Increased from 15 to 30
 const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/400x300?text=No+Image';
 const RETRY_ATTEMPTS = 3;
 const RETRY_BASE_DELAY = 500; // ms
@@ -206,7 +206,7 @@ async function fetchPlaceDetails(
  * @param tags - Array of tags to filter cafes
  * @param map - Google Maps instance
  * @param radius - Search radius in meters (default: 5000)
- * @param maxResults - Maximum number of results (default: 15)
+ * @param maxResults - Maximum number of results (default: 30)
  * @returns Array of CafeDetails
  * @throws PlacesServiceError or NetworkError on failure
  */

@@ -108,11 +108,8 @@ function Body2() {
                 <div className="video-wrapper">
                     <iframe
                         className="video"
-                        src="https://www.youtube.com/embed/5xAIzOlvfdE?autoplay=1&mute=1&loop=1&playlist=5xAIzOlvfdE"
+                        src="https://www.youtube.com/embed/5xAIzOlvfdE?autoplay=1&mute=1&loop=1&playlist=5xAIzOlvfdE&controls=0&modestbranding=1&disablekb=1&rel=0"
                         title="Cafe Compass Video"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
                     ></iframe>
                 </div>
             </div>

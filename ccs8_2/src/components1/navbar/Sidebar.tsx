@@ -9,7 +9,7 @@ type SidebarProps = {
 
 function Sidebar({ toggleDrawer, setToggleDrawer, path }: SidebarProps) {
     const navigate = useNavigate();
-    const btns = ["Home", "About Us", "Coffee Profiles", "Contact Us", "FAQs"];
+    const btns = ["Home", "Explore", "Coffee Profiles", "FAQs"];
 
     const handleItemClick = (index: number) => {
         navigate(path[index]);

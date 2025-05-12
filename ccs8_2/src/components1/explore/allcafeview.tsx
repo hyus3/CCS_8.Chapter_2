@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography, Button, CircularProgress } from '@mui/material';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { fetchCafesByTags, CafeDetails } from '../services/GooglePlacesServices2';
+import '../coffeeprofiles/CoffeeProfiles.css'
 
 const DUMAGUETE_CENTER = { lat: 9.3076, lng: 123.3080 };
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '';
@@ -31,7 +32,6 @@ const CafeCarousel: React.FC<{
         });
     };
 
-    // Handle card click to navigate to CafeView
     const handleCardClick = (cafe: CafeDetails) => {
         if (!cafe.place_id || typeof cafe.place_id !== 'string' || cafe.place_id.trim() === '') {
             console.warn('Cannot navigate: Invalid placeId', {
@@ -57,131 +57,32 @@ const CafeCarousel: React.FC<{
     };
 
     if (cafes.length === 0) {
-        return <Typography sx={{ fontFamily: 'Inter, sans-serif', color: '#2d2d2d' }}>
-            No cafes found for selected tags.
-        </Typography>;
-    }
-
-    // Render single cafe if only one result
-    if (cafes.length === 1) {
-        const cafe = cafes[0];
-        const imageSrc = cafe.photos && cafe.photos.length > 0 ? cafe.photos[0] : PLACEHOLDER_IMAGE;
-
         return (
-            <Box sx={{
-                position: 'relative',
-                width: '100%',
-                maxWidth: '100vw',
-                height: { xs: '350px', md: '400px' },
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
-                <Box
-                    key={cafe.place_id}
-                    sx={{
-                        width: { xs: '60%', md: '40%' },
-                        mx: 1,
-                        borderRadius: '12px',
-                        overflow: 'hidden',
-                        position: 'relative',
-                        cursor: 'pointer',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                        transform: 'scale(1)',
-                        transition: 'transform 0.3s ease',
-                        opacity: 1,
-                    }}
-                    onClick={() => handleCardClick(cafe)}
-                >
-                    <img
-                        src={imageSrc}
-                        alt={cafe.name}
-                        onError={(e) => { e.currentTarget.src = PLACEHOLDER_IMAGE; }}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            display: 'block',
-                        }}
-                    />
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            padding: { xs: '8px', md: '12px' },
-                            background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
-                            color: '#ffffff',
-                            textShadow: { xs: '0 0 4px rgba(0,0,0,0.7)', md: '0 0 6px rgba(0,0,0,0.7)' },
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontSize: { xs: '16px', md: '20px' },
-                                fontFamily: 'Inter, sans-serif',
-                                fontWeight: 600,
-                            }}
-                        >
-                            {cafe.name}
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: { xs: '12px', md: '14px' },
-                                fontFamily: 'Inter, sans-serif',
-                            }}
-                        >
-                            {cafe.address}
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: { xs: '12px', md: '14px' },
-                                fontFamily: 'Inter, sans-serif',
-                                color: '#cd3234',
-                            }}
-                        >
-                            Rating: {cafe.rating || 'N/A'}
-                        </Typography>
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                fontSize: { xs: '12px', md: '14px' },
-                                fontFamily: 'Inter, sans-serif',
-                            }}
-                        >
-                            Amenities: {cafe.amenities.join(', ') || 'None'}
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>
+            <Typography sx={{ fontFamily: 'Inter, sans-serif', color: '#2d2d2d' }}>
+                No cafes found.
+            </Typography>
         );
     }
 
-    // Render carousel for multiple cafes
     const prevIndex = (currentIndex - 1 + cafes.length) % cafes.length;
     const nextIndex = (currentIndex + 1) % cafes.length;
-    const displayedCafes = [
-        cafes[prevIndex],
-        cafes[currentIndex],
-        cafes[nextIndex],
-    ];
+    const displayedCafes = [cafes[prevIndex], cafes[currentIndex], cafes[nextIndex]];
 
     return (
-        <Box sx={{
-            position: 'relative',
-            width: '80%',
-            maxWidth: '100vw',
-            height: { xs: '350px', md: '400px' },
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            justifySelf: 'center'
-        }}>
+        <Box
+            sx={{
+                position: 'relative',
+                width: '100%',
+                maxWidth: '80vw',
+                height: { xs: '200px', sm: '300px' },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                justifySelf: 'center',
+            }}
+        >
             {displayedCafes.map((cafe, index) => {
-                const isMain = index === 1; // Middle card is the main one
+                const isMain = index === 1;
                 const imageSrc = cafe.photos && cafe.photos.length > 0 ? cafe.photos[0] : PLACEHOLDER_IMAGE;
 
                 return (
@@ -189,7 +90,7 @@ const CafeCarousel: React.FC<{
                         key={cafe.place_id}
                         sx={{
                             width: isMain ? { xs: '60%', md: '40%' } : { xs: '20%', md: '25%' },
-                            height: isMain ? '70%' : '60%',
+                            height: isMain ? '80%' : '60%',
                             mx: 1,
                             borderRadius: '12px',
                             overflow: 'hidden',
@@ -256,7 +157,7 @@ const CafeCarousel: React.FC<{
                             </Typography>
                         </Box>
                     </Box>
-                )
+                );
             })}
             <Button
                 onClick={handlePrev}
@@ -308,10 +209,8 @@ const CafeCarousel: React.FC<{
     );
 };
 
-function MapView() {
-    const location = useLocation();
+function AllCafesView() {
     const navigate = useNavigate();
-    const tags = (location.state as { tags?: string[] })?.tags || [];
     const mapRef = useRef<HTMLDivElement>(null);
     const [cafes, setCafes] = useState<CafeDetails[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -321,15 +220,16 @@ function MapView() {
     const scriptRef = useRef<HTMLScriptElement | null>(null);
 
     useEffect(() => {
+        console.log('AllCafesView mounted, API_KEY:', API_KEY);
         if (!API_KEY) {
             console.error('Google Maps API key is missing');
             setIsLoading(false);
             return;
         }
 
-        // Dynamically load Google Maps API
         const loadGoogleMaps = () => {
             if (window.google && window.google.maps) {
+                console.log('Google Maps API already loaded');
                 initializeMap();
                 return;
             }
@@ -338,10 +238,14 @@ function MapView() {
             scriptRef.current.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initMap`;
             scriptRef.current.async = true;
             scriptRef.current.defer = true;
+            scriptRef.current.onerror = () => {
+                console.error('Failed to load Google Maps script');
+                setIsLoading(false);
+            };
             document.body.appendChild(scriptRef.current);
 
-            // Define global callback
             (window as any).initMap = () => {
+                console.log('initMap callback triggered');
                 initializeMap();
             };
         };
@@ -352,23 +256,29 @@ function MapView() {
                 setIsLoading(false);
                 return;
             }
+            if (!window.google || !window.google.maps) {
+                console.error('Google Maps API not loaded');
+                setIsLoading(false);
+                return;
+            }
 
-            // Initialize Google Map with locked interaction
+            console.log('Initializing map');
             const googleMap = new google.maps.Map(mapRef.current, {
                 center: DUMAGUETE_CENTER,
                 zoom: 15,
                 mapTypeId: 'roadmap',
-                disableDefaultUI: true, // Disable all default UI controls
-                draggable: false, // Prevent dragging/panning
-                scrollwheel: false, // Disable zoom on scroll
-                gestureHandling: 'none', // Disable all gestures
-                keyboardShortcuts: false, // Disable keyboard controls
+                disableDefaultUI: true,
+                draggable: false,
+                scrollwheel: false,
+                gestureHandling: 'none',
+                keyboardShortcuts: false,
             });
             setMap(googleMap);
 
-            // Fetch cafes based on tags
-            fetchCafesByTags(tags, googleMap)
+            console.log('Fetching cafes');
+            fetchCafesByTags([], googleMap)
                 .then((fetchedCafes) => {
+                    console.log('Cafes fetched:', fetchedCafes);
                     setCafes(fetchedCafes);
                     setIsLoading(false);
                 })
@@ -380,8 +290,8 @@ function MapView() {
 
         loadGoogleMaps();
 
-        // Cleanup on unmount
         return () => {
+            console.log('Cleaning up AllCafesView');
             if (scriptRef.current && document.body.contains(scriptRef.current)) {
                 document.body.removeChild(scriptRef.current);
             }
@@ -392,37 +302,34 @@ function MapView() {
                 setMarker(null);
             }
         };
-    }, [tags]);
+    }, []);
 
-    // Update marker when currentIndex or cafes change
     useEffect(() => {
         if (!map || !cafes.length) return;
 
-        // Clear existing marker
         if (marker) {
             marker.setMap(null);
             setMarker(null);
         }
 
-        // Add marker for current cafe
         const cafe = cafes[currentIndex];
         if (cafe) {
+            console.log('Setting marker for cafe:', cafe.name);
             const newMarker = new google.maps.Marker({
                 position: { lat: cafe.lat, lng: cafe.lng },
                 map,
                 title: cafe.name,
             });
 
-            // Info window for marker click
             const infoWindow = new google.maps.InfoWindow({
                 content: `
-          <div style="padding: 10px; font-family: 'Inter', sans-serif;">
-            <h3 style="margin: 0 0 8px; color: #2d2d2d;">${cafe.name}</h3>
-            <p style="margin: 4px 0;">${cafe.address}</p>
-            <p style="margin: 4px 0; color: #cd3234;">Rating: ${cafe.rating || 'N/A'}</p>
-            <p style="margin: 4px 0;">Amenities: ${cafe.amenities.join(', ') || 'None'}</p>
-          </div>
-        `,
+                    <div style="padding: 10px; font-family: 'Inter', sans-serif;">
+                        <h3 style="margin: 0 0 8px; color: #2d2d2d;">${cafe.name}</h3>
+                        <p style="margin: 4px 0;">${cafe.address}</p>
+                        <p style="margin: 4px 0; color: #cd3234;">Rating: ${cafe.rating || 'N/A'}</p>
+                        <p style="margin: 4px 0;">Amenities: ${cafe.amenities.join(', ') || 'None'}</p>
+                    </div>
+                `,
             });
 
             newMarker.addListener('click', () => {
@@ -430,8 +337,6 @@ function MapView() {
             });
 
             setMarker(newMarker);
-
-            // Pan map to cafe location
             map.panTo({ lat: cafe.lat, lng: cafe.lng });
         }
     }, [currentIndex, cafes, map]);
@@ -453,15 +358,14 @@ function MapView() {
                     maxWidth: '1200px',
                     padding: '60px 1rem',
                     width: '100%'
-                }}
-            >
-                <Typography variant='h5' sx={{ color: '#cd3234', fontWeight: 'bold' }}>Explore</Typography>
-                <Typography variant='h3' sx={{ color: '#000000', fontWeight: 'semi-bold' }}>Cafes near you</Typography>
+                }}>
+                <Typography variant='h5' sx={{color: '#cd3234', fontWeight: 'bold'}}>Explore</Typography>
+                <Typography variant='h3' sx={{color: '#000000', fontWeight: 'semi-bold'}}>Cafes near you</Typography>
             </Box>
             <Box
                 sx={{
                     flex: { xs: 'none', md: 2 },
-                    minHeight: { xs: '60vh' },
+                    minHeight: { xs: '60vh' }, // Adjusted for testing
                     width: '100%',
                 }}
             >
@@ -477,7 +381,7 @@ function MapView() {
                 }}
             >
                 {isLoading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center',}}>
                         <CircularProgress sx={{ color: '#cd3234' }} />
                     </Box>
                 ) : (
@@ -488,4 +392,4 @@ function MapView() {
     );
 }
 
-export default MapView;
+export default AllCafesView;

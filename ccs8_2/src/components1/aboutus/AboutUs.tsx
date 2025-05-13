@@ -54,11 +54,11 @@ function AboutUs() {
                 {/* Avatar for picture */}
                 <Avatar
                     alt="Daniel Arellano Profile"
-                    src="https://drive.google.com/file/d/1AjxUcahCh3OJrd74WhJuFyWxA-L54_Vy/view?" // Image source
+                    src="https://drive.google.com/thumbnail?id=1QQE6o2h3dU_-RUvUqmuv7RJ-bjLdgYPa"
                     sx={{
                         width: 120,
                         height: 120,
-                        margin: '0 auto 10px', // Centering the Avatar and adding space below
+                        margin: '0 auto 10px',
                     }}
                 />
                 <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#6e4e33' }}> Daniel Roz Arellano </Typography>

@@ -54,7 +54,7 @@ function AboutUs() {
                 {/* Avatar for picture */}
                 <Avatar
                     alt="Daniel Arellano Profile"
-                    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t39.30808-1/438973119_1604729470302789_2778952454368984412_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=110&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFZjQl28x2BxCa9MitQjc_0GRoVC1ULahAZGhULVQtqEHhD8CENtpYB5NfACBQ0i3AaOg-q78dCByfgfL2fzQfW&_nc_ohc=Ro-1q4M7KHEQ7kNvwGglZTc&_nc_oc=Adk1LaMUkisE9qHIHeuvlR7huY6G5zPcTiiIIfa68EcaWW755ny5AcJHVvBAypBCZjo&_nc_zt=24&_nc_ht=scontent.fceb3-1.fna&_nc_gid=mFSZ1JR6tPtok7wPqU0pzw&oh=00_AfI-tlmulncvcHo7pWWJc4IM8-uevC_9BzhxYLq2fbS7LA&oe=682004BB" // Image source
+                    src="https://drive.google.com/file/d/1AjxUcahCh3OJrd74WhJuFyWxA-L54_Vy/view?" // Image source
                     sx={{
                         width: 120,
                         height: 120,

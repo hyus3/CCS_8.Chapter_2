@@ -257,25 +257,29 @@ function Profile({ user }: ProfileProps) {
                         </Card>
                     ))
                 ) : (
-                    <Typography
-                        variant="h6"
+                    <Box
                         sx={{
-                            textAlign: 'center',
-                            p: 2,
-                            backgroundColor: 'transparent',
-                            border: '1px solid #110203',
-                            borderRadius: 2,
-                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                            color: '#666',
-                            fontFamily: "Helvetica",
-                            fontWeight: 500,
-                            width: '100%',
-                            maxWidth: 500,
-                            mx: 'auto',
+                            gridColumn: '1 / -1', // span entire row
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            minHeight: 200, // adjust based on how much space you want
                         }}
                     >
-                        You have no favorite cafes yet.
-                    </Typography>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                textAlign: 'center',
+                                backgroundColor: 'transparent',
+                                color: '#666',
+                                fontFamily: "Helvetica",
+                                fontWeight: 500,
+                                maxWidth: 500,
+                            }}
+                        >
+                            You have no favorite cafes yet.
+                        </Typography>
+                    </Box>
                 )}
             </Box>
         </Container>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
 import { User, onAuthStateChanged, getAuth, signOut } from "firebase/auth";
 
 import NavBar from "./components1/navbar/NavBar";
@@ -14,6 +14,7 @@ import ContactUs from "./components1/contactus/ContactUs";
 import CoffeeProfiles from "./components1/coffeeprofiles/CoffeeProfiles";
 import MapView from "./components1/mapview/mapview";
 import AllCafesView from "./components1/explore/allcafeview";
+import Footer from "./components1/navbar/Footer";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -68,6 +69,9 @@ function App() {
                 <Route path="/mapview" element={<MapView />} />
                 <Route path="/explore" element={<AllCafesView />} />
             </Routes>
+            <footer>
+                <Footer />
+            </footer>
         </Router>
     );
 }

@@ -445,6 +445,7 @@ function MapView() {
                 width: '100%',
                 position: 'relative',
                 backgroundColor: '#eeeae4',
+                marginBottom : '300px',
             }}
         >
             <Box

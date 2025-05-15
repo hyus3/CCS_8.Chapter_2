@@ -319,7 +319,7 @@ function AllCafesView() {
 
     const breadcrumbItems = [
         { label: 'Home', path: '/' },
-        { label: 'All Cafes' },
+        { label: 'Explore' },
     ];
 
     useEffect(() => {
@@ -453,7 +453,7 @@ function AllCafesView() {
                 width: '100%',
                 position: 'relative',
                 backgroundColor: '#eeeae4',
-                marginBottom: '300px',
+                marginBottom: {xs: '325px', md: '375px'},
             }}
         >
             <Box
@@ -467,15 +467,12 @@ function AllCafesView() {
                 <Typography variant='h5' sx={{color: '#cd3234', fontWeight: 'bold'}}>Explore</Typography>
                 <Typography variant='h3' sx={{color: '#000000', fontWeight: 'semi-bold'}}>Cafes near you</Typography>
             </Box>
-            <Box
-                sx={{
-                    flex: { xs: 'none', md: 2 },
-                    minHeight: { xs: '60vh' },
+            <Box ref={mapRef}
+                 sx={{
                     width: '100%',
+                    height: {xs: '60vh', sm: '50vh'},
                 }}
-            >
-                <div ref={mapRef} style={{ width: '100%', height: '100%', minHeight: '60vh' }} />
-            </Box>
+            />
             <Box
                 sx={{
                     flex: { xs: 'none', md: 1 },
@@ -486,7 +483,7 @@ function AllCafesView() {
                 }}
             >
                 {isLoading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center',}}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center'}}>
                         <CircularProgress sx={{ color: '#cd3234' }} />
                     </Box>
                 ) : (

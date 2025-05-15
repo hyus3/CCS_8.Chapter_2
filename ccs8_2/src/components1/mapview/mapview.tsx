@@ -451,7 +451,7 @@ function MapView() {
                 width: '100%',
                 position: 'relative',
                 backgroundColor: '#eeeae4',
-                marginBottom : '300px',
+                marginBottom: {xs: '325px', md: '375px'},
             }}
         >
             <Box
@@ -466,15 +466,12 @@ function MapView() {
                 <Typography variant='h5' sx={{ color: '#cd3234', fontWeight: 'bold' }}>Preference</Typography>
                 <Typography variant='h3' sx={{ color: '#000000', fontWeight: 'semi-bold' }}>Discover cafes based on your needs</Typography>
             </Box>
-            <Box
-                sx={{
-                    flex: { xs: 'none', md: 2 },
-                    minHeight: { xs: '60vh' },
-                    width: '100%',
-                }}
-            >
-                <div ref={mapRef} style={{ width: '100%', height: '100%', minHeight: '60vh' }} />
-            </Box>
+            <Box ref={mapRef}
+                 sx={{
+                     width: '100%',
+                     height: {xs: '60vh', sm: '50vh'},
+                 }}
+            />
             <Box
                 sx={{
                     flex: { xs: 'none', md: 1 },

@@ -28,6 +28,12 @@ function Footer() {
                 '&:hover': { color: '#cd3234'}
             }}
                         onClick={() => navigate('/aboutus')}>About Us</Typography>
+            <Typography variant='h6' sx={{
+                fontWeight: '400',
+                fontSize: '1rem',
+                '&:hover': { color: '#cd3234'}
+            }}
+                        onClick={() => navigate('/sitemap')}>Sitemap</Typography>
         </Box>
     )
 }

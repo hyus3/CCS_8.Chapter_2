@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { User, onAuthStateChanged, getAuth, signOut } from "firebase/auth";
 
 import NavBar from "./components1/navbar/NavBar";
@@ -15,10 +15,12 @@ import CoffeeProfiles from "./components1/coffeeprofiles/CoffeeProfiles";
 import MapView from "./components1/mapview/mapview";
 import AllCafesView from "./components1/explore/allcafeview";
 import Footer from "./components1/navbar/Footer";
+import Sitemap from "./components1/sitemap/Sitemap";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
+    const location = useLocation();
 
     useEffect(() => {
         const auth = getAuth();
@@ -47,15 +49,19 @@ function App() {
             });
     };
 
+    const isLoginPage = location.pathname === "/login";
+
     return (
-        <Router>
-            <header>
-                <NavBar
-                    loggedIn={loggedIn}
-                    setLoggedin={logout}
-                    userPhoto={user?.photoURL}
-                />
-            </header>
+        <>
+            {!isLoginPage && (
+                <header>
+                    <NavBar
+                        loggedIn={loggedIn}
+                        setLoggedin={logout}
+                        userPhoto={user?.photoURL}
+                    />
+                </header>
+            )}
             <Routes>
                 <Route path="/" element={<Body2 />} />
                 <Route path="/aboutus" element={<AboutUs />} />
@@ -68,12 +74,21 @@ function App() {
                 <Route path="/cafe/:placeId" element={<CafeView user={user} />} />
                 <Route path="/mapview" element={<MapView />} />
                 <Route path="/explore" element={<AllCafesView />} />
+                <Route path="/sitemap" element={<Sitemap />} />
             </Routes>
-            <footer>
-                <Footer />
-            </footer>
-        </Router>
+            {!isLoginPage && (
+                <footer>
+                    <Footer />
+                </footer>
+            )}
+        </>
     );
 }
 
-export default App;
+export default function AppWrapper() {
+    return (
+        <Router>
+            <App />
+        </Router>
+    );
+}

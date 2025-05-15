@@ -65,52 +65,102 @@ function Login({ onLogin }: LoginProps) {
     return (
         <Box
             display="flex"
-            flexDirection="column"
-            alignItems="center"
             justifyContent="center"
-            sx={{ textAlign: "center", padding: 3 }}
+            alignItems="center"
+            minHeight= '100vh'
+            sx={{
+                backgroundImage: `url(https://i.pinimg.com/736x/83/ea/49/83ea4988f002a81e18789b188d7f79f9.jpg)`, // Replace with your image path or URL
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                 // Adjust the blur radius (e.g., 8px) as needed
+            }}
         >
-            <Typography variant="h4" sx={{ mb: 3, fontWeight: 600, color: "#333" }}>
-                {mode === "login" ? "Log in to Coffee Compass" : "Sign up for Coffee Compass"}
-            </Typography>
-
             <Box
-                component="form"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    handleEmailAuth();
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                bgcolor= 'rgba(238,234,228, .85)'
+                width='max-content'
+                sx={{
+                    textAlign: "center",
+                    p: 4,
+                    borderRadius: 5,
+                    transition: 'transform 0.3s ease'
                 }}
-                sx={{ width: "100%", maxWidth: 400 }}
             >
-                {mode === "signup" && (
+                <Typography variant="h4" sx={{ mb: 3, fontWeight: 600, color: "#333" }}>
+                    {mode === "login" ? "Log in to Coffee Compass" : "Sign up for Coffee Compass"}
+                </Typography>
+
+                <Box
+                    component="form"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleEmailAuth();
+                    }}
+                    sx={{ width: "100%", maxWidth: 400 }}
+                >
+                    {mode === "signup" && (
+                        <TextField
+                            label="Name"
+                            fullWidth
+                            required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            sx={{ mb: 2 }}
+                        />
+                    )}
                     <TextField
-                        label="Name"
+                        label="Email"
+                        type="email"
                         fullWidth
                         required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         sx={{ mb: 2 }}
                     />
-                )}
-                <TextField
-                    label="Email"
-                    type="email"
-                    fullWidth
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <TextField
-                    label="Password"
-                    type="password"
-                    fullWidth
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-                <Button variant="outlined" type="submit" fullWidth
+                    <TextField
+                        label="Password"
+                        type="password"
+                        fullWidth
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        sx={{ mb: 2 }}
+                    />
+                    <Button variant="outlined" type="submit" fullWidth
+                            sx={{
+                                width: "100%",
+                                maxWidth: 400,
+                                height: 60,
+                                borderColor: "#cd3234",
+                                color: "#cd3234",
+                                borderWidth: 2,
+                                mb: 2,
+                                "&:hover": {
+                                    backgroundColor: "#cd3234",
+                                    color: "#fff"
+                                }
+                            }}
+                    >
+                        {mode === "login" ? "Log in with Email" : "Sign up with Email"}
+                    </Button>
+                    {error && (
+                        <Typography color="error" sx={{ mt: 1 }}>
+                            {error}
+                        </Typography>
+                    )}
+                </Box>
+
+                <Divider sx={{ width: "100%", maxWidth: 400, my: 2 }}>
+                    <Typography variant="caption">or</Typography>
+                </Divider>
+
+                <Button
+                    variant="outlined"
+                    onClick={handleGoogleLogin}
                     sx={{
                         width: "100%",
                         maxWidth: 400,
@@ -120,105 +170,74 @@ function Login({ onLogin }: LoginProps) {
                         borderWidth: 2,
                         mb: 2,
                         "&:hover": {
-                            borderColor: "#6e4e33",
-                            backgroundColor: "#6e4e33",
+                            backgroundColor: "#cd3234",
                             color: "#fff"
                         }
                     }}
+                    startIcon={<GoogleIcon />}
                 >
-                    {mode === "login" ? "Log in with Email" : "Sign up with Email"}
+                    Continue with Google
                 </Button>
-                {error && (
-                    <Typography color="error" sx={{ mt: 1 }}>
-                        {error}
-                    </Typography>
-                )}
+
+                {/* Toggle between Login and Signup */}
+                <ToggleButtonGroup
+                    value={mode}
+                    exclusive
+                    onChange={(_, newMode) => newMode && setMode(newMode)}
+                    sx={{ mb: 2 }}
+                >
+                    <ToggleButton
+                        value="login"
+                        sx={{
+                            fontSize: "0.75rem",
+                            px: 2,
+                            py: 0.5,
+                            height: 30,
+                            minWidth: 80,
+                            borderColor: "#cd3234",
+                            color: "#cd3234",
+                            "&.Mui-selected": {
+                                backgroundColor: "#cd3234",
+                                color: "#fff",
+                                "&:hover": {
+                                    backgroundColor: "#cd3234"
+                                }
+                            },
+                            "&:hover": {
+                                backgroundColor: "#cd3234",
+                                color: "#fff"
+                            }
+                        }}
+                    >
+                        Log In
+                    </ToggleButton>
+                    <ToggleButton
+                        value="signup"
+                        sx={{
+                            fontSize: "0.75rem",
+                            px: 2,
+                            py: 0.5,
+                            height: 30,
+                            minWidth: 80,
+                            borderColor: "#cd3234",
+                            color: "#cd3234",
+                            "&.Mui-selected": {
+                                backgroundColor: "#cd3234",
+                                color: "#fff",
+                                "&:hover": {
+                                    backgroundColor: "#cd3234"
+                                }
+                            },
+                            "&:hover": {
+                                backgroundColor: "#cd3234",
+                                color: "#fff"
+                            }
+                        }}
+                    >
+                        Sign Up
+                    </ToggleButton>
+                </ToggleButtonGroup>
             </Box>
-
-            <Divider sx={{ width: "100%", maxWidth: 400, my: 2 }}>
-                <Typography variant="caption">or</Typography>
-            </Divider>
-
-            <Button
-                variant="outlined"
-                onClick={handleGoogleLogin}
-                sx={{
-                    width: "100%",
-                    maxWidth: 400,
-                    height: 60,
-                    borderColor: "#cd3234",
-                    color: "#cd3234",
-                    borderWidth: 2,
-                    mb: 2,
-                    "&:hover": {
-                        borderColor: "#6e4e33",
-                        backgroundColor: "#6e4e33",
-                        color: "#fff"
-                    }
-                }}
-                startIcon={<GoogleIcon />}
-            >
-                Continue with Google
-            </Button>
-
-            {/* Toggle between Login and Signup */}
-            <ToggleButtonGroup
-                value={mode}
-                exclusive
-                onChange={(_, newMode) => newMode && setMode(newMode)}
-                sx={{ mb: 2 }}
-            >
-                <ToggleButton
-                    value="login"
-                    sx={{
-                        fontSize: "0.75rem",
-                        px: 2,
-                        py: 0.5,
-                        height: 30,
-                        minWidth: 80,
-                        borderColor: "#cd3234",
-                        color: "#cd3234",
-                        "&.Mui-selected": {
-                            backgroundColor: "#cd3234",
-                            color: "#fff",
-                            "&:hover": {
-                                backgroundColor: "#6e4e33"
-                            }
-                        },
-                        "&:hover": {
-                            backgroundColor: "#6e4e33",
-                            color: "#fff"
-                        }
-                    }}
-                >
-                    Log In
-                </ToggleButton>
-                <ToggleButton
-                    value="signup"
-                    sx={{
-                        fontSize: "0.75rem",
-                        px: 2,
-                        py: 0.5,
-                        height: 30,
-                        minWidth: 80,
-                        borderColor: "#cd3234",
-                        color: "#cd3234",
-                        "&.Mui-selected": {
-                            backgroundColor: "#cd3234",
-                            color: "#fff",
-                            "&:hover": {
-                                backgroundColor: "#6e4e33"
-                            }
-                        },
-                        "&:hover": {
-                            backgroundColor: "#6e4e33",
-                            color: "#fff"
-                        }
-                    }}
-                >
-                    Sign Up
-                </ToggleButton>
-            </ToggleButtonGroup>
         </Box>
     );
 }

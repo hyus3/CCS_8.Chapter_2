@@ -44,7 +44,6 @@ function AboutUs() {
             sx={{
                 paddingTop: "3rem",
                 gap: '20px', // Space between the people
-                minHeight: '100vh', // Ensures that content takes full height
                 marginTop: '0',
                 flexWrap: 'wrap',
             }}

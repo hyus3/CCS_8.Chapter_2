@@ -1,4 +1,5 @@
 import React from "react";
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 const faqs = [
   {
@@ -44,6 +45,10 @@ const faqs = [
 ];
 
 const FaqPage = () => {
+    const breadcrumbItems = [
+        { label: 'Home', path: '/' },
+        { label: 'FAQ' },
+    ];
   return (
     <div style={{ 
         padding: "60px 1rem",
@@ -52,6 +57,7 @@ const FaqPage = () => {
         fontFamily: "Helvetica",
         marginBottom: "4rem",
      }}>
+        <BreadcrumbsComponent items={breadcrumbItems} />
       <h1 style={{ 
         fontSize: "1.5rem", 
         color: "#cd3234", 

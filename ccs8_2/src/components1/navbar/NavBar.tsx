@@ -64,11 +64,32 @@ function NavBar(prop: props) {
                 sx={{
                     width: 'auto',
                     height: '7.5vw',
-                    display: {xs: 'none', md: 'flex'},
-                }}>
+                    display: { xs: 'none', md: 'flex' },
+                }}
+            >
                 <Tooltip title="Home">
-                    <Button onClick={() => navigate('/')} sx={{width: "auto", height: "inherit"}}>
-                        <img id="logo" src={'../../../logo.png'} height='100%'/>
+                    <Button
+                        onClick={() => navigate('/')}
+                        sx={{
+                            width: 'auto',
+                            height: 'inherit',
+                            padding: 0,
+                            minWidth: 'unset',
+                            backgroundColor: 'transparent',
+                            ':hover': {
+                                backgroundColor: 'transparent',
+                                boxShadow: 'none',
+                            },
+                            ':active': {
+                                backgroundColor: 'transparent',
+                                boxShadow: 'none',
+                            },
+                            '.MuiTouchRipple-root': {
+                                display: 'none', // Disable ripple effect
+                            },
+                        }}
+                    >
+                        <img id="logo" src={'../../../logo.png'} alt="Home" style={{ height: '100%' }} />
                     </Button>
                 </Tooltip>
             </Box>

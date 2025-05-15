@@ -1,7 +1,12 @@
 import React from 'react';
 import { Box, Typography, Paper, Avatar } from '@mui/material';
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 function AboutUs() {
+    const breadcrumbItems = [
+        { label: 'Home', path: '/' },
+        { label: 'About Us' },
+    ];
     return (
         <Box
             sx={{
@@ -11,6 +16,7 @@ function AboutUs() {
                 margin: '0 auto',
             }}
         >
+            <BreadcrumbsComponent items={breadcrumbItems} />
             {/* Header Section */}
             <Box mb={2}>
                 <h2 style={{
@@ -38,7 +44,7 @@ function AboutUs() {
             sx={{
                 paddingTop: "3rem",
                 gap: '20px', // Space between the people
-                maxHeight: '100vh', // Ensures that content takes full height
+                minHeight: '100vh', // Ensures that content takes full height
                 marginTop: '0',
                 flexWrap: 'wrap',
             }}

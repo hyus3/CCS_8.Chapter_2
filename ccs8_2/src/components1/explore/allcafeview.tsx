@@ -4,6 +4,7 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { fetchCafesByTags, CafeDetails } from '../services/GooglePlacesServices2';
 import '../coffeeprofiles/CoffeeProfiles.css'
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 const DUMAGUETE_CENTER = { lat: 9.3076, lng: 123.3080 };
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '';
@@ -64,6 +65,103 @@ const CafeCarousel: React.FC<{
         );
     }
 
+    if (cafes.length === 1) {
+        const cafe = cafes[0];
+        const imageSrc = cafe.photos && cafe.photos.length > 0 ? cafe.photos[0] : PLACEHOLDER_IMAGE;
+
+        return (
+            <Box sx={{
+                position: 'relative',
+                width: '100%',
+                maxWidth: '100vw',
+                height: { xs: '350px', md: '400px' },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <Box
+                    key={cafe.place_id}
+                    sx={{
+                        width: { xs: '60%', md: '40%' },
+                        mx: 1,
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        position: 'relative',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                        transform: 'scale(1)',
+                        transition: 'transform 0.3s ease',
+                        opacity: 1,
+                    }}
+                    onClick={() => handleCardClick(cafe)}
+                >
+                    <img
+                        src={imageSrc}
+                        alt={cafe.name}
+                        onError={(e) => { e.currentTarget.src = PLACEHOLDER_IMAGE; }}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            display: 'block',
+                        }}
+                    />
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            padding: { xs: '8px', md: '12px' },
+                            background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                            color: '#ffffff',
+                            textShadow: { xs: '0 0 4px rgba(0,0,0,0.7)', md: '0 0 6px rgba(0,0,0,0.7)' },
+                        }}
+                    >
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontSize: { xs: '16px', md: '20px' },
+                                fontFamily: 'Inter, sans-serif',
+                                fontWeight: 600,
+                            }}
+                        >
+                            {cafe.name}
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                fontSize: { xs: '12px', md: '14px' },
+                                fontFamily: 'Inter, sans-serif',
+                            }}
+                        >
+                            {cafe.address}
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                fontSize: { xs: '12px', md: '14px' },
+                                fontFamily: 'Inter, sans-serif',
+                                color: '#cd3234',
+                            }}
+                        >
+                            Rating: {cafe.rating || 'N/A'}
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                fontSize: { xs: '12px', md: '14px' },
+                                fontFamily: 'Inter, sans-serif',
+                            }}
+                        >
+                            Amenities: {cafe.amenities.join(', ') || 'None'}
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+        );
+    }
+
     const prevIndex = (currentIndex - 1 + cafes.length) % cafes.length;
     const nextIndex = (currentIndex + 1) % cafes.length;
     const displayedCafes = [cafes[prevIndex], cafes[currentIndex], cafes[nextIndex]];
@@ -74,7 +172,7 @@ const CafeCarousel: React.FC<{
                 position: 'relative',
                 width: '100%',
                 maxWidth: '80vw',
-                height: { xs: '200px', sm: '300px' },
+                height: { xs: '350px', md: '400px' },
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -90,7 +188,7 @@ const CafeCarousel: React.FC<{
                         key={cafe.place_id}
                         sx={{
                             width: isMain ? { xs: '60%', md: '40%' } : { xs: '20%', md: '25%' },
-                            height: isMain ? '80%' : '60%',
+                            height: isMain ? '70%' : '60%',
                             mx: 1,
                             borderRadius: '12px',
                             overflow: 'hidden',
@@ -219,6 +317,11 @@ function AllCafesView() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const scriptRef = useRef<HTMLScriptElement | null>(null);
 
+    const breadcrumbItems = [
+        { label: 'Home', path: '/' },
+        { label: 'All Cafes' },
+    ];
+
     useEffect(() => {
         console.log('AllCafesView mounted, API_KEY:', API_KEY);
         if (!API_KEY) {
@@ -257,7 +360,7 @@ function AllCafesView() {
                 return;
             }
             if (!window.google || !window.google.maps) {
-                console.error('Google Maps API not loaded');
+                console.error('Google Maps API not StuartMap API not loaded');
                 setIsLoading(false);
                 return;
             }
@@ -350,7 +453,7 @@ function AllCafesView() {
                 width: '100%',
                 position: 'relative',
                 backgroundColor: '#eeeae4',
-                marginBottom : '300px',
+                marginBottom: '300px',
             }}
         >
             <Box
@@ -360,13 +463,14 @@ function AllCafesView() {
                     padding: '60px 1rem',
                     width: '100%'
                 }}>
+                <BreadcrumbsComponent items={breadcrumbItems} />
                 <Typography variant='h5' sx={{color: '#cd3234', fontWeight: 'bold'}}>Explore</Typography>
                 <Typography variant='h3' sx={{color: '#000000', fontWeight: 'semi-bold'}}>Cafes near you</Typography>
             </Box>
             <Box
                 sx={{
                     flex: { xs: 'none', md: 2 },
-                    minHeight: { xs: '60vh' }, // Adjusted for testing
+                    minHeight: { xs: '60vh' },
                     width: '100%',
                 }}
             >

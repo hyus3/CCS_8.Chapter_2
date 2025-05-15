@@ -1,5 +1,6 @@
 import React from "react";
 import "./CoffeeProfiles.css";
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 type CoffeeItem = {
   name: string;
@@ -117,8 +118,13 @@ const coffeeData: CoffeeCategory[] = [
 ];
 
 const CoffeeProfiles = () => {
+  const breadcrumbItems = [
+    { label: 'Home', path: '/' },
+    { label: 'Coffee Profiles' },
+  ];
   return (
     <div className="container">
+      <BreadcrumbsComponent items={breadcrumbItems} />
       <h2 className="title" >
         Coffee Flavors Profile
       </h2>

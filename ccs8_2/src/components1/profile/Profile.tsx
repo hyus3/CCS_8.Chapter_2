@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { db } from '../../firebase'; // Assuming you have Firebase initialized
 import { collection, query, getDocs } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom";
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 type ProfileProps = {
     user: User | null;
@@ -27,6 +28,11 @@ function Profile({ user }: ProfileProps) {
     const [photoUrl, setPhotoUrl] = useState<string>("");
     const [favoriteCafes, setFavoriteCafes] = useState<CafeDetails[]>([]);
     const navigate = useNavigate();
+
+    const breadcrumbItems = [
+        { label: 'Home', path: '/' },
+        { label: 'Profile' },
+    ];
 
     // Function to fetch favorite cafes from Firestore
     const fetchFavoriteCafes = async () => {
@@ -101,25 +107,39 @@ function Profile({ user }: ProfileProps) {
 
     if (!freshUser) {
         return (
-            <Typography
-                variant="h6"
+            <Container
                 sx={{
-                    textAlign: 'center',
-                    p: 2,
-                    backgroundColor: 'transparent',
-                    border: '1px solid #110203',
-                    borderRadius: 2,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                    color: '#666',
-                    fontFamily: "Helvetica",
-                    fontWeight: 500,
-                    maxWidth: 600,
-                    mx: 'auto',
-                    mt: 4,
+                    maxWidth: '1400px !important',
+                    minHeight: '100vh',
+                    bgcolor: '#eeeae4',
+                    p: { xs: 2, sm: 3, md: 4 },
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    fontFamily: 'Helvetica',
                 }}
             >
-                Please log in to view your profile.
-            </Typography>
+                <BreadcrumbsComponent items={breadcrumbItems} />
+                <Typography
+                    variant="h6"
+                    sx={{
+                        textAlign: 'center',
+                        p: 2,
+                        backgroundColor: 'transparent',
+                        border: '1px solid #110203',
+                        borderRadius: 2,
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                        color: '#666',
+                        fontFamily: 'Helvetica',
+                        fontWeight: 500,
+                        maxWidth: 600,
+                        mx: 'auto',
+                        mt: 4,
+                    }}
+                >
+                    Please log in to view your profile.
+                </Typography>
+            </Container>
         );
     }
 
@@ -134,153 +154,155 @@ function Profile({ user }: ProfileProps) {
                 p: { xs: 2, sm: 3, md: 4 },
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
                 fontFamily: "Helvetica",
             }}
         >
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    mb: 4,
-                    gap: 2,
-                }}
-            >
-                <Avatar
-                    src={photoUrl || "broken-image.jpg"}
+            <BreadcrumbsComponent items={breadcrumbItems} />
+            <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                <Box
                     sx={{
-                        width: { xs: 120, sm: 160, md: 180 },
-                        height: { xs: 120, sm: 160, md: 180 },
-                        border: '4px solid #fff',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                        transition: 'transform 0.3s ease',
-                        '&:hover': {
-                            transform: 'scale(1.05)',
-                        },
-                    }}
-                />
-                <Typography
-                    variant="h4"
-                    sx={{
-                        fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' },
-                        fontWeight: 700,
-                        color: '#6e4e33',
-                        textAlign: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        mb: 4,
+                        gap: 2,
                     }}
                 >
-                    {fullName}
-                </Typography>
-            </Box>
-
-            <Box
-                sx={{
-                    display: 'grid',
-                    gridTemplateColumns: {
-                        xs: '1fr',
-                        sm: 'repeat(auto-fill, minmax(280px, 1fr))',
-                        md: 'repeat(auto-fill, minmax(300px, 1fr))',
-                    },
-                    gap: { xs: 2, sm: 3 },
-                    width: '100%',
-                    maxWidth: '1200px',
-                }}
-            >
-                {favoriteCafes.length > 0 ? (
-                    favoriteCafes.map((cafe) => (
-                        <Card
-                            key={cafe.place_id}
-                            sx={{
-                                borderRadius: 3,
-                                border: '1px solid #110203',
-                                backgroundColor: "transparent",
-                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-                                overflow: 'hidden',
-                                cursor: 'pointer',
-                                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                                '&:hover': {
-                                    transform: 'translateY(-4px)',
-                                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
-                                },
-                            }}
-                            onClick={() => handleCafeClick(cafe)}
-                        >
-                            {cafe.photos.length > 0 ? (
-                                <CardMedia
-                                    component="img"
-                                    sx={{
-                                        height: { xs: 120, sm: 140, md: 150 },
-                                        objectFit: 'cover',
-                                    }}
-                                    image={cafe.photos[0]}
-                                    alt={cafe.name}
-                                />
-                            ) : (
-                                <CardMedia
-                                    component="img"
-                                    sx={{
-                                        height: { xs: 140, sm: 160, md: 180 },
-                                        objectFit: 'cover',
-                                    }}
-                                    image="broken-image.jpg"
-                                    alt="Default Image"
-                                />
-                            )}
-                            <CardContent
-                                sx={{
-                                    p: 2,
-                                }}
-                            >
-                                <Typography
-                                    variant="h6"
-                                    sx={{
-                                        fontSize: { xs: '1rem', sm: '1.3rem' },
-                                        fontWeight: 600,
-                                        color: '#6e4e33',
-                                        mb: 1,
-                                        lineHeight: 1.2,
-                                    }}
-                                >
-                                    {cafe.name}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    sx={{
-                                        fontSize: { xs: '0.7rem', sm: '0.9rem' },
-                                        color: '#4a3b2e',
-                                        lineHeight: 1.3,
-                                    }}
-                                >
-                                    {cafe.address}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    ))
-                ) : (
-                    <Box
+                    <Avatar
+                        src={photoUrl || "broken-image.jpg"}
                         sx={{
-                            gridColumn: '1 / -1', // span entire row
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            minHeight: 200, // adjust based on how much space you want
+                            width: { xs: 120, sm: 160, md: 180 },
+                            height: { xs: 120, sm: 160, md: 180 },
+                            border: '4px solid #fff',
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                            transition: 'transform 0.3s ease',
+                            '&:hover': {
+                                transform: 'scale(1.05)',
+                            },
+                        }}
+                    />
+                    <Typography
+                        variant="h4"
+                        sx={{
+                            fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' },
+                            fontWeight: 700,
+                            color: '#6e4e33',
+                            textAlign: 'center',
                         }}
                     >
-                        <Typography
-                            variant="h6"
+                        {fullName}
+                    </Typography>
+                </Box>
+
+                <Box
+                    sx={{
+                        display: 'grid',
+                        gridTemplateColumns: {
+                            xs: '1fr',
+                            sm: 'repeat(auto-fill, minmax(280px, 1fr))',
+                            md: 'repeat(auto-fill, minmax(300px, 1fr))',
+                        },
+                        gap: { xs: 2, sm: 3 },
+                        width: '100%',
+                        maxWidth: '1200px',
+                    }}
+                >
+                    {favoriteCafes.length > 0 ? (
+                        favoriteCafes.map((cafe) => (
+                            <Card
+                                key={cafe.place_id}
+                                sx={{
+                                    borderRadius: 3,
+                                    border: '1px solid #110203',
+                                    backgroundColor: "transparent",
+                                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                                    overflow: 'hidden',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                                    '&:hover': {
+                                        transform: 'translateY(-4px)',
+                                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                                    },
+                                }}
+                                onClick={() => handleCafeClick(cafe)}
+                            >
+                                {cafe.photos.length > 0 ? (
+                                    <CardMedia
+                                        component="img"
+                                        sx={{
+                                            height: { xs: 120, sm: 140, md: 150 },
+                                            objectFit: 'cover',
+                                        }}
+                                        image={cafe.photos[0]}
+                                        alt={cafe.name}
+                                    />
+                                ) : (
+                                    <CardMedia
+                                        component="img"
+                                        sx={{
+                                            height: { xs: 140, sm: 160, md: 180 },
+                                            objectFit: 'cover',
+                                        }}
+                                        image="broken-image.jpg"
+                                        alt="Default Image"
+                                    />
+                                )}
+                                <CardContent
+                                    sx={{
+                                        p: 2,
+                                    }}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            fontSize: { xs: '1rem', sm: '1.3rem' },
+                                            fontWeight: 600,
+                                            color: '#6e4e33',
+                                            mb: 1,
+                                            lineHeight: 1.2,
+                                        }}
+                                    >
+                                        {cafe.name}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            fontSize: { xs: '0.7rem', sm: '0.9rem' },
+                                            color: '#4a3b2e',
+                                            lineHeight: 1.3,
+                                        }}
+                                    >
+                                        {cafe.address}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        ))
+                    ) : (
+                        <Box
                             sx={{
-                                textAlign: 'center',
-                                backgroundColor: 'transparent',
-                                color: '#666',
-                                fontFamily: "Helvetica",
-                                fontWeight: 500,
-                                maxWidth: 500,
+                                gridColumn: '1 / -1', // span entire row
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                minHeight: 200, // adjust based on how much space you want
                             }}
                         >
-                            You have no favorite cafes yet.
-                        </Typography>
-                    </Box>
-                )}
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    textAlign: 'center',
+                                    backgroundColor: 'transparent',
+                                    color: '#666',
+                                    fontFamily: "Helvetica",
+                                    fontWeight: 500,
+                                    maxWidth: 500,
+                                }}
+                            >
+                                You have no favorite cafes yet.
+                            </Typography>
+                        </Box>
+                    )}
+                </Box>
             </Box>
         </Container>
     );

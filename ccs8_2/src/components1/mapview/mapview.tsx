@@ -3,6 +3,7 @@ import { Box, Typography, Button, CircularProgress } from '@mui/material';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchCafesByTags, CafeDetails } from '../services/GooglePlacesServices2';
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 const DUMAGUETE_CENTER = { lat: 9.3076, lng: 123.3080 };
 const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '';
@@ -172,8 +173,8 @@ const CafeCarousel: React.FC<{
     return (
         <Box sx={{
             position: 'relative',
-            width: '80%',
-            maxWidth: '100vw',
+            width: '100%',
+            maxWidth: '80vw',
             height: { xs: '350px', md: '400px' },
             display: 'flex',
             alignItems: 'center',
@@ -320,6 +321,11 @@ function MapView() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const scriptRef = useRef<HTMLScriptElement | null>(null);
 
+    const breadcrumbItems = [
+        { label: 'Home', path: '/' },
+        { label: 'Preference' },
+    ];
+
     useEffect(() => {
         if (!API_KEY) {
             console.error('Google Maps API key is missing');
@@ -456,8 +462,9 @@ function MapView() {
                     width: '100%'
                 }}
             >
-                <Typography variant='h5' sx={{ color: '#cd3234', fontWeight: 'bold' }}>Explore</Typography>
-                <Typography variant='h3' sx={{ color: '#000000', fontWeight: 'semi-bold' }}>Cafes near you</Typography>
+                <BreadcrumbsComponent items={breadcrumbItems} />
+                <Typography variant='h5' sx={{ color: '#cd3234', fontWeight: 'bold' }}>Preference</Typography>
+                <Typography variant='h3' sx={{ color: '#000000', fontWeight: 'semi-bold' }}>Discover cafes based on your needs</Typography>
             </Box>
             <Box
                 sx={{

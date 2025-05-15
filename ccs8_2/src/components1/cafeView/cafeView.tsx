@@ -12,6 +12,7 @@ import React, { useEffect, useState, useRef } from 'react';
   import { fetchGoogleReviews } from './fetchGoogleReviews';
   import { parseGoogleReviews } from './parseGoogleReview';
   import { Review } from './review';
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
   const DUMAGUETE_COORDINATES = { lat: 9.3076, lng: 123.3080 };
   const PLACEHOLDER_PHOTO = 'https://picsum.photos/400/300?grayscale';
@@ -45,6 +46,19 @@ import React, { useEffect, useState, useRef } from 'react';
     const mapRef = useRef<HTMLDivElement>(null);
     const leafletMap = useRef<L.Map | null>(null);
     const navigate = useNavigate();
+
+    const breadcrumbItems = [
+      { label: 'Home', path: '/' },
+      {
+        label: 'Search',
+        path: '/search',
+        state: {
+          lat: state?.lat || DUMAGUETE_COORDINATES.lat,
+          lon: state?.lon || DUMAGUETE_COORDINATES.lng,
+        },
+      },
+      { label: cafe?.name || 'Cafe' },
+    ];
 
     const RANDOM_DESCRIPTIONS: Array<string> = [
       'A cozy spot perfect for coffee lovers, offering a warm ambiance and friendly service.',
@@ -181,6 +195,7 @@ import React, { useEffect, useState, useRef } from 'react';
     if (error && !cafe) {
       return (
         <div className="cafe-view-error">
+          <BreadcrumbsComponent items={breadcrumbItems} />
           {error}
           <button className="back-button" onClick={handleBack}>Back to Search</button>
         </div>
@@ -190,6 +205,7 @@ import React, { useEffect, useState, useRef } from 'react';
     if (!cafe) {
       return (
         <div className="cafe-view-error">
+          <BreadcrumbsComponent items={breadcrumbItems} />
           Cafe not found
           <button className="back-button" onClick={handleBack}>Back to Search</button>
         </div>
@@ -198,6 +214,7 @@ import React, { useEffect, useState, useRef } from 'react';
 
     return (
       <div className="cafe-view-container">
+        <BreadcrumbsComponent items={breadcrumbItems} />
         <div className="cafe-view-content">
           <div className="left-section">
             <div className="cafe-image-container">

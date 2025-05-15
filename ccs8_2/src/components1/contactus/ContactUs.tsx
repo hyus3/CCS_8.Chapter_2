@@ -1,6 +1,7 @@
 import { FormatPaint } from "@mui/icons-material";
 import emailjs from "emailjs-com";
 import { useState } from "react";
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,11 @@ const ContactUs = () => {
     subject: "",
     message: "",
   });
+
+  const breadcrumbItems = [
+    { label: 'Home', path: '/' },
+    { label: 'Contact Us' },
+  ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -41,7 +47,7 @@ const ContactUs = () => {
         maxWidth: "1200px",
         fontFamily: "Helvetica",
         marginBottom: "4rem", }}>
-
+      <BreadcrumbsComponent items={breadcrumbItems} />
       <h2 style={{ 
         fontSize: "1.5rem", 
         color: "#cd3234",

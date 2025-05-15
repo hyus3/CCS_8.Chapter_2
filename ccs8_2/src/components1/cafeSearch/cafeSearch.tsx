@@ -6,6 +6,7 @@ import { fetchCafesByQuery } from '../services/GooglePlacesService';
 import { CafeDetails } from '../body/Body2.script';
 import './cafeSearch.css';
 import {Tooltip} from "@mui/material";
+import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
 
 const DUMAGUETE_COORDINATES = { lat: 9.3076, lng: 123.3080 };
 
@@ -21,6 +22,11 @@ const CafeSearch: React.FC = () => {
   const urlQuery = queryParams.get('query');
   const stateQuery = state?.query;
   const finalQuery = stateQuery || urlQuery || 'Coffee shops in Dumaguete';
+
+  const breadcrumbItems = [
+    { label: 'Home', path: '/' },
+    { label: `Search` },
+  ];
 
   const loadCafes = () => {
     setLoading(true);
@@ -82,6 +88,7 @@ const CafeSearch: React.FC = () => {
 
   return (
     <div className="cafeSearch-container">
+      <BreadcrumbsComponent items={breadcrumbItems} />
       <Tooltip title="Searchbar">
         <AutosuggestSearch placeholder="Search for coffee shops in Dumaguete" />
       </Tooltip>

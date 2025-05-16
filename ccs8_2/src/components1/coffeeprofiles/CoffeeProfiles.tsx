@@ -150,12 +150,12 @@ const CoffeeProfiles = () => {
 
     {category.items.map((item) => (
       <div
-        key={item.name} className="card">
+        key={item.name} className="card-coffee">
 
         <div
           style={{ 
             position: "relative", 
-            height: 200, 
+            height: '200px',
             overflow: "hidden" }}
           onMouseEnter={(e) =>
             ((e.currentTarget.querySelector(".hover-overlay") as HTMLElement).style.opacity = "1")
@@ -204,7 +204,7 @@ const CoffeeProfiles = () => {
           </div>
         </div>
         
-        <div style={{ 
+        <div style={{
             padding: "10px", 
             textAlign: "center", 
             backgroundColor: "#cd3234",

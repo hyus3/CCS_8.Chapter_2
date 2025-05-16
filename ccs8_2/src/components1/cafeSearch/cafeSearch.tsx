@@ -105,14 +105,14 @@ const CafeSearch: React.FC = () => {
             <div key={cafe.place_id} className="card" onClick={() => handleCafeClick(cafe)}>
               <div className="card-image">
                 <img
-                  src={cafe.photos[0] || 'https://via.placeholder.com/400x300?text=No+Image'}
-                  alt={cafe.name}
-                  className="card-image-content"
-                  onError={(e) => {
-                    console.error(`[CafeSearch] Image failed to load for ${cafe.name}: ${cafe.photos[0]}`);
-                    e.currentTarget.src = 'https://via.placeholder.com/400x300?text=Image+Failed';
-                  }}
-                  style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                    src={cafe.photos[0] || 'https://via.placeholder.com/400x300?text=No+Image'}
+                    alt={cafe.name}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = 'https://via.placeholder.com/400x300?text=No+Image';
+                    }}
+                    style={{ width: '100%', height: 'auto' }}
                 />
               </div>
               <div className="card-footer">

@@ -341,3 +341,43 @@ export const getFallbackSliderItems = (): CafeDetails[] => [
   },
 ];
 
+export const fetchCafeDetailsById = (placeId: string): Promise<CafeDetails | null> => {
+  return new Promise((resolve) => {
+    if (!window.google?.maps?.places) {
+      console.error('[fetchCafeDetailsById] Google Maps API not loaded.');
+      resolve(null);
+      return;
+    }
+
+    const placesService = new window.google.maps.places.PlacesService(document.createElement('div'));
+
+    placesService.getDetails(
+        {
+          placeId,
+          fields: ['name', 'geometry', 'formatted_address', 'photos', 'rating', 'types'],
+        },
+        (place, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
+            const cafe: CafeDetails = {
+              place_id: placeId,
+              name: place.name || 'Unnamed Cafe',
+              photos: place.photos
+                  ? place.photos.slice(0, 3).map((photo) => photo.getUrl({ maxWidth: 400 }))
+                  : ['https://via.placeholder.com/400x300?text=No+Image'],
+              lat: place.geometry.location.lat(),
+              lon: place.geometry.location.lng(),
+              address: place.formatted_address || 'Unknown address',
+              rating: place.rating || null,
+              amenities: place.types?.includes('wifi') ? ['Wi-Fi'] : [],
+            };
+            resolve(cafe);
+          } else {
+            console.error(`[fetchCafeDetailsById] Failed to fetch details for placeId: ${placeId}, status: ${status}`);
+            resolve(null);
+          }
+        }
+    );
+  });
+};
+
+

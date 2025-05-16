@@ -5,6 +5,7 @@ import { db } from '../../firebase'; // Assuming you have Firebase initialized
 import { collection, query, getDocs } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom";
 import BreadcrumbsComponent from "../navbar/BreadcrumbsComponent";
+import { fetchCafeDetailsById, CafeDetails as ServiceCafeDetails } from '../services/GooglePlacesService';
 
 type ProfileProps = {
     user: User | null;
@@ -14,7 +15,7 @@ type CafeDetails = {
     place_id: string;
     name: string;
     address: string;
-    rating: number;
+    rating: number | null;
     photos: string[];
     lat?: number;
     lon?: number;
@@ -34,34 +35,42 @@ function Profile({ user }: ProfileProps) {
         { label: 'Profile' },
     ];
 
-    // Function to fetch favorite cafes from Firestore
+    // Function to fetch favorite cafes from Firestore and their details from Places API
     const fetchFavoriteCafes = async () => {
         if (user) {
             const userFavoritesRef = collection(db, "users", user.uid, "favorites");
             const q = query(userFavoritesRef);
-
             const querySnapshot = await getDocs(q);
             const cafeData: CafeDetails[] = [];
 
-            querySnapshot.forEach((doc) => {
+            // Fetch details for each cafe using fetchCafeDetailsById
+            for (const doc of querySnapshot.docs) {
                 const cafe = doc.data();
-                cafeData.push({
-                    place_id: cafe.placeId,
-                    name: cafe.name,
-                    address: cafe.address,
-                    rating: cafe.rating || 0,
-                    photos: cafe.photos || [],
-                    lat: cafe.lat,
-                    lon: cafe.lon,
-                    amenities: cafe.amenities || [],
-                });
-            });
+                const placeId = cafe.placeId;
+                if (placeId) {
+                    const details = await fetchCafeDetailsById(placeId);
+                    if (details) {
+                        cafeData.push({
+                            place_id: details.place_id,
+                            name: details.name,
+                            address: details.address,
+                            rating: details.rating,
+                            photos: details.photos,
+                            lat: details.lat,
+                            lon: details.lon,
+                            amenities: details.amenities,
+                        });
+                    } else {
+                        console.warn(`[Profile] Failed to fetch details for place_id: ${placeId}`);
+                    }
+                }
+            }
 
             setFavoriteCafes(cafeData);
         }
     };
 
-    // High-res photo function
+    // High-res photo function for user profile
     const getHighResPhoto = (url: string | null | undefined, size: number = 400): string => {
         if (!url) return "";
         return url.replace(/=s\d+-c$/, `=s${size}-c`);
@@ -158,7 +167,7 @@ function Profile({ user }: ProfileProps) {
             }}
         >
             <BreadcrumbsComponent items={breadcrumbItems} />
-            <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                 <Box
                     sx={{
                         display: 'flex',
@@ -169,7 +178,7 @@ function Profile({ user }: ProfileProps) {
                     }}
                 >
                     <Avatar
-                        src={photoUrl || "broken-image.jpg"}
+                        src={photoUrl || "https://via.placeholder.com/150?text=No+Image"}
                         sx={{
                             width: { xs: 120, sm: 160, md: 180 },
                             height: { xs: 120, sm: 160, md: 180 },
@@ -226,27 +235,16 @@ function Profile({ user }: ProfileProps) {
                                 }}
                                 onClick={() => handleCafeClick(cafe)}
                             >
-                                {cafe.photos.length > 0 ? (
-                                    <CardMedia
-                                        component="img"
-                                        sx={{
-                                            height: { xs: 120, sm: 140, md: 150 },
-                                            objectFit: 'cover',
-                                        }}
-                                        image={cafe.photos[0]}
-                                        alt={cafe.name}
-                                    />
-                                ) : (
-                                    <CardMedia
-                                        component="img"
-                                        sx={{
-                                            height: { xs: 140, sm: 160, md: 180 },
-                                            objectFit: 'cover',
-                                        }}
-                                        image="broken-image.jpg"
-                                        alt="Default Image"
-                                    />
-                                )}
+                                <CardMedia
+                                    component="img"
+                                    sx={{
+                                        height: { xs: 120, sm: 140, md: 150 },
+                                        objectFit: 'cover',
+                                    }}
+                                    image={cafe.photos.length > 0 ? cafe.photos[0] : "https://via.placeholder.com/400x300?text=No+Image"}
+                                    alt={cafe.name}
+                                    onError={(e) => console.error(`[Profile] Image failed to load for ${cafe.name}:`, cafe.photos[0])}
+                                />
                                 <CardContent
                                     sx={{
                                         p: 2,
@@ -280,11 +278,11 @@ function Profile({ user }: ProfileProps) {
                     ) : (
                         <Box
                             sx={{
-                                gridColumn: '1 / -1', // span entire row
+                                gridColumn: '1 / -1',
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                minHeight: 200, // adjust based on how much space you want
+                                minHeight: 200,
                             }}
                         >
                             <Typography

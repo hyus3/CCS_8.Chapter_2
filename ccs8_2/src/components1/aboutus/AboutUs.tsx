@@ -41,6 +41,7 @@ function AboutUs() {
             justifyContent="center" 
             alignItems="stretch"
             alignContent="center"
+            minHeight='45vh'
             sx={{
                 paddingTop: "3rem",
                 gap: '20px', // Space between the people

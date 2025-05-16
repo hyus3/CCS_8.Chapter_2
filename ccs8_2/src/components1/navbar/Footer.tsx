@@ -7,7 +7,8 @@ function Footer() {
     return (
         <Box sx={{
             display: 'flex',
-            flexDirection: {sm: 'row'},
+            flexDirection: {xs: 'column', sm: 'row'},
+            gap: {xs: '10px', sm: 'auto'},
             minHeight: '10vh',
             mx: 'auto' ,
             bottom: 0,
@@ -19,19 +20,22 @@ function Footer() {
             <Typography variant='h6' sx={{
                 fontWeight: '400',
                 fontSize: '1rem',
-                '&:hover': { color: '#cd3234'}
+                color: '#eeeae4',
+                '&:hover': { textDecoration: 'underline' }
             }}
                         onClick={() => navigate('/contactus')}>Contact Us</Typography>
             <Typography variant='h6' sx={{
                 fontWeight: '400',
                 fontSize: '1rem',
-                '&:hover': { color: '#cd3234'}
+                color: '#eeeae4',
+                '&:hover': { textDecoration: 'underline' }
             }}
                         onClick={() => navigate('/aboutus')}>About Us</Typography>
             <Typography variant='h6' sx={{
                 fontWeight: '400',
                 fontSize: '1rem',
-                '&:hover': { color: '#cd3234'}
+                color: '#eeeae4',
+                '&:hover': { textDecoration: 'underline' }
             }}
                         onClick={() => navigate('/sitemap')}>Sitemap</Typography>
         </Box>

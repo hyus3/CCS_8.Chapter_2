@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { User, onAuthStateChanged, getAuth, signOut } from "firebase/auth";
+import "./App.css";
 
 import NavBar from "./components1/navbar/NavBar";
 import Body2 from "./components1/body/Body2";
@@ -77,7 +78,7 @@ function App() {
                 <Route path="/sitemap" element={<Sitemap />} />
             </Routes>
             {!isLoginPage && (
-                <footer>
+                <footer className={'footer'}>
                     <Footer />
                 </footer>
             )}
